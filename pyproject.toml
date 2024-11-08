@@ -1,0 +1,7 @@
+[project]
+name = "linkml-gen-asciidoc"
+version = "0.1.0"
+description = "LinkML generator for generating AsciiDoc documentation."
+readme = "README.adoc"
+requires-python = ">=3.12"
+dependencies = []
