@@ -1,7 +1,7 @@
 import pytest
 import textwrap
-from linkml_gen_asciidoc.generator import AntoraDocsGenerator, cim_class_color
-import linkml_gen_asciidoc.schema as Schema
+from linkml_antora_generator.generator import AntoraDocsGenerator, cim_class_color
+import linkml_antora_generator.schema as Schema
 from cssutils.scripts import csscombine
 from pprint import pprint
 

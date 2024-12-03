@@ -5,12 +5,12 @@ import textwrap
 from os import PathLike
 import os.path
 from collections.abc import Callable
-import linkml_gen_asciidoc.schema as Schema
+import linkml_antora_generator.schema as Schema
 from xml.etree import ElementTree
 from urllib.parse import urlparse
 from functools import reduce
 
-from linkml_gen_asciidoc.linkml_full import (
+from linkml_antora_generator.linkml_full import (
     SchemaDefinition,
     ClassDefinition,
 )
