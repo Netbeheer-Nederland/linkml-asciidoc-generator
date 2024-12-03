@@ -2,7 +2,7 @@ import pytest
 import linkml_antora_generator.schema as schema
 
 # import linkml_antora_generator.linkml_prof_logical_model as linkml_type
-import linkml_linkml_antora_generator.linkml_full as linkml_type
+import linkml_antora_generator.linkml_full as linkml_type
 import yaml
 
 # CLASS_ = linkml_type.ClassDefinition()
