@@ -4,11 +4,25 @@
 
 * Set of LinkML schemas -> Antora component version
 ** LinkML schema -> Antora module
-*** LinkML class -> Antora page
+*** LinkML class -> Antora page (class template)
 **** LinkML class attributes -> Antora page section
-*** LinkML enumeration -> Antora page
-*** LinkML type -> Antora page
-*** LinkML slots -> Antora page (_TODO_)
+*** LinkML enumeration -> Antora page (enum template)
+*** LinkML type -> Antora page (type template; _TODO_)
+*** LinkML slots -> Antora page (_out of scope for now_)
+
+=== Component and module naming
+
+* Single LinkML schema
+** Schema ID -> Antora component name
+** ROOT module and nothing else
+* Multiple LinkML schemas
+** User input -> Antora component name
+** Schema ID -> Antora module name (dirname)
+
+== Limitations
+
+* Non-attribute (top-level) slots are out of scope for now.
+* Antora component version descriptor files support only the crucial metadata such as `name` and `version`, but no advanced options yet like `asciidoc`.
 
 == If Antora is not desired
 
