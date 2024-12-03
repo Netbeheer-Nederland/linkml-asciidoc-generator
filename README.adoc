@@ -1,4 +1,25 @@
-= LinkML AsciiDoc generator
+= LinkML Antora generator
+
+== Mapping
+
+* Set of LinkML schemas -> Antora component version
+** LinkML schema -> Antora module
+*** LinkML class -> Antora page
+**** LinkML class attributes -> Antora page section
+*** LinkML enumeration -> Antora page
+*** LinkML type -> Antora page
+*** LinkML slots -> Antora page (_TODO_)
+
+== If Antora is not desired
+
+Currently, the generator is tightly coupled to Antora. If one wishes to use the generated AsciiDoc outside of the Antora framework, the following post-processing should suffice:
+
+* Cross-references (`xref`) must be transformed such that they no longer use Antora-specific resource IDs. In many cases, however, these IDs are already compatible with regular relative paths.
+* The output directory follows Antora's convention regarding how to structure documentation in so called component versions. This is structure should work fine without using Antora as well, but one might desire a different structure. If you change the directory structure, however, you also need to update all the includes and cross-references.
+
+This is just what comes to mind immediately. More steps may be needed.
+
+NOTE: In future releases it may become configurable whether the output is an Antora component or generic AsciiDoc.
 
 == Benefits over alternatives
 
