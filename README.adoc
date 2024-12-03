@@ -1,0 +1,11 @@
+= LinkML AsciiDoc generator
+
+== Benefits over alternatives
+
+* Server-sided diagram rendering.
+** Avoids diagram code to match search queries and appear in search results.
+** Users never see diagram code when rendering has not finished yet.
+** No reliance on external services for availability of diagrams.
+** Avoids complicated architectures and keeps the website static and easy to work with.
+
+* AsciiDoc partials generation for maximal reusability of documentation parts.

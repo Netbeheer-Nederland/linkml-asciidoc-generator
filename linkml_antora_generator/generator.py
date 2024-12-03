@@ -385,3 +385,13 @@ class AntoraDocsGenerator:
         nav_page: AsciiDocStr = self._nav_page()
         nav_res_id = self._resource_id(ResourceType.NAV_PAGE)
         self._write_file(nav_page.encode("utf-8"), nav_res_id)
+
+
+    def create_docs(self) -> None:
+        for class_ in self.schema.classes.values():
+            self.create_class_page(class_)
+
+        for enum in self.schema.enums.values():
+            self.create_enum_page(enum)
+
+        self.create_nav_page()

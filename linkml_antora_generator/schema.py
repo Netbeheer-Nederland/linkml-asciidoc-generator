@@ -160,3 +160,80 @@ def attributes(
 #         return f"{loc}[{prefix}:{local_name}]"
 #     else:
 #         return f"{loc}[{loc}]"
+
+
+#def materialize(schema, class_name):
+#    class_ = schema.classes[class_name].model_copy()
+#
+#    inherited_attrs = {}
+#    for super_class_name in super_classes(schema, class_name)[::-1]:
+#        super_class = schema.classes[super_class_name]
+#        if super_class.attributes:
+#            inherited_attrs.update(super_class.attributes)
+#
+#    if not inherited_attrs:
+#        return class_
+#
+#    if not class_.attributes:
+#        class_.attributes = {}
+#
+#    class_.attributes.update(inherited_attrs)
+#
+#    return class_
+
+CIM_DATA_TYPES = [
+    "VoltagePerReactivePower",
+    "Length",
+    "ConductancePerLength",
+    "VolumeFlowRate",
+    "Volume",
+    "Voltage",
+    "Temperature",
+    "Admittance",
+    "Impedance",
+    "CostPerVolume",
+    "SusceptancePerLength",
+    "Money",
+    "Minutes",
+    "CostPerEnergyUnit",
+    "FloatQuantity",
+    "PerCent",
+    "ApparentPower",
+    "WaterLevel",
+    "Displacement",
+    "Damping",
+    "Seconds",
+    "ResistancePerLengt",
+    "Inductance",
+    "AngleDegrees",
+    "CostRate",
+    "Speed",
+    "Capacitance",
+    "PU",
+    "Pressure",
+    "KiloActivePower",
+    "ReactivePower",
+    "ActivePowerChangeRate",
+    "Hours",
+    "StringQuantity",
+    "Conductance",
+    "RotationSpeed",
+    "CurrentFlow",
+    "Frequency",
+    "AngleRadians",
+    "ActivePower",
+    "ReactancePerLength",
+    "Resistance",
+    "Reactance",
+    "Susceptance",
+    "RealEnergy",
+    "Classification",
+    "HeatRate",
+    "Emission",
+    "CostPerHeatUnit",
+    "ActivePowerPerFrequency",
+    "InductancePerLength",
+    "CapacitancePerLength",
+    "ActivePowerPerCurrentFlow",
+    "Mass",
+]
