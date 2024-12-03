@@ -1,7 +1,17 @@
 [project]
 name = "linkml-gen-asciidoc"
 version = "0.1.0"
-description = "LinkML generator for generating AsciiDoc documentation."
+description = "LinkML generator for Antora documentation in AsciiDoc."
 readme = "README.adoc"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "cssutils>=2.11.1",
+    "jinja2>=3.1.4",
+    "pydantic>=2.9.2",
+    "pyyaml>=6.0.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.3",
+]

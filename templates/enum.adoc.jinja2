@@ -1,0 +1,38 @@
+{%- if enum.title -%}
+    {%- set title = enum.title -%}
+{%- else -%}
+    {%- set title = "`" ~ enum_name ~ "`" -%}
+{%- endif -%}
+= {{ title }}
+
+{% if enum.description %}
+_+++{{ enum.description | trim }}+++_
+{% endif %}
+
+--
+[cols="h,3",width=60%]
+|===
+| Type
+| Enumeration
+{% if enum.enum_uri %}
+| URI
+| {{ link_curie(enum.enum_uri) }}
+{% endif %}
+|===
+--
+
+{% if enum.permissible_values %}
+== Permissible values
+
+[cols="1,1,1"]
+|===
+| Value | URI | Description
+{% for value, permissible_value in enum.permissible_values.items() %}
+| `{{ value }}`
+| {{ link_curie(permissible_value.meaning) }}
+| _{{- permissible_value.description | trim -}}_
+{% endfor %}
+|===
+{% else %}
+This enumeration has no permissible values defined.
+{% endif %}
