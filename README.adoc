@@ -42,5 +42,11 @@ NOTE: In future releases it may become configurable whether the output is an Ant
 ** Users never see diagram code when rendering has not finished yet.
 ** No reliance on external services for availability of diagrams.
 ** Avoids complicated architectures and keeps the website static and easy to work with.
-
 * AsciiDoc partials generation for maximal reusability of documentation parts.
+
+== Development
+
+=== Conventions
+
+* If methods or functions start with a verb they have side effects (_pull_ or _push_).
+** Otherwise, they are pure functions (_transformations_).

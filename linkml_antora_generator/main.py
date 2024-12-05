@@ -5,7 +5,7 @@ import textwrap
 from pathlib import Path
 
 import linkml_antora_generator.schema as Schema
-from linkml_antora_generator.generator import AntoraDocsGenerator
+from linkml_antora_generator.generator import AntoraGenerator
 
 
 def cim_class_color(class_: ClassDefinition) -> str:
@@ -24,11 +24,11 @@ if __name__ == "__main__":
 
     # Single schema.
     schemas = {Schema.read(data / "im_capaciteitskaart-full.yaml")}
-    adocgen = AntoraDocsGenerator(schemas, class_color=cim_class_color)
+    adocgen = AntoraGenerator(schemas, class_color=cim_class_color)
 
     # Multiple schemas.
     schemas = {Schema.read(schema_file) for schema_file in {data / "im_capaciteitskaart-full.yaml", data / "TC57CIM.IEC61970.yaml"}}
-    adocgen = AntoraDocsGenerator(schemas, class_color=cim_class_color, metadata={"name": "nbnl-cim-profile-group", "title": "NBNL CIM Profile Group"})
+    adocgen = AntoraGenerator(schemas, class_color=cim_class_color, metadata={"name": "nbnl-cim-profile-group", "title": "NBNL CIM Profile Group"})
 
     # Run.
     adocgen.create_docs()

@@ -51,7 +51,7 @@ class ResourceType(Enum):
     NAV_PAGE = auto()
 
 
-class AntoraDocsGenerator:
+class AntoraGenerator:
     template_map = {ResourceType.CLASS_PAGE: "class.adoc.jinja2", ResourceType.ENUM_PAGE: "enum.adoc.jinja2"}
 
     def __init__(
