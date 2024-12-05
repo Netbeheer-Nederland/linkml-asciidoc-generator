@@ -58,7 +58,7 @@ class AntoraDocsGenerator:
         self,
         schemas: set[SchemaDefinition],
         class_color: Callable[[ClassDefinition], str] | None = None,
-        output_dir: os.Pathlike | None = None,
+        output_dir: os.PathLike | None = None,
         metadata: AntoraYmlDict | None = None,
         diagram_background_color: str | None = None,
     ) -> None:
