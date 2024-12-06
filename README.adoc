@@ -1,28 +1,28 @@
 = LinkML Antora generator
 
+Generates an Antora module from a LinkML schema.
+
+The generated module can then be made part of an Antora component version, playing its part in a larger piece of documentation.
+
+== Why not regular AsciiDoc?
+
+Whichever choice is made, it is relatively easy to add or remove Antora-specific assumptions through post-processing, so it's not really important. The reason why Antora was chosen is because it helps organising the files in a standardized way, but moreover the module can be put to use immediately as part of an Antora-based site.
+
+
+
+
 == Mapping
 
-* Set of LinkML schemas -> Antora component version
-** LinkML schema -> Antora module
-*** LinkML class -> Antora page (class template)
-**** LinkML class attributes -> Antora page section
-*** LinkML enumeration -> Antora page (enum template)
-*** LinkML type -> Antora page (type template; _TODO_)
-*** LinkML slots -> Antora page (_out of scope for now_)
-
-=== Component and module naming
-
-* Single LinkML schema
-** Schema ID -> Antora component name
-** ROOT module and nothing else
-* Multiple LinkML schemas
-** User input -> Antora component name
-** Schema ID -> Antora module name (dirname)
+* LinkML schema -> Antora module
+** LinkML class -> Antora page (class template)
+*** LinkML class attributes -> Antora page section
+** LinkML enumeration -> Antora page (enum template)
+** LinkML type -> Antora page (type template; _TODO_)
+** LinkML slots -> Antora page (_out of scope for now_)
 
 == Limitations
 
 * Non-attribute (top-level) slots are out of scope for now.
-* Antora component version descriptor files support only the crucial metadata such as `name` and `version`, but no advanced options yet like `asciidoc`.
 
 == If Antora is not desired
 
@@ -46,7 +46,13 @@ NOTE: In future releases it may become configurable whether the output is an Ant
 
 == Development
 
+////
+Perhaps not.
+
 === Conventions
 
-* If methods or functions start with a verb they have side effects (_pull_ or _push_).
-** Otherwise, they are pure functions (_transformations_).
+* I emphasize the use of hashable, immutable data types, and try to make everything deterministic using only data types that support ordering.
+* If methods or functions start with a verb they have side effects (_pull_ or _push_). Otherwise, they are pure functions (_transformations_).
+* Typenames are `UpperCamelCase` and try to encode a lot of context, whereas function names are `lower_snake_case` and are contextualized by their namespace.
+** For example, the type `AntoraPage` is not abbreviated to just `Page` even though the namespace is `antora`.
+////

@@ -1,4 +1,3 @@
-import linkml_prof_logical_model as linkml_lang
 import yaml
 from jinja2 import Environment, FileSystemLoader
 import textwrap
@@ -27,8 +26,18 @@ if __name__ == "__main__":
     adocgen = AntoraGenerator(schemas, class_color=cim_class_color)
 
     # Multiple schemas.
-    schemas = {Schema.read(schema_file) for schema_file in {data / "im_capaciteitskaart-full.yaml", data / "TC57CIM.IEC61970.yaml"}}
-    adocgen = AntoraGenerator(schemas, class_color=cim_class_color, metadata={"name": "nbnl-cim-profile-group", "title": "NBNL CIM Profile Group"})
+    schemas = {
+        Schema.read(schema_file)
+        for schema_file in {
+            data / "im_capaciteitskaart-full.yaml",
+            data / "TC57CIM.IEC61970.yaml",
+        }
+    }
+    adocgen = AntoraGenerator(
+        schemas,
+        class_color=cim_class_color,
+        metadata={"name": "nbnl-cim-profile-group", "title": "NBNL CIM Profile Group"},
+    )
 
     # Run.
     adocgen.create_docs()
