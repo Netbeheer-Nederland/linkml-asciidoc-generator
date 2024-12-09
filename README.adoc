@@ -4,12 +4,7 @@ Generates an Antora module from a LinkML schema.
 
 The generated module can then be made part of an Antora component version, playing its part in a larger piece of documentation.
 
-== Why not regular AsciiDoc?
-
-Whichever choice is made, it is relatively easy to add or remove Antora-specific assumptions through post-processing, so it's not really important. The reason why Antora was chosen is because it helps organising the files in a standardized way, but moreover the module can be put to use immediately as part of an Antora-based site.
-
-
-
+NOTE: The generated AsciiDoc can also be used without Antora. See: <<If Antora is not desired>>.
 
 == Mapping
 
@@ -26,14 +21,20 @@ Whichever choice is made, it is relatively easy to add or remove Antora-specific
 
 == If Antora is not desired
 
-Currently, the generator is tightly coupled to Antora. If one wishes to use the generated AsciiDoc outside of the Antora framework, the following post-processing should suffice:
+There's only two things that are Antora-specific:
 
-* Cross-references (`xref`) must be transformed such that they no longer use Antora-specific resource IDs. In many cases, however, these IDs are already compatible with regular relative paths.
-* The output directory follows Antora's convention regarding how to structure documentation in so called component versions. This is structure should work fine without using Antora as well, but one might desire a different structure. If you change the directory structure, however, you also need to update all the includes and cross-references.
+* _File structure_. Files are structured as an Antora module, organizing all resources in so-called families.
+* _Reference style_. Resources are referenced using Antora resource IDs.
 
-This is just what comes to mind immediately. More steps may be needed.
+=== File structure
 
-NOTE: In future releases it may become configurable whether the output is an Antora component or generic AsciiDoc.
+How the files are organized has no bearing on whether the files are used with Antora or not. If, however, you wish to restructure the files, all references need to be refactored of course.
+
+=== Reference style
+Using the `--ref-style` parameter how the generator references resources can be configured:
+
+* `antora`: Use Antora resource IDs for use with the Antora framework;
+* `plain`: Use relative file paths for plain AsciiDoc style references.
 
 == Benefits over alternatives
 

@@ -15,7 +15,7 @@ from pprint import pprint
 import shutil
 import yaml
 
-from linkml_antora_generator.linkml_full import (
+from linkml_antora_generator.linkml.types import (
     SchemaDefinition,
     EnumDefinition,
     ClassDefinition,

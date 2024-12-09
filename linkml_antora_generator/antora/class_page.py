@@ -2,19 +2,56 @@
 LinkMLClass -> AntoraPage
 """
 
+import textwrap
+
+from linkml_antora_generator.linkml.types import *
+from linkml_antora_generator.antora.types import *
+
+
+def _generate_mermaid_diagram_code(
+    class_: ClassDefinition,
+    relation_slots: list[tuple[str, SlotDefinition]],
+) -> MermaidDiagramCodeStr:
+    class_name = class_._meta["name"]
+    diagram_code = textwrap.dedent(
+        f"""
+    %%{{
+        init: {{
+            'theme': 'base',
+            'themeVariables': {{
+            'primaryColor': '#CBDCEB',
+            'primaryTextColor': '#000000',
+            'primaryBorderColor': '#CBDCEB',
+            'lineColor': '#000000',
+            'secondaryColor': '#006100',
+            'tertiaryColor': '#ffffff',
+            'fontSize': '12px'
+            }}
+        }}
+    }}%%
+    classDiagram
+        class {class_name}
+    """
+    )
+    for slot_owner, slot in relation_slots:
+        slot_name = slot._meta["name"]
+        slot_cardinalities = self._cardinalities(slot)
+        diagram_code += f'\t{class_name} --> "{slot_cardinalities}" {slot.range}: {slot_name}\n'
+    return diagram_code
+
+
 
 def generate_class_page(class_: LinkMLClass, schema: SchemaDefinition, config: AntoraConfig) -> AntoraPage:
     class_name = class_._meta["name"]
     
     if config.include_relations_diagram:
-        relations_diagram_id: AntoraResourceID = f"{class_name}_relations.svg"
-        relations_diagram: MermaidDiagramCodeStr = system_call(generate_mermaid_diagram, relations_diagram_res_id)
+        relations_diagram_id: AntoraResourceID = f"{class_name}_relations.svg"  # TODO: Use dedicated function(s) for this.
+        relations_diagram: MermaidDiagramCodeStr = _generate_mermaid_diagram_code()
         images |= _generate_relations_diagram()
 
         relations_diagram_res_id = None
         if relation_slots:
 
-    :w
 
 
 
@@ -60,38 +97,6 @@ def _resource_id(self, type_, name: str | None = None) -> AntoraResourceID:
             return f"{name}_relations.svg"
         case ResourceType.NAV_PAGE:
             return f"nav.adoc"
-
-def _class_relations_diagram_mermaid(
-    self,
-    class_: ClassDefinition,
-    relation_slots: list[tuple[str, SlotDefinition]],
-) -> MermaidDiagramCodeStr:
-    class_name = class_._meta["name"]
-    diagram_code = textwrap.dedent(
-        f"""
-    %%{{
-        init: {{
-            'theme': 'base',
-            'themeVariables': {{
-            'primaryColor': '#CBDCEB',
-            'primaryTextColor': '#000000',
-            'primaryBorderColor': '#CBDCEB',
-            'lineColor': '#000000',
-            'secondaryColor': '#006100',
-            'tertiaryColor': '#ffffff',
-            'fontSize': '12px'
-            }}
-        }}
-    }}%%
-    classDiagram
-        class {class_name}
-    """
-    )
-    for slot_owner, slot in relation_slots:
-        slot_name = slot._meta["name"]
-        slot_cardinalities = self._cardinalities(slot)
-        diagram_code += f'\t{class_name} --> "{slot_cardinalities}" {slot.range}: {slot_name}\n'
-    return diagram_code
 
 def class_relations_diagram(self, schema: SchemaDefinition, class_: ClassDefinition) -> SvgImageStr:
     class_name = class_._meta["name"]
@@ -147,18 +152,6 @@ def _colored_class_relations_diagram(
     colored_diagram_svg = ElementTree.tostring(svg_root)
 
     return colored_diagram_svg
-
-
-def _enum_page(self, enum: EnumDefinition) -> AsciiDocStr:
-    enum_name = enum._meta["name"]
-
-    return self._render_template(
-        self.template_map[ResourceType.ENUM_PAGE],
-        enum=enum,
-        enum_name=enum_name,
-        enum_xref=self._enum_xref,
-        link_curie=self._link_curie,
-    )
 
 
 def _class_hierarchy(self, class_: ClassDefinition) -> AsciiDocStr:
@@ -249,24 +242,3 @@ def class_type(self, class_: ClassDefinition):
         return "Mixin class"
     else:
         return "Class"
-
-def _mermaid_to_svg(self, code: str, name: str) -> SvgImageStr:
-    result = subprocess.run(
-        [
-            MERMAID_MMDC,
-            "--theme",
-            "neutral",
-            "--outputFormat",
-            "svg",
-            "--svgId",
-            name,
-            "--output",
-            "-",
-        ],
-        input=code.encode("utf-8"),
-        capture_output=True,
-    )
-    assert result.returncode == 0
-    svg_image = result.stdout
-
-    return svg_image

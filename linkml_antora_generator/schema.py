@@ -115,7 +115,12 @@ def relations(
     _relations = []
 
     if class_.attributes:
-        _relations.extend(zip([class_name] * len(class_.attributes), filter(lambda s: is_relation(s, schema), class_.attributes.values())))
+        _relations.extend(
+            zip(
+                [class_name] * len(class_.attributes),
+                filter(lambda s: is_relation(s, schema), class_.attributes.values()),
+            )
+        )
 
     if include_inherited:
         _relations += list(filter(lambda s: is_relation(s[1], schema), _inherited_slots(class_, schema)))
@@ -140,7 +145,12 @@ def attributes(
     _attributes = []
 
     if class_.attributes:
-        _attributes.extend(zip([class_name] * len(class_.attributes), filter(lambda s: is_attribute(s, schema), class_.attributes.values())))
+        _attributes.extend(
+            zip(
+                [class_name] * len(class_.attributes),
+                filter(lambda s: is_attribute(s, schema), class_.attributes.values()),
+            )
+        )
 
     if include_inherited:
         _attributes += list(filter(lambda s: is_attribute(s[1], schema), _inherited_slots(class_, schema)))
@@ -148,7 +158,6 @@ def attributes(
     # TODO: Filter double _values_ from tuples
 
     return _attributes
-
 
 
 # def curie(schema, curie, as_curie=True):
@@ -162,7 +171,7 @@ def attributes(
 #         return f"{loc}[{loc}]"
 
 
-#def materialize(schema, class_name):
+# def materialize(schema, class_name):
 #    class_ = schema.classes[class_name].model_copy()
 #
 #    inherited_attrs = {}
