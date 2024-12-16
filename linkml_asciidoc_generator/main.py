@@ -1,6 +1,8 @@
 from pathlib import Path
-from linkml_asciidoc_generator.model.asciidoc.linkml_documentation import (
-    LinkMLDocumentation,
+from linkml_asciidoc_generator.reading import read_linkml_schema
+from linkml_asciidoc_generator.parsing import parse_linkml_schema
+from linkml_asciidoc_generator.generating.linkml_documentation import (
+    generate_linkml_documentation,
 )
 from linkml_asciidoc_generator.model import Config
 
