@@ -63,7 +63,7 @@ class ClassPage(Page):
     ref: Callable[[ResourceName, ResourceKind], ResourceID]
     ancestors: Callable[
         [list[LinkMLClassName]], AsciiDocStr
-    ]  # TODO: Not data, should go to rendering module.
+    ]  # TODO: These callables are not data, and should go to rendering module.
     title: str | None = None
     relations_diagram: RelationsDiagram | None = None
     attributes_diagram: AttributesDiagram | None = None
