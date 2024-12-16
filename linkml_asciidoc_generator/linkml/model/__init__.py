@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import NewType
 
-from linkml_asciidoc_generator.model.linkml.model import (
+from linkml_asciidoc_generator.linkml.model.metamodel import (
     Element,
     ClassDefinition,
     EnumDefinition,

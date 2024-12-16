@@ -1,5 +1,5 @@
-from linkml_asciidoc_generator.model.linkml import LinkMLSchema
-from linkml_asciidoc_generator.model.asciidoc.linkml_documentation import (
+from linkml_asciidoc_generator.linkml.model import LinkMLSchema
+from linkml_asciidoc_generator.asciidoc.model.linkml_documentation import (
     LinkMLDocumentation,
 )
 

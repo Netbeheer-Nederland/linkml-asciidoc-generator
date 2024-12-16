@@ -1,5 +1,5 @@
 from typing import NamedTuple, Callable
-from linkml_asciidoc_generator.model.asciidoc import (
+from linkml_asciidoc_generator.asciidoc.model import (
     AsciiDocStr,
     Resource,
     Jinja2Template,
@@ -11,7 +11,7 @@ from linkml_asciidoc_generator.model.asciidoc import (
     ResourceID,
     HyperLink,
 )
-from linkml_asciidoc_generator.model.linkml import (
+from linkml_asciidoc_generator.linkml.model import (
     LinkMLClassName,
     LinkMLPrimitive,
     LinkMLElementName,

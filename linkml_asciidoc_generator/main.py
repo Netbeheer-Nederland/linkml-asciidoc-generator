@@ -1,10 +1,10 @@
 from pathlib import Path
-from linkml_asciidoc_generator.reading import read_linkml_schema
-from linkml_asciidoc_generator.parsing import parse_linkml_schema
+from linkml_asciidoc_generator.linkml.reading import read_linkml_schema
+from linkml_asciidoc_generator.linkml.parsing import parse_linkml_schema
 from linkml_asciidoc_generator.generating.linkml_documentation import (
     generate_linkml_documentation,
 )
-from linkml_asciidoc_generator.model import Config
+from linkml_asciidoc_generator.config import Config
 
 
 def create_linkml_documentation(schema_file: Path, config=Config) -> None:

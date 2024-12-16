@@ -1,4 +1,4 @@
-from linkml_asciidoc_generator.model.linkml import LinkMLSchema
+from linkml_asciidoc_generator.linkml.model import LinkMLSchema
 
 
 def _set_names(elements) -> None:
