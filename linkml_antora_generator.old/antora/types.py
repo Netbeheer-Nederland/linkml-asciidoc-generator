@@ -14,7 +14,7 @@ from linkml_antora_generator.linkml.types import (
 
 AsciiDocStr = NewType("AsciiDocStr", str)
 Jinja2Template = NewType("Jinja2Template", str)
-AsciiDocTemplate = Jinja2Template
+type AsciiDocTemplate = Jinja2Template
 AntoraResourceID = NewType("AntoraResourceID", str)
 MermaidDiagramCodeStr = NewType("MermaidDiagramCodeStr", str)
 AntoraNavigation = NewType("AntoraNavigation", str)
@@ -110,14 +110,24 @@ class ClassAntoraPage(NamedTuple):
 
 
 class AntoraConfig(NamedTuple):
-    template_map: dict[AntoraResourceKind, PathLike]  # TODO: Nav file too! If empty or missing: no nav for module.
+    template_map: dict[
+        AntoraResourceKind, PathLike
+    ]  # TODO: Nav file too! If empty or missing: no nav for module.
     include_relations_diagram: bool = False
     include_attributes_diagram: bool = False
     module_name: str | None = None
 
 
-type AntoraPage = ClassAntoraPage | SlotAntoraPage | EnumerationAntoraPage | TypeAntoraPage | AntoraNavigation
-AntoraResource = AntoraPage | AntoraImage | AntoraAttachment | AntoraExample | AntoraPartial
+type AntoraPage = (
+    ClassAntoraPage
+    | SlotAntoraPage
+    | EnumerationAntoraPage
+    | TypeAntoraPage
+    | AntoraNavigation
+)
+AntoraResource = (
+    AntoraPage | AntoraImage | AntoraAttachment | AntoraExample | AntoraPartial
+)
 
 
 class AntoraNavigation:

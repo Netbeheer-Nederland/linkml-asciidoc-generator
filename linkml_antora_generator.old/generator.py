@@ -35,9 +35,7 @@ type CURIE = str
 
 JINJA2_TEMPLATES_DIR = "templates"
 ANTORA_COMPONENT_VERSION_DIR = "output"
-MERMAID_MMDC = (
-    "/home/bart/Programming/Netbeheer-Nederland/docs/node_modules/.bin/mmdc"
-)
+MERMAID_MMDC = "/home/bart/Programming/Netbeheer-Nederland/docs/node_modules/.bin/mmdc"
 
 
 def default_class_color(class_: ClassDefinition) -> str:
@@ -52,7 +50,10 @@ class ResourceType(Enum):
 
 
 class AntoraGenerator:
-    template_map = {ResourceType.CLASS_PAGE: "class.adoc.jinja2", ResourceType.ENUM_PAGE: "enum.adoc.jinja2"}
+    template_map = {
+        ResourceType.CLASS_PAGE: "class.adoc.jinja2",
+        ResourceType.ENUM_PAGE: "enum.adoc.jinja2",
+    }
 
     def __init__(
         self,
@@ -78,7 +79,7 @@ class AntoraGenerator:
         **kwargs,
     ) -> AsciiDocStr:
         template = self.jinja2_env.get_template(template_name)
-        #adoc = template.render(gen=self, **kwargs)
+        # adoc = template.render(gen=self, **kwargs)
         adoc = template.render(**kwargs)
 
         return adoc
@@ -133,10 +134,14 @@ class AntoraGenerator:
         for slot_owner, slot in relation_slots:
             slot_name = slot._meta["name"]
             slot_cardinalities = self._cardinalities(slot)
-            diagram_code += f'\t{class_name} --> "{slot_cardinalities}" {slot.range}: {slot_name}\n'
+            diagram_code += (
+                f'\t{class_name} --> "{slot_cardinalities}" {slot.range}: {slot_name}\n'
+            )
         return diagram_code
 
-    def class_relations_diagram(self, schema: SchemaDefinition, class_: ClassDefinition) -> SvgImageStr:
+    def class_relations_diagram(
+        self, schema: SchemaDefinition, class_: ClassDefinition
+    ) -> SvgImageStr:
         class_name = class_._meta["name"]
         relation_slots = Schema.relations(class_, schema)
         diagram_res_id = self._resource_id(
@@ -144,9 +149,7 @@ class AntoraGenerator:
         )
         diagram_name = diagram_res_id.split(".svg")[0]
 
-        diagram_code = self._class_relations_diagram_mermaid(
-            class_, relation_slots
-        )
+        diagram_code = self._class_relations_diagram_mermaid(class_, relation_slots)
 
         diagram_svg = self._mermaid_to_svg(diagram_code, diagram_name)
 
@@ -176,9 +179,7 @@ class AntoraGenerator:
             ".//svg:g[@class='nodes']/svg:g",
             namespaces={"svg": "http://www.w3.org/2000/svg"},
         ):
-            class_label = class_node.findtext(
-                f".//{{{html_ns}}}span/{{{html_ns}}}p"
-            )
+            class_label = class_node.findtext(f".//{{{html_ns}}}span/{{{html_ns}}}p")
             try:
                 color = self.class_color(schema.classes[class_label])
             except KeyError:
@@ -191,7 +192,6 @@ class AntoraGenerator:
 
         return colored_diagram_svg
 
-
     def _enum_page(self, enum: EnumDefinition) -> AsciiDocStr:
         enum_name = enum._meta["name"]
 
@@ -203,12 +203,12 @@ class AntoraGenerator:
             link_curie=self._link_curie,
         )
 
-
     def _class_hierarchy(self, class_: ClassDefinition) -> AsciiDocStr:
         return self._class_ancestors(class_) + self._class_descendants(class_)
 
-
-    def _class_ancestors(self, schema: SchemaDefinition, class_: ClassDefinition) -> AsciiDocStr:
+    def _class_ancestors(
+        self, schema: SchemaDefinition, class_: ClassDefinition
+    ) -> AsciiDocStr:
         # Ancestors.
         ancestor_classes = [
             c._meta["name"] for c in Schema.get_ancestors(class_, schema)
@@ -226,14 +226,13 @@ class AntoraGenerator:
 
         return hierarchy_adoc
 
-    def _class_descendants(self, schema: SchemaDefinition, class_: ClassDefinition) -> AsciiDocStr:
+    def _class_descendants(
+        self, schema: SchemaDefinition, class_: ClassDefinition
+    ) -> AsciiDocStr:
         # Descendants.
 
         subclasses = sorted(
-            [
-                c._meta["name"]
-                for c in Schema.get_subclasses(class_, schema)
-            ]
+            [c._meta["name"] for c in Schema.get_subclasses(class_, schema)]
         )[:3]
         hierarchy_adoc = reduce(
             lambda acc, succ: f"{acc} * {self._class_xref(succ)}\n",
@@ -247,17 +246,14 @@ class AntoraGenerator:
         class_res_id = self._resource_id(ResourceType.CLASS_PAGE, class_name)
         return f"xref::{class_res_id}[`{class_name}`]"
 
-
     def _enum_xref(self, enum_name: EnumName) -> AsciiDocStr:
         enum_res_id = self._resource_id(ResourceType.ENUM_PAGE, enum_name)
         return f"xref::{enum_res_id}[`{enum_name}`]"
-
 
     def _link_curie(self, schema: SchemaDefinition, curie: CURIE) -> AsciiDocStr:
         prefix, ncname = curie.split(":")
         base_uri = schema.prefixes[prefix]
         return f"{base_uri}{ncname}[`{curie}`]"
-
 
     def _class_page(
         self,
@@ -315,7 +311,7 @@ class AntoraGenerator:
         return svg_image
 
     def _write_file(
-            self, schema: SchemaDefinition, content: bytes, resource_id: AntoraResourceId
+        self, schema: SchemaDefinition, content: bytes, resource_id: AntoraResourceId
     ) -> os.PathLike:
         # TODO: Improve.
         if resource_id.endswith(".svg"):
@@ -333,7 +329,9 @@ class AntoraGenerator:
 
     def _nav_page(self, schema: SchemaDefinition) -> AsciiDocStr:
         nav = ".Classes\n"
-        for section_letter, classes_group in groupby(sorted(schema.classes), key=itemgetter(0)):
+        for section_letter, classes_group in groupby(
+            sorted(schema.classes), key=itemgetter(0)
+        ):
             nav += f"* {section_letter}\n"
             for class_ in classes_group:
                 nav += f"** {self._class_xref(class_, mono=False)}\n"
@@ -342,11 +340,11 @@ class AntoraGenerator:
         for enum in schema.enums:
             nav += f"* {self._enum_xref(enum)}\n"
 
-        #nav = reduce(
+        # nav = reduce(
         #    lambda acc, succ: f"{acc}* {self._class_xref(succ)}\n",
-        #schema.classes.keys(),
-        #"",
-        #)
+        # schema.classes.keys(),
+        # "",
+        # )
         return nav
 
     def _component_version_descriptor(self, metadata: AntoraYmlDict) -> YamlDocStr:
@@ -363,7 +361,6 @@ class AntoraGenerator:
         antora_yml = self._component_version_descriptor(self.metadata)
         self._write_file(antora_yml.encode("utf-8"))  # TODO
 
-
     def _create_nav_page(self) -> None:
         nav_page: AsciiDocStr = self._nav_page()
         nav_res_id = self._resource_id(ResourceType.NAV_PAGE)
@@ -376,24 +373,25 @@ class AntoraGenerator:
         enum_res_id = self._resource_id(ResourceType.ENUM_PAGE, enum_name)
         self._write_file(enum_page.encode("utf-8"), enum_res_id)
 
-    def _create_class_page(self, schema: SchemaDefinition, class_name: ClassName, incl_relations_diagram: bool = False) -> None:
-        class_= schema.classes[class_name]
+    def _create_class_page(
+        self,
+        schema: SchemaDefinition,
+        class_name: ClassName,
+        incl_relations_diagram: bool = False,
+    ) -> None:
+        class_ = schema.classes[class_name]
 
         relation_slots = Schema.relations(class_, schema)
 
         relations_diagram_res_id = None
         if relation_slots:
-            relations_diagram: SvgImageStr = self.class_relations_diagram(
-                class_
-            )
+            relations_diagram: SvgImageStr = self.class_relations_diagram(class_)
             relations_diagram_res_id = self._resource_id(
                 ResourceType.CLASS_RELATIONS_DIAGRAM, class_name
             )
             self._write_file(relations_diagram, relations_diagram_res_id)
 
-        class_page: AsciiDocStr = self._class_page(
-            class_, relations_diagram_res_id
-        )
+        class_page: AsciiDocStr = self._class_page(class_, relations_diagram_res_id)
         class_res_id = self._resource_id(ResourceType.CLASS_PAGE, class_name)
         self._write_file(class_page.encode("utf-8"), class_res_id)
 
@@ -418,7 +416,7 @@ class AntoraGenerator:
         for enum_name in schema.enums:
             self._create_enum_page(schema, enum_name)
 
-        #for type_name in schema.types:
+        # for type_name in schema.types:
         #    self._create_type_page(schema, enum_name)
 
         self._create_nav_page()
@@ -445,7 +443,6 @@ class AntoraGenerator:
                 self._create_module(schema)
 
     def create_docs(self) -> None:
-        """Entry point.
-        """
+        """Entry point."""
 
         self._create_component_version()
