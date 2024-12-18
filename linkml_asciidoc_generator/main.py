@@ -17,5 +17,5 @@ def create_linkml_documentation(schema_file: Path, config=Config) -> None:
 
 if __name__ == "__main__":
     config = {}
-    schema = Path("data/TC57CIM.yml")
+    schema = Path("data/dp_meetdata.yaml")
     create_linkml_documentation(schema, config=config)

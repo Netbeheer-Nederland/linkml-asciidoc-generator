@@ -9,6 +9,7 @@ from linkml_asciidoc_generator.asciidoc.model.type_page import TypePage
 
 class LinkMLDocumentation(NamedTuple):
     name: str
+    title: str
     index_page: Page
     navigation_page: Page
     class_pages: frozenset[ClassPage]

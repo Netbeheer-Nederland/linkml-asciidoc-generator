@@ -58,13 +58,13 @@ class AttributesDiagram(MermaidDiagram): ...
 
 
 class ClassPage(Page):
+    title: str
     class_: Class
-    curie: Callable[[CURIE], HyperLink]
-    ref: Callable[[ResourceName, ResourceKind], ResourceID]
-    ancestors: Callable[
-        [list[LinkMLClassName]], AsciiDocStr
-    ]  # TODO: These callables are not data, and should go to rendering module.
-    title: str | None = None
+    # curie: Callable[[CURIE], HyperLink]
+    # ref: Callable[[ResourceName, ResourceKind], ResourceID]
+    # ancestors: Callable[
+    #     [list[LinkMLClassName]], AsciiDocStr
+    # ]  # TODO: These callables are not data, and should be parameters in the rendering/serialization module
     relations_diagram: RelationsDiagram | None = None
     attributes_diagram: AttributesDiagram | None = None
 
