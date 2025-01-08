@@ -4,17 +4,14 @@ from linkml_asciidoc_generator.asciidoc import (
     Jinja2TemplateFile,
     Element,
     CURIE,
-    CURIEPrefix,
-    URI,
     Page,
+    PrefixesMap,
 )
 from linkml_asciidoc_generator.linkml.model import (
     LinkMLClassName,
     LinkMLPrimitive,
     LinkMLElementName,
 )
-
-type PrefixesMap = dict[CURIEPrefix, URI]
 
 
 @dataclass

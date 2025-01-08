@@ -6,7 +6,6 @@ from enum import Enum, auto
 import jinja2
 
 from linkml_asciidoc_generator.linkml.model import LinkMLElementName
-from linkml_asciidoc_generator.config import Config
 
 
 type ResourceName = str
@@ -21,6 +20,7 @@ type AntoraResourceID = str
 type ResourceID = RelativeFilePath | AntoraResourceID
 type D2DiagramCodeStr = str
 type CharEncoding = str
+type PrefixesMap = dict[CURIEPrefix, URI]
 
 
 class PageKind(Enum):
@@ -74,3 +74,37 @@ def get_page_resource_id(name: ResourceName, kind: PageKind) -> ResourceID:
             page_type = ""
 
     return os.path.join(page_type, f"{name}.adoc")
+
+
+# Render functions.
+
+
+def _xref_resource(name: ResourceName, kind: PageKind) -> AsciiDocStr:
+    resource_id = get_page_resource_id(name, kind)
+
+    return f"xref::{resource_id}[`{name}`]"
+
+
+def link_curie(curie: CURIE, prefixes: PrefixesMap) -> AsciiDocStr:
+    prefix, ncname = curie.split(":")
+    base_uri = prefixes[prefix]
+
+    return f"{base_uri}{ncname}[`{curie}`]"
+
+
+def xref_class(class_name: ResourceName) -> AsciiDocStr:
+    return _xref_resource(class_name, PageKind.CLASS_PAGE)
+
+
+def xref_enum(enum_name: ResourceName) -> AsciiDocStr:
+    return _xref_resource(enum_name, PageKind.ENUMERATION_PAGE)
+
+
+def xref_slot(
+    slot_name: ResourceName,
+) -> AsciiDocStr:
+    return _xref_resource(slot_name, PageKind.SLOT_PAGE)
+
+
+def xref_type(type_name: ResourceName) -> AsciiDocStr:
+    return _xref_resource(type_name, PageKind.TYPE_PAGE)

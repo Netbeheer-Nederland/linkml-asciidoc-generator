@@ -39,6 +39,7 @@ prefixes:
   nbnl: https://begrippen.netbeheernederland.nl/energiesysteembeheer/nl/page/
   liander: http://data.liander.nl/markt/def#
   this: http://data.netbeheernederland.nl/dp-meetdata/def#
+  owl: http://www.w3.org/2002/07/owl#
 default_curi_maps:
 - semweb_context
 default_prefix: cim

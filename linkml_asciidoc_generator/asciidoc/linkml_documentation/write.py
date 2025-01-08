@@ -48,7 +48,7 @@ def write_linkml_documentation(
     os.makedirs(examples_dir, exist_ok=True)
 
     index_page_path = os.path.join(
-        module_dir,
+        pages_dir,
         get_page_resource_id("index", PageKind.INDEX_PAGE),
     )
     _write_page(
