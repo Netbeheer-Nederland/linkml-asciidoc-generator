@@ -83,6 +83,7 @@ def _generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) -
         relations=[
             _generate_relation(r[0], r[1]) for r in get_relations(class_, schema)
         ],
+        prefixes=schema.prefixes,
     )
 
     return _class_

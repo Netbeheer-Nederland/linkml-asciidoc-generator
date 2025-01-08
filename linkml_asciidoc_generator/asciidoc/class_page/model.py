@@ -4,6 +4,8 @@ from linkml_asciidoc_generator.asciidoc import (
     Jinja2TemplateFile,
     Element,
     CURIE,
+    CURIEPrefix,
+    URI,
     Page,
 )
 from linkml_asciidoc_generator.linkml.model import (
@@ -11,6 +13,8 @@ from linkml_asciidoc_generator.linkml.model import (
     LinkMLPrimitive,
     LinkMLElementName,
 )
+
+type PrefixesMap = dict[CURIEPrefix, URI]
 
 
 @dataclass
@@ -42,6 +46,7 @@ class Class:
     ancestors: list[LinkMLClassName]
     relations: list[Relation]
     attributes: list[Attribute]
+    prefixes: PrefixesMap
 
 
 @dataclass
@@ -58,8 +63,3 @@ class RelationsDiagram(D2Diagram):
 class ClassPage(Page):
     class_: Class
     relations_diagram: RelationsDiagram | None = None
-    # curie: Callable[[CURIE], HyperLink]
-    # ref: Callable[[ResourceName, ResourceKind], ResourceID]
-    # ancestors: Callable[
-    #     [list[LinkMLClassName]], AsciiDocStr
-    # ]  # TODO: These callables are not data, and should be parameters in the rendering/serialization module

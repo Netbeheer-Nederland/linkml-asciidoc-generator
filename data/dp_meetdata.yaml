@@ -724,7 +724,7 @@ classes:
           toekenning EAN-codes elektriciteit](https://www.acm.nl/nl/publicaties/codebesluit-toekenning-ean-codes-elektriciteit).
         exact_mappings:
         - nbnl:EAN
-        slot_uri: nl:IdentifiedObject.europeanArticleNumberEAN
+        slot_uri: nbnl:IdentifiedObject.europeanArticleNumberEAN
         multivalued: false
         range: string
         required: false

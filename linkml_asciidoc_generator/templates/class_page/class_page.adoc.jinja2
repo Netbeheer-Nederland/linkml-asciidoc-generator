@@ -34,46 +34,23 @@
 
 == Relations
 
-{% if relations %}
-{% if render_images %}
-[.relations-diagram.zoomable]
-image::{{ class_relations_diagram_res_id }}[width=90%]
+{% if class_.relations %}
+{% if relations_diagram %}
+{{ relations_diagram }}
 {% endif %}
 
-[cols="1,1,1,1,1"]
+[cols="1,1,1,1,1,1"]
 |===
-| Name | Cardinality | Destination class | Description | Inherited from
-{% for slot_owner, slot in relations %}
-| {{ slot._meta["name"] }}
-{#| {{ link_curie(slot.slot_uri) }}-#}
-| {{ cardinalities(slot) }}
-| `{{ slot.range }}`
-| _+++{{- slot.description | trim | replace("|", '\\|') | truncate(100, False) -}}+++_
-| {{ slot_owner }}
+| Name | URI | Cardinality | Destination class | Description | Inherited from
+{% for relation in class_.relations %}
+| {{ relation.name }}
+| {{ link_curie(relation.uri) }}
+| {{ cardinalities(relation) }}
+| `{{ relation.destination_class }}`
+| _+++{{- relation.description | trim | replace("|", '\\|') | truncate(100, False) -}}+++_
+| {{ relation.inherited_from }}
 {% endfor -%}
 |===
-
-{% for slot_owner, slot in relations %}
-[discrete]
-=== `{{- slot._meta["name"] -}}`
-{% if slot.description %}+++{{- slot.description | trim -}}+++{% endif %}
-
-[cols="h,2",width=60%]
-|===
-| URI
-| {{ link_curie(slot.slot_uri) }}
-| Required
-| {% if slot.required %}yes{% else %}no{% endif %}
-| Multivalued
-| {% if slot.multivalued %}yes{% else %}no{% endif %}
-| Destination class
-| {{ class_xref(slot.range) }}
-{% if slot_owner != class_name %}
-| Inherited from
-| `{{ slot_owner }}`
-{% endif %}
-|===
-{% endfor %}
 
 {% else %}
 This class is not the source of any relationship.
@@ -81,23 +58,23 @@ This class is not the source of any relationship.
 
 == Attributes
 
-{% if attributes %}
-{% for slot_owner, slot in attributes %}
+{% if class_.attributes %}
+{% for attribute in class_.attributes %}
 [discrete]
-=== `{{- slot._meta["name"] -}}`
-{% if slot.description %}+++{{- slot.description | trim -}}+++{% endif %}
+=== `{{- attribute.name -}}`
+{% if attribute.description %}+++{{- attribute.description | trim -}}+++{% endif %}
 
 [cols="h,2",width=60%]
 |===
 | URI
-| {{ link_curie(slot.slot_uri) }}
+| {{ link_curie(attribute.uri) }}
 | Cardinality
-| {{ cardinalities(slot) }}
+| {{ cardinalities(attribute) }}
 | Data type
-| `{{ slot.range }}`
-{% if slot_owner != class_name %}
+| `{{ attribute.data_type }}`
+{% if attribute.inherited_from != class_name %}
 | Inherited from
-| {{ class_xref(slot_owner) }}
+| {{ xref_class(attribute.inherited_from) }}
 {% endif %}
 |===
 {% endfor %}
@@ -114,4 +91,3 @@ This class has no attributes.
 {% if class_.mixin %}* This is a mixin class and it should not be subclassed.{% endif %}
 --
 {%- endif %}
-

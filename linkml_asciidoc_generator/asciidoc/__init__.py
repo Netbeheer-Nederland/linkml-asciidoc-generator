@@ -11,6 +11,8 @@ from linkml_asciidoc_generator.config import Config
 
 type ResourceName = str
 type CURIE = str
+type CURIEPrefix = str
+type URI = str
 type Jinja2TemplateFile = PathLike
 type Jinja2TemplateStr = str
 type AsciiDocStr = str
@@ -18,6 +20,7 @@ type RelativeFilePath = str
 type AntoraResourceID = str
 type ResourceID = RelativeFilePath | AntoraResourceID
 type D2DiagramCodeStr = str
+type CharEncoding = str
 
 
 class PageKind(Enum):
@@ -53,9 +56,7 @@ def read_jinja2_template(template_path: PathLike) -> Jinja2TemplateStr:
     return template
 
 
-def get_page_resource_id(
-    name: ResourceName, kind: PageKind, config: Config
-) -> ResourceID:
+def get_page_resource_id(name: ResourceName, kind: PageKind) -> ResourceID:
     match kind:
         case PageKind.CLASS_PAGE:
             page_type = "class"
@@ -72,7 +73,4 @@ def get_page_resource_id(
         case _:
             page_type = ""
 
-    page_dir = os.path.join(config["output_dir"], page_type)
-    page_filename = f"{name}.adoc"
-
-    return os.path.join(page_dir, page_filename)
+    return os.path.join(page_type, f"{name}.adoc")

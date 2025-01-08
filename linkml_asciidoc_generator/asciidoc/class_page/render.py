@@ -15,45 +15,48 @@ from linkml_asciidoc_generator.config import Config
 from linkml_asciidoc_generator.asciidoc.class_page.model import (
     ClassPage,
     Class,
+    PrefixesMap,
     RelationsDiagram,
     Attribute,
     Relation,
 )
 
 
-def _link_curie(curie: CURIE, schema: LinkMLSchema) -> AsciiDocStr:
+def _link_curie(curie: CURIE, prefixes: PrefixesMap) -> AsciiDocStr:
     prefix, ncname = curie.split(":")
-    base_uri = schema.prefixes[prefix]
+    base_uri = prefixes[prefix]
 
     return f"{base_uri}{ncname}[`{curie}`]"
 
 
-def _xref_resource(name: ResourceName, kind: PageKind, config: Config) -> AsciiDocStr:
-    resource_id = get_page_resource_id(name, kind, config)
+def _xref_resource(name: ResourceName, kind: PageKind) -> AsciiDocStr:
+    resource_id = get_page_resource_id(name, kind)
 
     return f"xref::{resource_id}[`{name}`]"
 
 
-def _xref_class(class_name: ResourceName, config: Config) -> AsciiDocStr:
-    return _xref_resource(class_name, PageKind.CLASS_PAGE, config)
+def _xref_class(class_name: ResourceName) -> AsciiDocStr:
+    return _xref_resource(class_name, PageKind.CLASS_PAGE)
 
 
-def _xref_enum(enum_name: ResourceName, config: Config) -> AsciiDocStr:
-    return _xref_resource(enum_name, PageKind.ENUMERATION_PAGE, config)
+def _xref_enum(enum_name: ResourceName) -> AsciiDocStr:
+    return _xref_resource(enum_name, PageKind.ENUMERATION_PAGE)
 
 
-def _xref_slot(slot_name: ResourceName, config: Config) -> AsciiDocStr:
-    return _xref_resource(slot_name, PageKind.SLOT_PAGE, config)
+def _xref_slot(
+    slot_name: ResourceName,
+) -> AsciiDocStr:
+    return _xref_resource(slot_name, PageKind.SLOT_PAGE)
 
 
-def _xref_type(type_name: ResourceName, config: Config) -> AsciiDocStr:
-    return _xref_resource(type_name, PageKind.TYPE_PAGE, config)
+def _xref_type(type_name: ResourceName) -> AsciiDocStr:
+    return _xref_resource(type_name, PageKind.TYPE_PAGE)
 
 
-def _render_ancestors(class_: Class, config: Config) -> AsciiDocStr:
+def _render_ancestors(class_: Class) -> AsciiDocStr:
     hierarchy_adoc = reduce(
-        lambda acc, succ: f"{acc}{'*'*succ[0]} {_xref_class(succ[1], config)}\n",
-        enumerate(class_.ancestors, 1),
+        lambda acc, succ: f"{acc}{'*'*succ[0]} {_xref_class(succ[1])}\n",
+        enumerate(class_.ancestors[::-1], 1),
         "",
     )
 
@@ -98,12 +101,12 @@ def render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
 
     content = template.render(
         class_=class_page.class_,
-        ancestors=_render_ancestors(class_page.class_, config),
-        link_curie=_link_curie,
-        xref_class=partial(_xref_class, config=Config),
-        xref_enum=partial(_xref_enum, config=Config),
-        xref_slot=partial(_xref_slot, config=Config),
-        xref_type=partial(_xref_type, config=Config),
+        ancestors=_render_ancestors(class_page.class_),
+        link_curie=partial(_link_curie, prefixes=class_page.class_.prefixes),
+        xref_class=partial(_xref_class),
+        xref_enum=partial(_xref_enum),
+        xref_slot=partial(_xref_slot),
+        xref_type=partial(_xref_type),
         cardinalities=_render_cardinalities,
         relations_diagram=relations_diagram,
     )

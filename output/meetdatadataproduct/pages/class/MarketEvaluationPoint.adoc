@@ -1,0 +1,119 @@
+= `MarketEvaluationPoint`
+
+
+
+--
+[cols="h,3",width=60%]
+|===
+| Kind
+| Class
+
+| Abstract
+| 
+
+| Mixin
+| 
+
+
+|===
+--
+
+== Class hierarchy
+* xref::class/IdentifiedObject.adoc[`IdentifiedObject`]
+** xref::class/UsagePoint.adoc[`UsagePoint`]
+*** *`MarketEvaluationPoint`*
+
+
+
+== Relations
+
+
+
+[d2,svg,theme=4,width=70%]
+----
+MarketEvaluationPoint -> MeterReading: meter_readings
+MarketEvaluationPoint -> Name: names
+----
+
+
+[cols="1,1,1,1,1,1"]
+|===
+| Name | URI | Cardinality | Destination class | Description | Inherited from
+
+| meter_readings
+| https://begrippen.netbeheernederland.nl/energiesysteembeheer/nl/page/MarketEvaluationPoint.MeterReadings[`nbnl:MarketEvaluationPoint.MeterReadings`]
+| 1..*
+| `MeterReading`
+| _+++All meter readings provided by this meter.+++_
+| MarketEvaluationPoint
+
+| names
+| https://cim.ucaiug.io/ns#IdentifiedObject.Names[`cim:IdentifiedObject.Names`]
+| 1..*
+| `Name`
+| _+++All names of this identified object.+++_
+| IdentifiedObject
+|===
+
+
+
+== Attributes
+
+
+
+[discrete]
+=== `european_article_number_ean`
++++The attribute is used for an exchange of the EAN code (European Article Number). The length of the string is 16 characters as defined by the EAN code. For details on EAN scheme please refer to the [Codebesluit toekenning EAN-codes elektriciteit](https://www.acm.nl/nl/publicaties/codebesluit-toekenning-ean-codes-elektriciteit).+++
+
+[cols="h,2",width=60%]
+|===
+| URI
+| https://begrippen.netbeheernederland.nl/energiesysteembeheer/nl/page/IdentifiedObject.europeanArticleNumberEAN[`nbnl:IdentifiedObject.europeanArticleNumberEAN`]
+| Cardinality
+| 1..*
+| Data type
+| `string`
+
+| Inherited from
+| xref::class/UsagePoint.adoc[`UsagePoint`]
+
+|===
+
+[discrete]
+=== `description`
++++The description is a free human readable text describing or naming the object. It may be non unique and may not correlate to a naming hierarchy.+++
+
+[cols="h,2",width=60%]
+|===
+| URI
+| https://cim.ucaiug.io/ns#IdentifiedObject.description[`cim:IdentifiedObject.description`]
+| Cardinality
+| 1..*
+| Data type
+| `string`
+
+| Inherited from
+| xref::class/IdentifiedObject.adoc[`IdentifiedObject`]
+
+|===
+
+[discrete]
+=== `m_rid`
++++Master resource identifier issued by a model authority. The mRID is unique within an exchange context. Global uniqueness is easily achieved by using a UUID, as specified in RFC 4122, for the mRID. The use of UUID is strongly recommended.
+For CIMXML data files in RDF syntax conforming to IEC 61970-552, the mRID is mapped to rdf:ID or rdf:about attributes that identify CIM object elements.+++
+
+[cols="h,2",width=60%]
+|===
+| URI
+| https://cim.ucaiug.io/ns#IdentifiedObject.mRID[`cim:IdentifiedObject.mRID`]
+| Cardinality
+| 1..*
+| Data type
+| `string`
+
+| Inherited from
+| xref::class/IdentifiedObject.adoc[`IdentifiedObject`]
+
+|===
+
+
