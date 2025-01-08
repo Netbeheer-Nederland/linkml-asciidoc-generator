@@ -1,5 +1,10 @@
 [d2,svg,theme=4,width=70%]
 ----
+vars: {
+  d2-config: {
+    pad: 20
+  }
+}
 {% for relation in class_.relations -%}
 {{ class_.name }} -> {{ relation.destination_class }}: {{ relation.name }}
 {% endfor -%}

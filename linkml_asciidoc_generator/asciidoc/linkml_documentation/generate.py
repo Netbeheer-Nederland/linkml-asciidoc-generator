@@ -20,6 +20,7 @@ def generate_linkml_documentation(
     class_pages = {
         c._meta["name"]: generate_class_page(c, schema, config)
         for c in schema.classes.values()
+        if c._meta["name"] == "MarketEvaluationPoint"  # TODO: Remove when done.
     }
 
     slot_pages = {}
