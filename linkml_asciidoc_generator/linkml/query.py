@@ -1,4 +1,4 @@
-from linkml_asciidoc_generator.model.linkml import (
+from linkml_asciidoc_generator.linkml.model import (
     LinkMLClass,
     LinkMLSchema,
     LinkMLSlot,
@@ -70,7 +70,8 @@ def get_relations(
     class_: LinkMLClass,
     schema: LinkMLSchema,
     include_inherited: bool = True,
-) -> dict[LinkMLSlotOwner, LinkMLSlot]:
+    # ) -> dict[LinkMLSlotOwner, LinkMLSlot]:
+) -> list[LinkMLSlot]:
     # TODO: Expand this so that this also covers `slots` and `slot_usage` (if we allow that one as well).
     class_name = class_._meta["name"]
     _relations = []
