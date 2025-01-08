@@ -1,5 +1,4 @@
 from pathlib import Path
-from pprint import pprint
 from linkml_asciidoc_generator.linkml.read import read_linkml_schema
 from linkml_asciidoc_generator.linkml.parse import parse_linkml_schema
 from linkml_asciidoc_generator.asciidoc.linkml_documentation.generate import (
@@ -9,7 +8,7 @@ from linkml_asciidoc_generator.asciidoc.linkml_documentation.render import (
     render_linkml_documentation,
 )
 from linkml_asciidoc_generator.asciidoc.linkml_documentation.write import (
-    write_linkml_documentation_project,
+    write_linkml_documentation,
 )
 from linkml_asciidoc_generator.config import Config
 
@@ -21,7 +20,8 @@ def create_linkml_documentation(schema_file: Path, config=Config) -> None:
     linkml_documentation_adoc = render_linkml_documentation(
         linkml_documentation, config
     )
-    write_linkml_documentation_project(linkml_documentation_adoc, config)
+    print(linkml_documentation_adoc)
+    write_linkml_documentation(linkml_documentation_adoc, config)
 
     # pprint(linkml_documentation.class_pages["MarketEvaluationPoint"].relations_diagram)
 
@@ -36,6 +36,7 @@ if __name__ == "__main__":
         },
         "diagrams": {"relations": True},
         "output_dir": "output/",
+        "char_encoding": "utf8",
     }
     schema = Path("data/dp_meetdata.yaml")
     create_linkml_documentation(schema, config=config)

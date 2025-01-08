@@ -22,7 +22,6 @@ class LinkMLDocumentation:
 @dataclass
 class RenderedLinkMLDocumentation:
     name: str
-    title: str
     index_page: AsciiDocStr
     navigation_page: AsciiDocStr
     class_pages: dict[ResourceName, AsciiDocStr]
