@@ -20,7 +20,8 @@ def create_linkml_documentation(schema_file: Path, config=Config) -> None:
     )
     # write_linkml_documentation(linkml_documentation_adoc)
 
-    pprint(linkml_documentation.class_pages["MeterReadingDataSet"].relations_diagram)
+    # pprint(linkml_documentation.class_pages["MarketEvaluationPoint"].relations_diagram)
+    pprint(linkml_documentation_adoc)
 
 
 if __name__ == "__main__":

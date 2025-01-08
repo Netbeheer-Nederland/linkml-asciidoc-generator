@@ -6,5 +6,6 @@ from linkml_asciidoc_generator.asciidoc import Page
 class Schema: ...
 
 
+@dataclass
 class IndexPage(Page):
     schema: Schema

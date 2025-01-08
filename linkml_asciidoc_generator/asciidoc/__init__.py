@@ -41,6 +41,7 @@ class Element:
     name: LinkMLElementName
 
 
+@dataclass
 class Page(Resource):
     title: str
     template: Jinja2TemplateFile

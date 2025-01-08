@@ -5,7 +5,6 @@ from linkml_asciidoc_generator.asciidoc import (
     Element,
     CURIE,
     Page,
-    D2DiagramCodeStr,
 )
 from linkml_asciidoc_generator.linkml.model import (
     LinkMLClassName,
@@ -14,6 +13,7 @@ from linkml_asciidoc_generator.linkml.model import (
 )
 
 
+@dataclass
 class Relation(Element):
     destination_class: LinkMLClassName
     inherited_from: LinkMLClassName | None = None
@@ -23,6 +23,7 @@ class Relation(Element):
     max_cardinalty: int = 999  # TODO
 
 
+@dataclass
 class Attribute(Element):
     data_type: LinkMLPrimitive
     inherited_from: LinkMLClassName | None = None
@@ -43,17 +44,21 @@ class Class:
     attributes: list[Attribute]
 
 
+@dataclass
 class D2Diagram(Resource):
     template: Jinja2TemplateFile
 
 
+@dataclass
 class RelationsDiagram(D2Diagram):
     class_: Class
 
 
+@dataclass
 class AttributesDiagram(D2Diagram): ...
 
 
+@dataclass
 class ClassPage(Page):
     class_: Class
     relations_diagram: RelationsDiagram | None = None

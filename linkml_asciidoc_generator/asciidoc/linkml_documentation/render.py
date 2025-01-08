@@ -23,22 +23,24 @@ def render_linkml_documentation(
     linkml_documentation = LinkMLDocumentation(
         name=linkml_documentation.name,
         title=linkml_documentation.title,
-        index_page=render_index_page(linkml_documentation.index_page),
-        navigation_page=render_navigation_page(linkml_documentation.navigation_page),
+        index_page=render_index_page(linkml_documentation.index_page, config),
+        navigation_page=render_navigation_page(
+            linkml_documentation.navigation_page, config
+        ),
         class_pages={
-            class_name: render_class_page(class_page)
-            for class_name, class_page in linkml_documentation.class_pages.items()
+            name: render_class_page(page, config)
+            for name, page in linkml_documentation.class_pages.items()
         },
         slot_pages={
-            name: render_slot_page(page)
+            name: render_slot_page(page, config)
             for name, page in linkml_documentation.slot_pages.items()
         },
         enumeration_pages={
-            name: render_enumeration_page(page)
+            name: render_enumeration_page(page, config)
             for name, page in linkml_documentation.enumeration_pages.items()
         },
         type_pages={
-            name: render_type_page(page)
+            name: render_type_page(page, config)
             for name, page in linkml_documentation.type_pages.items()
         },
     )
