@@ -1,10 +1,10 @@
-= {{ title }}
+= {{ page.title }}
 
 == Classes
 
 |===
 | Name
-{% for class_ in classes %}
-| class_.name
+{% for class_ in page.classes %}
+| {{ class_.name }}
 {% endfor %}
 |===

@@ -1,4 +1,4 @@
-from pathlib import Path
+import os.path
 from dataclasses import dataclass
 from os import PathLike
 from enum import Enum, auto
@@ -47,8 +47,9 @@ class Page(Resource):
     template: Jinja2TemplateFile
 
 
-def read_jinja2_template(template_name: str, templates_dir: Path) -> Jinja2TemplateStr:
-    jinja2_env = jinja2.Environment(loader=jinja2.FileSystemLoader(templates_dir))
-    template = jinja2_env.get_template(template_name)
+def read_jinja2_template(template_path: PathLike) -> Jinja2TemplateStr:
+    template_dir, tmpl_filename = os.path.split(template_path)
+    jinja2_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir))
+    template = jinja2_env.get_template(tmpl_filename)
 
     return template

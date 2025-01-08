@@ -3,9 +3,10 @@ from linkml_asciidoc_generator.asciidoc import Page
 
 
 @dataclass
-class Schema: ...
+class Class:
+    name: str
 
 
 @dataclass
 class IndexPage(Page):
-    schema: Schema
+    classes: list[Class]
