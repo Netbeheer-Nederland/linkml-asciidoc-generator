@@ -55,14 +55,9 @@ class RelationsDiagram(D2Diagram):
 
 
 @dataclass
-class AttributesDiagram(D2Diagram): ...
-
-
-@dataclass
 class ClassPage(Page):
     class_: Class
     relations_diagram: RelationsDiagram | None = None
-    attributes_diagram: AttributesDiagram | None = None
     # curie: Callable[[CURIE], HyperLink]
     # ref: Callable[[ResourceName, ResourceKind], ResourceID]
     # ancestors: Callable[

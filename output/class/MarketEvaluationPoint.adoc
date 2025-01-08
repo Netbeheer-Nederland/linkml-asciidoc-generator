@@ -2,11 +2,37 @@
 
 
 
+--
+[cols="h,3",width=60%]
+|===
+| Kind
+| Class
+
+| Abstract
+| 
+
+| Mixin
+| 
+
+
+|===
+--
+
+== Class hierarchy
+* xref::output/class/UsagePoint.adoc[`UsagePoint`]
+** xref::output/class/IdentifiedObject.adoc[`IdentifiedObject`]
+*** *`MarketEvaluationPoint`*
+
+
+
 == Relations
 
 
-[d2,svg,theme=101]
-----
-MarketEvaluationPoint -> MeterReading: meter_readings
-MarketEvaluationPoint -> Name: names
-----
+This class is not the source of any relationship.
+
+
+== Attributes
+
+
+This class has no attributes.
+

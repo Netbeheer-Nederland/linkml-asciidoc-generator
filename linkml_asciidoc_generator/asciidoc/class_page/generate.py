@@ -93,8 +93,6 @@ def generate_class_page(
 ) -> ClassPage:
     _class_ = _generate_class(class_, schema, config)
 
-    attributes_diagram = None
-
     if config["diagrams"]["relations"]:
         relations_diagram = RelationsDiagram(
             name=f"{_class_.name}_relations",
@@ -110,14 +108,6 @@ def generate_class_page(
         title=class_.title or _class_.name,
         class_=_class_,
         relations_diagram=relations_diagram,
-        attributes_diagram=attributes_diagram,
     )
 
     return page
-
-
-# class RelationsDiagram(MermaidDiagram):
-#     class_name: LinkMLClassName
-
-#     return page
-#     # relations_diagram: RelationsDiagram | None = None
