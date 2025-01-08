@@ -71,7 +71,7 @@ def get_relations(
     schema: LinkMLSchema,
     include_inherited: bool = True,
     # ) -> dict[LinkMLSlotOwner, LinkMLSlot]:
-) -> list[LinkMLSlot]:
+) -> list[tuple[LinkMLSlotOwner, LinkMLSlot]]:
     # TODO: Expand this so that this also covers `slots` and `slot_usage` (if we allow that one as well).
     class_name = class_._meta["name"]
     _relations = []
@@ -101,7 +101,7 @@ def get_attributes(
     class_: LinkMLClass,
     schema: LinkMLSchema,
     include_inherited: bool = True,
-) -> dict[LinkMLSlotOwner, LinkMLSlot]:
+) -> list[tuple[LinkMLSlotOwner, LinkMLSlot]]:
     # TODO: Expand this so that this also covers `slots` and `slot_usage` (if we allow that one as well).
     class_name = class_._meta["name"]
     _attributes = []

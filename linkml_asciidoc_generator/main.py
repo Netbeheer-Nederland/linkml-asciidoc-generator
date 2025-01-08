@@ -20,7 +20,6 @@ def create_linkml_documentation(schema_file: Path, config=Config) -> None:
     linkml_documentation_adoc = render_linkml_documentation(
         linkml_documentation, config
     )
-    print(linkml_documentation_adoc)
     write_linkml_documentation(linkml_documentation_adoc, config)
 
     # pprint(linkml_documentation.class_pages["MarketEvaluationPoint"].relations_diagram)
@@ -30,7 +29,7 @@ if __name__ == "__main__":
     config = {
         "templates": {
             "class_page": "linkml_asciidoc_generator/templates/class_page/class_page.adoc.jinja2",
-            "class_page_relations_diagram": "linkml_asciidoc_generator/templates/class_page/relations_diagram.d2.jinja2",
+            "class_page_relations_diagram": "linkml_asciidoc_generator/templates/class_page/relations_diagram.adoc.jinja2",
             "index_page": "linkml_asciidoc_generator/templates/index_page.adoc.jinja2",
             "navigation_page": "linkml_asciidoc_generator/templates/navigation_page.adoc.jinja2",
         },

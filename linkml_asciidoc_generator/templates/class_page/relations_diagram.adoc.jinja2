@@ -1,0 +1,6 @@
+[d2,svg,theme=101]
+----
+{% for relation in class_.relations -%}
+{{ class_.name }} -> {{ relation.destination_class }}: {{ relation.name }}
+{% endfor -%}
+----

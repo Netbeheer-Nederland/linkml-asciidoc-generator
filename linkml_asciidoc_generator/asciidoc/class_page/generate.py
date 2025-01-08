@@ -1,16 +1,73 @@
-from linkml_asciidoc_generator.linkml.model import LinkMLClass, LinkMLSchema
+from typing import Any
+from linkml_asciidoc_generator.linkml.model import (
+    LinkMLClass,
+    LinkMLSlot,
+    LinkMLSlotOwner,
+    LinkMLSchema,
+    LinkMLPrimitive,
+)
 from linkml_asciidoc_generator.config import Config
 from linkml_asciidoc_generator.asciidoc.class_page.model import (
     ClassPage,
     Class,
+    Relation,
+    Attribute,
     RelationsDiagram,
-    AttributesDiagram,
 )
+from linkml_asciidoc_generator.linkml.model import SlotDefinition
 from linkml_asciidoc_generator.linkml.query import (
     get_ancestors,
     get_relations,
     get_attributes,
 )
+
+
+def _get_min_cardinality(slot: LinkMLSlot) -> Any:
+    ...
+
+    min_card = 0
+
+    return min_card
+
+
+def _get_max_cardinality(slot: LinkMLSlot) -> Any:
+    ...
+
+    max_card = "*"
+
+    return max_card
+
+
+def _generate_data_type(slot_range: Any) -> LinkMLPrimitive:
+    ...
+
+    data_type = slot_range
+
+    return data_type
+
+
+def _generate_attribute(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot) -> Attribute:
+    return Attribute(
+        name=slot._meta["name"],
+        data_type=_generate_data_type(slot.range),
+        inherited_from=slot_owner,
+        description=slot.description,
+        uri=slot.slot_uri,
+        min_cardinality=_get_min_cardinality(slot),
+        max_cardinalty=_get_max_cardinality(slot),
+    )
+
+
+def _generate_relation(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot) -> Relation:
+    return Relation(
+        name=slot._meta["name"],
+        destination_class=slot.range,
+        inherited_from=slot_owner,
+        description=slot.description,
+        uri=slot.slot_uri,
+        min_cardinality=_get_min_cardinality(slot),
+        max_cardinalty=_get_max_cardinality(slot),
+    )
 
 
 def _generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) -> Class:
@@ -20,10 +77,12 @@ def _generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) -
         is_mixin=bool(class_.mixin),
         uri=class_.class_uri,
         ancestors=[c._meta["name"] for c in get_ancestors(class_, schema)],
-        # relations=list(get_relations(class_, schema).values()),
-        # attributes=list(get_attributes(class_, schema).values()),
-        relations=get_relations(class_, schema),
-        attributes=get_attributes(class_, schema),
+        attributes=[
+            _generate_attribute(a[0], a[1]) for a in get_attributes(class_, schema)
+        ],
+        relations=[
+            _generate_relation(r[0], r[1]) for r in get_relations(class_, schema)
+        ],
     )
 
     return _class_

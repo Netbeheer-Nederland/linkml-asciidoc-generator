@@ -1,0 +1,12 @@
+= `MarketEvaluationPoint`
+
+
+
+== Relations
+
+
+[d2,svg,theme=101]
+----
+MarketEvaluationPoint -> MeterReading: meter_readings
+MarketEvaluationPoint -> Name: names
+----

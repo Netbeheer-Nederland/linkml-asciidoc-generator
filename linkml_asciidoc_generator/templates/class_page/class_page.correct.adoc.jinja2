@@ -1,7 +1,7 @@
 {%- if class_.title -%}
     {%- set title = class_.title -%}
 {%- else -%}
-    {%- set title = "`" ~ class_name ~ "`" -%}
+    {%- set title = "`" ~ class_.name ~ "`" -%}
 {%- endif -%}
 = {{ title }}
 

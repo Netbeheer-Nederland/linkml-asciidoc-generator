@@ -1,0 +1,16 @@
+{%- if class_.title -%}
+    {%- set title = class_.title -%}
+{%- else -%}
+    {%- set title = "`" ~ class_.name ~ "`" -%}
+{%- endif -%}
+= {{ title }}
+
+{% if class_.description %}
++++{{ class_.description | trim }}+++
+{% endif %}
+
+== Relations
+
+{% if relations_diagram %}
+{{ relations_diagram }}
+{% endif %}
