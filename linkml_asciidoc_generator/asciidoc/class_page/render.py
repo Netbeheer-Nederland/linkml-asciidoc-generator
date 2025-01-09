@@ -22,6 +22,9 @@ from linkml_asciidoc_generator.asciidoc.class_page.model import (
 )
 
 
+DEFAULT_COLOR = "#cc0000"
+
+
 def _render_ancestors(class_: Class) -> AsciiDocStr:
     hierarchy_adoc = reduce(
         lambda acc, succ: f"{acc}{'*'*succ[0]} {xref_class(succ[1])}\n",
@@ -60,7 +63,10 @@ def _render_relations_diagram(
 
 
 def _get_class_color(class_: Class, config: Config) -> HexColor:
-    color = config["diagrams"]["class_color"][class_.standard.value]
+    try:
+        color = config["diagrams"]["class_color"][class_.standard.value]
+    except AttributeError:
+        color = DEFAULT_COLOR
 
     return color
 

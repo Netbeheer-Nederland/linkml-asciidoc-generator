@@ -71,15 +71,13 @@ def _generate_relation(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot, schema: Li
     )
 
 
-def _get_standard(class_: LinkMLClass) -> CIMStandard | None:
+def _get_standard(class_: LinkMLClass) -> CIMStandard:
     # TODO: This is a temporary semi-hardcoded solution.
+    ...
 
     standard = CIMStandard.IEC61970
 
-    for standard, classes in ClassesInStandard.items():
-        if class_._meta["name"] in classes:
-            return standard
-    return None
+    return 
     
 
 
