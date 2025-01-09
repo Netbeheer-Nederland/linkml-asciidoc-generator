@@ -10,11 +10,11 @@ from linkml_asciidoc_generator.config import Config
 from linkml_asciidoc_generator.asciidoc.class_page.model import (
     ClassPage,
     Class,
+    CIMStandard,
     Relation,
     Attribute,
     RelationsDiagram,
 )
-from linkml_asciidoc_generator.linkml.model import SlotDefinition
 from linkml_asciidoc_generator.linkml.query import (
     get_ancestors,
     get_relations,
@@ -58,10 +58,10 @@ def _generate_attribute(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot) -> Attrib
     )
 
 
-def _generate_relation(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot) -> Relation:
+def _generate_relation(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot, schema: LinkMLSchema, config: Config) -> Relation:
     return Relation(
         name=slot._meta["name"],
-        destination_class=slot.range,
+        destination_class=_generate_class(schema.classes[slot.range], schema, config),
         inherited_from=slot_owner,
         description=slot.description,
         uri=slot.slot_uri,
@@ -81,9 +81,10 @@ def _generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) -
             _generate_attribute(a[0], a[1]) for a in get_attributes(class_, schema)
         ],
         relations=[
-            _generate_relation(r[0], r[1]) for r in get_relations(class_, schema)
+            _generate_relation(r[0], r[1], schema, config) for r in get_relations(class_, schema)
         ],
         prefixes=schema.prefixes,
+        standard=CIMStandard.IEC61968,  # TODO: Implement.
     )
 
     return _class_

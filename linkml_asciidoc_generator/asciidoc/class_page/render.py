@@ -10,6 +10,7 @@ from linkml_asciidoc_generator.asciidoc import (
     xref_slot,
     xref_type,
     link_curie,
+    HexColor,
 )
 from linkml_asciidoc_generator.config import Config
 from linkml_asciidoc_generator.asciidoc.class_page.model import (
@@ -50,9 +51,18 @@ def _render_relations_diagram(
     diagram: RelationsDiagram, config: Config
 ) -> D2DiagramCodeStr:
     template = read_jinja2_template(config["templates"]["class_page_relations_diagram"])
-    content = template.render(class_=diagram.class_)
+    content = template.render(
+        class_=diagram.class_,
+        color_class=partial(_get_class_color, config=config),
+    )
 
     return content
+
+
+def _get_class_color(class_: Class, config: Config) -> HexColor:
+    color = config["diagrams"]["class_color"][class_.standard.value]
+
+    return color
 
 
 def render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from enum import Enum, auto
 from linkml_asciidoc_generator.asciidoc import (
     Resource,
     Jinja2TemplateFile,
@@ -14,9 +15,15 @@ from linkml_asciidoc_generator.linkml.model import (
 )
 
 
+class CIMStandard(Enum):
+    IEC61970 = "IEC61970"
+    IEC61968 = "IEC61968"
+    IEC62325 = "IEC62325"
+
+
 @dataclass
 class Relation(Element):
-    destination_class: LinkMLClassName
+    destination_class: "Class"
     inherited_from: LinkMLClassName | None = None
     description: str | None = None
     uri: CURIE | None = None
@@ -44,6 +51,7 @@ class Class:
     relations: list[Relation]
     attributes: list[Attribute]
     prefixes: PrefixesMap
+    standard: CIMStandard | None = None
 
 
 @dataclass

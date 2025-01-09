@@ -20,6 +20,7 @@ type AntoraResourceID = str
 type ResourceID = RelativeFilePath | AntoraResourceID
 type D2DiagramCodeStr = str
 type CharEncoding = str
+type HexColor = str
 type PrefixesMap = dict[CURIEPrefix, URI]
 
 

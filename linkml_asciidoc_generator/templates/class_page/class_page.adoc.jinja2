@@ -46,7 +46,7 @@
 | {{ relation.name }}
 | {{ link_curie(relation.uri) }}
 | {{ cardinalities(relation) }}
-| `{{ relation.destination_class }}`
+| `{{ relation.destination_class.name }}`
 | _+++{{- relation.description | trim | replace("|", '\\|') | truncate(100, False) -}}+++_
 | {{ relation.inherited_from }}
 {% endfor -%}

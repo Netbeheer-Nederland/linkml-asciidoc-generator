@@ -33,7 +33,14 @@ if __name__ == "__main__":
             "index_page": "linkml_asciidoc_generator/templates/index_page.adoc.jinja2",
             "navigation_page": "linkml_asciidoc_generator/templates/navigation_page.adoc.jinja2",
         },
-        "diagrams": {"relations": True},
+        "diagrams": {
+            "relations": True,
+            "class_color": {
+                "IEC61970": "#eccfcb",
+                "IEC61968": "#d1e7c2",
+                "IEC62325": "#fffbef",
+            },
+        },
         "output_dir": "output/",
         "char_encoding": "utf8",
     }
