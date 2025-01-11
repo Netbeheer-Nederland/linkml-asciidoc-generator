@@ -1,6 +1,7 @@
 from linkml_asciidoc_generator.asciidoc import (
     AsciiDocStr,
     read_jinja2_template,
+    xref_class,
     Jinja2TemplateStr,
 )
 from linkml_asciidoc_generator.config import Config
@@ -15,6 +16,6 @@ def render_navigation_page(
     template: Jinja2TemplateStr = read_jinja2_template(
         config["templates"]["navigation_page"]
     )
-    content = template.render(page=navigation_page)
+    content = template.render(page=navigation_page, xref_class=xref_class)
 
     return content
