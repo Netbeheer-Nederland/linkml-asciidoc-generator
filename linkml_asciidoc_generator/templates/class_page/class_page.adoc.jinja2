@@ -4,78 +4,80 @@
     {%- set title = "`" ~ class_.name ~ "`" -%}
 {%- endif -%}
 = {{ title }}
+:toclevels: 4
 
 {% if class_.description %}
 +++{{ class_.description | trim }}+++
 {% endif %}
 
---
 [cols="h,3",width=60%]
 |===
-| Kind
-| Class
+| Type
+| {% if class_.is_abstract %}Abstract class^xref:ROOT::usage_notes_abstract_class.adoc[?]^{% else %}Class{% endif %}
 
-| Abstract
-| {{ class_.abstract }}
-
-| Mixin
-| {{ class_.mixin }}
-
-{% if class_.class_uri %}
-| URI
-| {{ link_curie(class_.class_uri) }}
+{% if class_.uri %}
+| URI^xref:ROOT::uri_explanation.adoc[?]^
+| {{ link_curie(class_.uri) }}
 {% endif %}
 |===
---
+
+'''
+
+{% if class_.relations and relations_diagram %}
+{{ relations_diagram }}
+{% endif %}
 
 == Class hierarchy
 {{ ancestors }}
 
+== Fields
 
-== Relations
-
-{% if class_.relations %}
-{% if relations_diagram %}
-{{ relations_diagram }}
-{% endif %}
-
-[cols="1,1,1,1,1,1"]
+{% if class_.relations or class_.attributes %}
+.Reference of fields (attributes and relations)
+[cols="3,1,3,6",width=100%]
 |===
-| Name | URI | Cardinality | Destination class | Description | Inherited from
-{% for relation in class_.relations %}
-| {{ relation.name }}
-| {{ link_curie(relation.uri) }}
-| {{ cardinalities(relation) }}
-| `{{ relation.destination_class.name }}`
-| _+++{{- relation.description | trim | replace("|", '\\|') | truncate(100, False) -}}+++_
-| {{ relation.inherited_from }}
+| Name | Cardinalityxref:ROOT::cardinalities_explained.adoc[^?^,title="Explains stuff"] | Type | Description
+{% for slot in class_.relations + class_.attributes %}
+| <<{{ slot.name }},`{{ slot.name }}`>>
+| {{ cardinalities(slot) }}
+| {% if slot.destination_class %}{{ xref_class(slot.destination_class.name) }}{% elif slot.data_type %}`{{ slot.data_type }}`{% else %}`Any`{% endif %}
+//| +++{{- slot.description | trim | replace("|", '\\|') | truncate(100, False) -}}+++
+| {% if slot.description %}+++{{- slot.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor -%}
 |===
 
-{% else %}
-This class is not the source of any relationship.
-{% endif %}
-
-== Attributes
+=== Attributes
 
 {% if class_.attributes %}
 {% for attribute in class_.attributes %}
-[discrete]
-=== `{{- attribute.name -}}`
+//[discrete]
+[#{{ attribute.name }}]
+==== `{{- attribute.name -}}`
 {% if attribute.description %}+++{{- attribute.description | trim -}}+++{% endif %}
 
-[cols="h,2",width=60%]
+[cols="h,1",width=60%]
 |===
 | URI
-| {{ link_curie(attribute.uri) }}
+| {% if attribute.uri %}{{ link_curie(attribute.uri) }}{% else %}n/a{% endif %}
 | Cardinality
-| {{ cardinalities(attribute) }}
+| `{{ cardinalities(attribute) }}`
 | Data type
-| `{{ attribute.data_type }}`
+| {% if attribute.data_type %}`{{ attribute.data_type }}`{% else %}`Any`{% endif %}
 {% if attribute.inherited_from != class_name %}
 | Inherited from
 | {{ xref_class(attribute.inherited_from) }}
 {% endif %}
+| Glossary mappings ^xref:ROOT::what_are_glossary_mappings.adoc[?]^
+a|
+!===
+! Mapping type ! Term
+
+! `closeMatch`
+! `nbnl:EAN`
+! `exactMatch`
+! `schema:gtin13`
+!===
+
 |===
 {% endfor %}
 
@@ -83,11 +85,42 @@ This class is not the source of any relationship.
 This class has no attributes.
 {% endif %}
 
-{%- if class_.abstract or class_.mixin -%}
-== Usage notes
+=== Relations
 
---
-{% if class_.abstract %}* This is an abstract class and it should not be instantiated directly.{% endif %}
-{% if class_.mixin %}* This is a mixin class and it should not be subclassed.{% endif %}
---
-{%- endif %}
+{% if class_.relations %}
+{% for relation in class_.relations %}
+//[discrete]
+[#{{ relation.name }}]
+==== `{{- relation.name -}}`
+{% if relation.description %}+++{{- relation.description | trim -}}+++{% else %}n/a{% endif %}
+
+[cols="h,1",width=60%]
+|===
+| URI
+| {% if relation.uri %}{{ link_curie(relation.uri) }}{% else %}n/a{% endif %}
+| Cardinality
+| `{{ cardinalities(relation) }}`
+| Destination class
+| `{{ xref_class(relation.destination_class.name) }}`
+{% if relation.inherited_from != class_name %}
+| Inherited from
+| {{ xref_class(relation.inherited_from) }}
+{% endif %}
+| Glossary mappings^xref:ROOT::what_are_glossary_mappings.adoc[?]^
+a|
+!===
+! Mapping type ! Term
+
+! `closeMatch`
+! `nbnl:EAN`
+! `exactMatch`
+! `schema:gtin13`
+!===
+
+|===
+{% endfor %}
+
+{% else %}
+This class has no fields.
+{% endif %}
+{% endif %}

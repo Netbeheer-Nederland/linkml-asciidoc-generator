@@ -22,12 +22,12 @@ from linkml_asciidoc_generator.asciidoc.class_page.model import (
 )
 
 
-DEFAULT_COLOR = "#cc0000"
+DEFAULT_COLOR = "#cccccc"
 
 
 def _render_ancestors(class_: Class) -> AsciiDocStr:
     hierarchy_adoc = reduce(
-        lambda acc, succ: f"{acc}{'*'*succ[0]} {xref_class(succ[1])}\n",
+        lambda acc, succ: f"{acc}{'*' * succ[0]} {xref_class(succ[1])}\n",
         enumerate(class_.ancestors[::-1], 1),
         "",
     )
@@ -39,15 +39,17 @@ def _render_ancestors(class_: Class) -> AsciiDocStr:
 
 
 def _render_cardinalities(slot: Attribute | Relation):
-    return "1..*"
-    # if slot.required and slot.multivalued:
-    #     return "1..*"
-    # elif slot.required and not slot.multivalued:
-    #     return "1"
-    # elif not slot.required and slot.multivalued:
-    #     return "*"
-    # else:  # not attr.required and not attr.multivalued
-    #     return "0..1"
+    min_cardinality = str(slot.min_cardinality)
+
+    if slot.max_cardinalty is None:
+        max_cardinality = "*"
+    else:
+        max_cardinality = str(slot.max_cardinalty)
+
+    if min_cardinality == max_cardinality:
+        return f"{min_cardinality}"
+    else:
+        return f"{min_cardinality}..{max_cardinality}"
 
 
 def _render_relations_diagram(

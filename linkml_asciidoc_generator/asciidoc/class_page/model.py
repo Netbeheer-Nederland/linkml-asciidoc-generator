@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from enum import Enum, auto
+from enum import Enum
 from linkml_asciidoc_generator.asciidoc import (
     Resource,
     Jinja2TemplateFile,
@@ -15,6 +15,9 @@ from linkml_asciidoc_generator.linkml.model import (
 )
 
 
+type PositiveInt = int
+
+
 class CIMStandard(Enum):
     IEC61970 = "IEC61970"
     IEC61968 = "IEC61968"
@@ -28,7 +31,7 @@ class Relation(Element):
     description: str | None = None
     uri: CURIE | None = None
     min_cardinality: int = 0
-    max_cardinalty: int = 999  # TODO
+    max_cardinalty: PositiveInt | None = None
 
 
 @dataclass
@@ -38,7 +41,7 @@ class Attribute(Element):
     description: str | None = None
     uri: CURIE | None = None
     min_cardinality: int = 0
-    max_cardinalty: int = 999  # TODO
+    max_cardinalty: PositiveInt | None = None
 
 
 @dataclass
@@ -52,6 +55,7 @@ class Class:
     attributes: list[Attribute]
     prefixes: PrefixesMap
     standard: CIMStandard | None = None
+    description: str | None = None
 
 
 @dataclass

@@ -1,6 +1,5 @@
 from linkml_asciidoc_generator.linkml.model import LinkMLSchema
 from linkml_asciidoc_generator.config import Config
-from linkml_asciidoc_generator.asciidoc import Page
 from linkml_asciidoc_generator.asciidoc.linkml_documentation.model import (
     LinkMLDocumentation,
 )
@@ -20,6 +19,7 @@ def generate_linkml_documentation(
     class_pages = {
         c._meta["name"]: generate_class_page(c, schema, config)
         for c in schema.classes.values()
+        if c._meta["name"] in ["MarketEvaluationPoint", "UsagePoint"]
     }
 
     slot_pages = {}
