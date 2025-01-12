@@ -11,7 +11,7 @@ def _generate_class(class_: LinkMLClass) -> Class:
 def generate_index_page(schema: LinkMLSchema, config: Config) -> IndexPage:
     index_page = IndexPage(
         name="index",
-        title=schema.title or schema.name,
+        title="Index",
         template=config["templates"]["index_page"],
         classes=[_generate_class(c) for c in schema.classes.values()],
     )
