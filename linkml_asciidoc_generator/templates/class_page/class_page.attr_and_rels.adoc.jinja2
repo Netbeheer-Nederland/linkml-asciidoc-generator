@@ -44,25 +44,65 @@
 {% endfor -%}
 |===
 
-'''
+=== Attributes
 
-{% for slot in class_.relations + class_.attributes %}
+{% if class_.attributes %}
+{% for attribute in class_.attributes %}
 //[discrete]
-[#{{ slot.name }}]
-=== `{{- slot.name -}}`
-{% if slot.description %}+++{{- slot.description | trim -}}+++{% endif %}
+[#{{ attribute.name }}]
+==== `{{- attribute.name -}}`
+{% if attribute.description %}+++{{- attribute.description | trim -}}+++{% endif %}
 
 [cols="h,1",width=60%]
 |===
 | URI
-| {% if slot.uri %}{{ link_curie(slot.uri) }}{% else %}n/a{% endif %}
+| {% if attribute.uri %}{{ link_curie(attribute.uri) }}{% else %}n/a{% endif %}
 | Cardinality
-| {{ cardinalities(slot) }}
+| `{{ cardinalities(attribute) }}`
 | Data type
-| {% if slot.destination_class %}{{ xref_class(slot.destination_class.name) }}{% elif slot.data_type %}`{{ slot.data_type }}`{% else %}`Any`{% endif %}
-{% if slot.inherited_from != class_name %}
+| {% if attribute.data_type %}`{{ attribute.data_type }}`{% else %}`Any`{% endif %}
+{% if attribute.inherited_from != class_name %}
 | Inherited from
-| {{ xref_class(slot.inherited_from) }}
+| {{ xref_class(attribute.inherited_from) }}
+{% endif %}
+| Glossary mappings ^xref:ROOT::what_are_glossary_mappings.adoc[?]^
+a|
+!===
+! Mapping type ! Term
+
+! `closeMatch`
+! `nbnl:EAN`
+! `exactMatch`
+! `schema:gtin13`
+!===
+
+|===
+{% endfor %}
+
+{% else %}
+This class has no attributes.
+{% endif %}
+
+=== Relations
+
+{% if class_.relations %}
+{% for relation in class_.relations %}
+//[discrete]
+[#{{ relation.name }}]
+==== `{{- relation.name -}}`
+{% if relation.description %}+++{{- relation.description | trim -}}+++{% else %}n/a{% endif %}
+
+[cols="h,1",width=60%]
+|===
+| URI
+| {% if relation.uri %}{{ link_curie(relation.uri) }}{% else %}n/a{% endif %}
+| Cardinality
+| `{{ cardinalities(relation) }}`
+| Destination class
+| `{{ xref_class(relation.destination_class.name) }}`
+{% if relation.inherited_from != class_name %}
+| Inherited from
+| {{ xref_class(relation.inherited_from) }}
 {% endif %}
 | Glossary mappings^xref:ROOT::what_are_glossary_mappings.adoc[?]^
 a|
@@ -79,5 +119,6 @@ a|
 {% endfor %}
 
 {% else %}
-This class has no slots.
+This class has no fields.
+{% endif %}
 {% endif %}

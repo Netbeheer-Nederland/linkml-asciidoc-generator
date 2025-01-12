@@ -1,0 +1,147 @@
+{%- if class_.title -%}
+    {%- set title = class_.title -%}
+{%- else -%}
+    {%- set title = "`" ~ class_.name ~ "`" -%}
+{%- endif -%}
+= {{ title }}
+:toclevels: 4
+
+{% if class_.description %}
++++{{ class_.description | trim }}+++
+{% endif %}
+
+[cols="h,3",width=60%]
+|===
+| Type
+| {% if class_.is_abstract %}Abstract class^xref:ROOT::usage_notes_abstract_class.adoc[?]^{% else %}Class{% endif %}
+
+{% if class_.uri %}
+| URI^xref:ROOT::uri_explanation.adoc[?]^
+| {{ link_curie(class_.uri) }}
+{% endif %}
+|===
+
+== Class hierarchy
+{{ ancestors }}
+
+== Attributes
+
+{% if class_.attributes %}
+[cols="3,1,3,6",width=100%]
+|===
+| Name | Cardinalityxref:ROOT::cardinalities_explained.adoc[^?^,title="Explains stuff"] | Data type | Description
+{% for slot in class_.attributes %}
+| <<{{ slot.name }},`{{ slot.name }}`>>
+| {{ cardinalities(slot) }}
+| {% if slot.data_type %}`{{ slot.data_type }}`{% else %}`Any`{% endif %}
+//| +++{{- slot.description | trim | replace("|", '\\|') | truncate(100, False) -}}+++
+| {% if slot.description %}+++{{- slot.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
+{% endfor -%}
+|===
+
+{% else %}
+This class has no attributes.
+{% endif %}
+
+== Relations
+
+{% if class_.relations and relations_diagram %}
+.Associated classes
+{{ relations_diagram }}
+{% endif %}
+
+{% if class_.relations %}
+[cols="3,1,3,6",width=100%]
+|===
+| Name | Cardinalityxref:ROOT::cardinalities_explained.adoc[^?^,title="Explains stuff"] | Destination class | Description
+{% for slot in class_.relations %}
+| <<{{ slot.name }},`{{ slot.name }}`>>
+| {{ cardinalities(slot) }}
+| {% if slot.destination_class %}`{{ slot.destination_class.name }}`{% else %}`Any`{% endif %}
+//| +++{{- slot.description | trim | replace("|", '\\|') | truncate(100, False) -}}+++
+| {% if slot.description %}+++{{- slot.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
+{% endfor -%}
+|===
+
+{% else %}
+This class is not the source class of any relation.
+{% endif %}
+
+////
+=== Attributes
+
+{% if class_.attributes %}
+{% for attribute in class_.attributes %}
+//[discrete]
+[#{{ attribute.name }}]
+==== `{{- attribute.name -}}`
+{% if attribute.description %}+++{{- attribute.description | trim -}}+++{% endif %}
+
+[cols="h,1",width=60%]
+|===
+| URI
+| {% if attribute.uri %}{{ link_curie(attribute.uri) }}{% else %}n/a{% endif %}
+| Cardinality
+| `{{ cardinalities(attribute) }}`
+| Data type
+| {% if attribute.data_type %}`{{ attribute.data_type }}`{% else %}`Any`{% endif %}
+{% if attribute.inherited_from != class_name %}
+| Inherited from
+| {{ xref_class(attribute.inherited_from) }}
+{% endif %}
+| Glossary mappings ^xref:ROOT::what_are_glossary_mappings.adoc[?]^
+a|
+!===
+! Mapping type ! Term
+
+! `closeMatch`
+! `nbnl:EAN`
+! `exactMatch`
+! `schema:gtin13`
+!===
+
+|===
+{% endfor %}
+
+{% else %}
+This class has no attributes.
+{% endif %}
+
+=== Relations
+
+{% if class_.relations %}
+{% for relation in class_.relations %}
+//[discrete]
+[#{{ relation.name }}]
+==== `{{- relation.name -}}`
+{% if relation.description %}+++{{- relation.description | trim -}}+++{% else %}n/a{% endif %}
+
+[cols="h,1",width=60%]
+|===
+| URI
+| {% if relation.uri %}{{ link_curie(relation.uri) }}{% else %}n/a{% endif %}
+| Cardinality
+| `{{ cardinalities(relation) }}`
+| Destination class
+| `{{ xref_class(relation.destination_class.name) }}`
+{% if relation.inherited_from != class_name %}
+| Inherited from
+| {{ xref_class(relation.inherited_from) }}
+{% endif %}
+| Glossary mappings^xref:ROOT::what_are_glossary_mappings.adoc[?]^
+a|
+!===
+! Mapping type ! Term
+
+! `closeMatch`
+! `nbnl:EAN`
+! `exactMatch`
+! `schema:gtin13`
+!===
+
+|===
+{% endfor %}
+
+{% endif %}
+
+////

@@ -63,7 +63,7 @@ def _generate_relation(
 ) -> Relation:
     return Relation(
         name=slot._meta["name"],
-        destination_class=_generate_class(schema.classes[slot.range], schema, config),
+        destination_class=generate_class(schema.classes[slot.range], schema, config),
         inherited_from=slot_owner,
         description=slot.description,
         uri=slot.slot_uri,
@@ -83,7 +83,7 @@ def _get_standard(class_: LinkMLClass) -> CIMStandard | None:
     return None
 
 
-def _generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) -> Class:
+def generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) -> Class:
     _class_ = Class(
         name=class_._meta["name"],
         is_abstract=bool(class_.abstract),
@@ -108,7 +108,7 @@ def _generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) -
 def generate_class_page(
     class_: LinkMLClass, schema: LinkMLSchema, config: Config
 ) -> ClassPage:
-    _class_ = _generate_class(class_, schema, config)
+    _class_ = generate_class(class_, schema, config)
 
     if config["diagrams"]["relations"]:
         relations_diagram = RelationsDiagram(

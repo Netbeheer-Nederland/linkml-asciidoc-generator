@@ -2,10 +2,10 @@
 * Information model
 ** Classes
 {% for class_ in page.classes.values() -%}
-*** xref::class/{{ class_._meta["name"] }}.adoc[`{{ class_._meta["name"] }}`]
-{%- if class_.attributes -%}
-{% for slot in class_.attributes.values() -%}
-**** xref::slot/{{ slot._meta["name"] }}.adoc[`{{ slot._meta["name"] }}`]
+*** xref::class/{{ class_.name }}.adoc[`{{ class_.name }}`]
+{#%- if class_.attributes -%}
+{% for slot in (class_.attributes + class_.relations) -%}
+**** xref::slot/{{ slot.name }}.adoc[`{{ slot.name }}`]
 {% endfor -%}
-{% endif %}
+{% endif %#}
 {% endfor -%}
