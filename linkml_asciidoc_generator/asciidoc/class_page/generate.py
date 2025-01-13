@@ -15,6 +15,8 @@ from linkml_asciidoc_generator.asciidoc.class_page.model import (
     Attribute,
     RelationsDiagram,
     PositiveInt,
+    SkosVerb,
+    SkosMapping,
 )
 from linkml_asciidoc_generator.asciidoc.class_page.standard_mapping import (
     CLASSES_IN_STANDARD,
@@ -159,6 +161,23 @@ def _get_standard(class_: LinkMLClass) -> CIMStandard | None:
     return None
 
 
+def _get_skos_mappings(class_: LinkMLClass) -> SkosMapping:
+    mappings = {}
+
+    if class_.exact_mappings:
+        mappings[SkosVerb.EXACT_MATCH] = class_.exact_mappings
+    elif class_.close_mappings:
+        mappings[SkosVerb.CLOSE_MATCH] = class_.close_mappings
+    elif class_.narrow_mappings:
+        mappings[SkosVerb.NARROW_MATCH] = class_.narrow_mappings
+    elif class_.broad_mappings:
+        mappings[SkosVerb.BROAD_MATCH] = class_.broad_mappings
+    elif class_.mappings:
+        mappings[SkosVerb.MAPPING_RELATION] = class_.mappings
+
+    return mappings
+
+
 def generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) -> Class:
     _class_ = Class(
         name=class_._meta["name"],
@@ -176,7 +195,8 @@ def generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) ->
             for r in get_relations(class_, schema)
         ],
         prefixes=schema.prefixes,
-        standard=_get_standard(class_),  # TODO: Implement.
+        standard=_get_standard(class_),
+        skos_mappings=_get_skos_mappings(class_),
     )
 
     return _class_

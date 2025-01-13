@@ -5,6 +5,7 @@ from linkml_asciidoc_generator.asciidoc import (
     Jinja2TemplateFile,
     Element,
     CURIE,
+    URI,
     Page,
     PrefixesMap,
 )
@@ -15,7 +16,16 @@ from linkml_asciidoc_generator.linkml.model import (
 )
 
 
+class SkosVerb(Enum):
+    EXACT_MATCH = "skos:exactMatch"
+    CLOSE_MATCH = "skos:closeMatch"
+    NARROW_MATCH = "skos:narrowMatch"
+    BROAD_MATCH = "skos:broadMatch"
+    MAPPING_RELATION = "skos:mappingRelation"
+
+
 type PositiveInt = int
+type SkosMapping = dict[SkosVerb, list[CURIE]]
 
 
 class CIMStandard(Enum):
@@ -57,6 +67,7 @@ class Class:
     prefixes: PrefixesMap
     standard: CIMStandard | None = None
     description: str | None = None
+    skos_mappings: SkosMapping | None = None
 
 
 @dataclass

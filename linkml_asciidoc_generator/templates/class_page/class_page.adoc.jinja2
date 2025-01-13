@@ -10,7 +10,7 @@
 +++{{ class_.description | trim }}+++
 {% endif %}
 
-[cols="h,3",width=60%]
+[cols="h,4",width=65%]
 |===
 | Type
 | {% if class_.is_abstract %}Abstract class^xref:ROOT::usage_notes_abstract_class.adoc[?]^{% else %}Class{% endif %}
@@ -18,6 +18,24 @@
 {% if class_.uri %}
 | URI^xref:ROOT::uri_explanation.adoc[?]^
 | {{ link_curie(class_.uri) }}
+{% endif %}
+{% if class_.skos_mappings %}
+| Glossary mappings^xref:ROOT::what_are_glossary_mappings.adoc[?]^
+a|
+[cols="1,5"]
+!===
+! Mapping type ! Term
+{% for skos_verb, terms in class_.skos_mappings.items() %}
+! {{ skos_verb.value }}
+a! {% for term in terms %}
+{% if loop.length == 1 %}
+{{ term }}
+{% else %}
+* {{ term }}{% if loop.last %} +{% endif %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+!===
 {% endif %}
 |===
 
@@ -52,7 +70,7 @@
 === `{{- slot.name -}}`
 {% if slot.description %}+++{{- slot.description | trim -}}+++{% endif %}
 
-[cols="h,1",width=60%]
+[cols="h,4",width=65%]
 |===
 | URI
 | {% if slot.uri %}{{ link_curie(slot.uri) }}{% else %}n/a{% endif %}
@@ -64,16 +82,18 @@
 | Inherited from
 | {{ xref_class(slot.inherited_from) }}
 {% endif %}
+{% if class_.skos_mappings %}
 | Glossary mappings^xref:ROOT::what_are_glossary_mappings.adoc[?]^
 a|
+[cols="1,5"]
 !===
 ! Mapping type ! Term
-
-! `closeMatch`
-! `nbnl:EAN`
-! `exactMatch`
-! `schema:gtin13`
+{% for skos_verb, term in class_.skos_mappings.items() %}
+! {{ skos_verb.value }}
+! {{ term }}
+{% endfor %}
 !===
+{% endif %}
 
 |===
 {% endfor %}
