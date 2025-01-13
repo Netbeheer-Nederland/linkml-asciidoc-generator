@@ -7,4 +7,4 @@ from linkml_asciidoc_generator.asciidoc.class_page.model import Class
 @dataclass
 class NavigationPage(Page):
     classes: dict[ResourceName, Class]
-    types: list[str]
+    cim_data_types: dict[ResourceName, Class]

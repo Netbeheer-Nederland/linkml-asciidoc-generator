@@ -49,6 +49,7 @@ class Class:
     name: LinkMLElementName
     is_abstract: bool
     is_mixin: bool
+    is_cim_data_type: bool
     uri: CURIE
     ancestors: list[LinkMLClassName]
     relations: list[Relation]

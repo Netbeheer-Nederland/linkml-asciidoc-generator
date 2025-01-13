@@ -73,7 +73,7 @@ def _get_class_color(class_: Class, config: Config) -> HexColor:
     return color
 
 
-def render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
+def _render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
     template: Jinja2TemplateStr = read_jinja2_template(
         config["templates"]["class_page"]
     )
@@ -98,3 +98,29 @@ def render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
     )
 
     return content
+
+
+def _render_cim_data_type_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
+    template: Jinja2TemplateStr = read_jinja2_template(
+        config["templates"]["cim_data_type_page"]
+    )
+
+    content = template.render(
+        class_=class_page.class_,
+        ancestors=_render_ancestors(class_page.class_),
+        link_curie=partial(link_curie, prefixes=class_page.class_.prefixes),
+        xref_class=xref_class,
+        xref_enum=xref_enum,
+        xref_slot=xref_slot,
+        xref_type=xref_type,
+        cardinalities=_render_cardinalities,
+    )
+
+    return content
+
+
+def render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
+    if class_page.class_.is_cim_data_type:
+        return _render_cim_data_type_page(class_page, config)
+    else:
+        return _render_class_page(class_page, config)

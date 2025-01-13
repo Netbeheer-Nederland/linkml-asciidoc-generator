@@ -17,13 +17,76 @@ from linkml_asciidoc_generator.asciidoc.class_page.model import (
     PositiveInt,
 )
 from linkml_asciidoc_generator.asciidoc.class_page.standard_mapping import (
-    ClassesInStandard,
+    CLASSES_IN_STANDARD,
 )
 from linkml_asciidoc_generator.linkml.query import (
     get_ancestors,
     get_relations,
     get_attributes,
 )
+
+CIM_DATA_TYPES = [
+    "cim:ActivePower",
+    "cim:ActivePowerChangeRate",
+    "cim:ActivePowerPerCurrentFlow",
+    "cim:ActivePowerPerFrequency",
+    "cim:Admittance",
+    "cim:AngleDegrees",
+    "cim:AngleRadians",
+    "cim:ApparentPower",
+    "cim:Area",
+    "cim:Bearing",
+    "cim:Capacitance",
+    "cim:CapacitancePerLength",
+    "cim:Classification",
+    "cim:Conductance",
+    "cim:ConductancePerLength",
+    "cim:CostPerEnergyUnit",
+    "cim:CostPerHeatUnit",
+    "cim:CostPerVolume",
+    "cim:CostRate",
+    "cim:CurrentFlow",
+    "cim:Damping",
+    "cim:Displacement",
+    "cim:Emission",
+    "cim:Frequency",
+    "cim:HeatRate",
+    "cim:Hours",
+    "cim:Impedance",
+    "cim:Inductance",
+    "cim:InductancePerLength",
+    "cim:KiloActivePower",
+    "cim:Length",
+    "cim:MagneticField",
+    "cim:Mass",
+    "cim:Minutes",
+    "cim:Money",
+    "cim:ParticulateDensity",
+    "cim:PerCent",
+    "cim:Pressure",
+    "cim:PU",
+    "cim:Reactance",
+    "cim:ReactancePerLength",
+    "cim:ReactivePower",
+    "cim:RealEnergy",
+    "cim:Resistance",
+    "cim:ResistancePerLength",
+    "cim:RotationSpeed",
+    "cim:Seconds",
+    "cim:Speed",
+    "cim:Susceptance",
+    "cim:SusceptancePerLength",
+    "cim:Temperature",
+    "cim:Voltage",
+    "cim:VoltagePerReactivePower",
+    "cim:Volume",
+    "cim:VolumeFlowRate",
+    "cim:WaterLevel",
+]
+
+
+def is_cim_data_type(class_: LinkMLClass):
+    return class_.class_uri in CIM_DATA_TYPES
 
 
 def _get_min_cardinality(slot: LinkMLSlot) -> int:
@@ -68,6 +131,7 @@ def _generate_relation(
             name=target_class._meta["name"],
             is_abstract=bool(target_class.abstract),
             is_mixin=bool(target_class.mixin),
+            is_cim_data_type=is_cim_data_type(target_class),
             description=target_class.description,
             uri=target_class.class_uri,
             ancestors=[],
@@ -89,8 +153,8 @@ def _get_standard(class_: LinkMLClass) -> CIMStandard | None:
 
     standard = CIMStandard.IEC61970
 
-    for standard, classes in ClassesInStandard.items():
-        if class_._meta["name"] in classes:
+    for standard, classes in CLASSES_IN_STANDARD.items():
+        if class_.class_uri in classes:
             return standard
     return None
 
@@ -100,6 +164,7 @@ def generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) ->
         name=class_._meta["name"],
         is_abstract=bool(class_.abstract),
         is_mixin=bool(class_.mixin),
+        is_cim_data_type=is_cim_data_type(class_),
         description=class_.description,
         uri=class_.class_uri,
         ancestors=[c._meta["name"] for c in get_ancestors(class_, schema)],

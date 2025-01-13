@@ -4,7 +4,6 @@ from linkml_asciidoc_generator.asciidoc.linkml_documentation.model import (
     LinkMLDocumentation,
 )
 from linkml_asciidoc_generator.asciidoc.class_page.generate import generate_class_page
-from linkml_asciidoc_generator.asciidoc.type_page.generate import generate_type_page
 from linkml_asciidoc_generator.asciidoc.index_page.generate import generate_index_page
 from linkml_asciidoc_generator.asciidoc.navigation_page.generate import (
     generate_navigation_page,

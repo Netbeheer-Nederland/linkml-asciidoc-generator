@@ -4,6 +4,7 @@ from linkml_asciidoc_generator.linkml.model import (
 from linkml_asciidoc_generator.asciidoc import ResourceName
 from linkml_asciidoc_generator.asciidoc.class_page.model import Class
 from linkml_asciidoc_generator.asciidoc.class_page.generate import generate_class
+from linkml_asciidoc_generator.asciidoc.class_page.generate import is_cim_data_type
 from linkml_asciidoc_generator.config import Config
 from linkml_asciidoc_generator.asciidoc.navigation_page.model import NavigationPage
 
@@ -11,10 +12,21 @@ from linkml_asciidoc_generator.asciidoc.navigation_page.model import NavigationP
 def _get_classes(schema: LinkMLSchema, config: Config) -> dict[ResourceName, Class]:
     classes = {}
     for class_name, class_ in schema.classes.items():
-        if not (class_.annotations and class_.annotations.get("cim_datatype")):
+        if not is_cim_data_type(class_):
             classes[class_name] = generate_class(class_, schema, config)
 
     return classes
+
+
+def _get_cim_data_types(
+    schema: LinkMLSchema, config: Config
+) -> dict[ResourceName, Class]:
+    cim_data_types = {}
+    for class_name, class_ in schema.classes.items():
+        if is_cim_data_type(class_):
+            cim_data_types[class_name] = generate_class(class_, schema, config)
+
+    return cim_data_types
 
 
 def generate_navigation_page(schema: LinkMLSchema, config: Config) -> NavigationPage:
@@ -23,7 +35,7 @@ def generate_navigation_page(schema: LinkMLSchema, config: Config) -> Navigation
         title="Navigation",
         template=config["templates"]["navigation_page"],
         classes=_get_classes(schema, config),
-        types=[],
+        cim_data_types=_get_cim_data_types(schema, config),
     )
 
     return navigation_page
