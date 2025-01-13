@@ -169,13 +169,13 @@ def _get_skos_mappings(element: LinkMLElement) -> SkosMapping:
 
     if element.exact_mappings:
         mappings[SkosVerb.EXACT_MATCH] = element.exact_mappings
-    elif element.close_mappings:
+    if element.close_mappings:
         mappings[SkosVerb.CLOSE_MATCH] = element.close_mappings
-    elif element.narrow_mappings:
+    if element.narrow_mappings:
         mappings[SkosVerb.NARROW_MATCH] = element.narrow_mappings
-    elif element.broad_mappings:
+    if element.broad_mappings:
         mappings[SkosVerb.BROAD_MATCH] = element.broad_mappings
-    elif element.mappings:
+    if element.mappings:
         mappings[SkosVerb.MAPPING_RELATION] = element.mappings
 
     return mappings

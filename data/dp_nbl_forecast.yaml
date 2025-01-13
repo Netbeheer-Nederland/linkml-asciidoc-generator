@@ -20,6 +20,7 @@ prefixes:
   nbnl: https://begrippen.netbeheernederland.nl/energiesysteembeheer/nl/page/
   nl: http://iec.ch/TC57/CIM100-Netherlands#
   this: http://data.netbeheernederland.nl/dp-nbl-forecast/def#
+  skos: http://www.w3.org/2004/02/skos/core#
 default_curi_maps:
 - semweb_context
 default_prefix: cim
@@ -1279,8 +1280,13 @@ classes:
           by the EAN code. For details on EAN scheme please refer to the
           [Codebesluit toekenning EAN-codes
           elektriciteit](https://www.acm.nl/nl/publicaties/codebesluit-toekenning-ean-codes-elektriciteit).
+        close_mappings:
+          - nbnl:EAN
+        broad_mappings:
+          - owl:Thing
         exact_mappings:
           - nbnl:EAN
+          - nbnl:voedingsgebied
         slot_uri: nl:IdentifiedObject.europeanArticleNumberEAN
         multivalued: false
         range: string
