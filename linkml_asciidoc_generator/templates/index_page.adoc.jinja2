@@ -1,0 +1,10 @@
+= {{ page.title }}
+
+== Classes
+
+|===
+| Name
+{% for class_ in page.classes %}
+| {{ xref_class(class_.name) }}
+{% endfor %}
+|===
