@@ -22,20 +22,9 @@
 {% if class_.skos_mappings %}
 | Glossary mappings^xref:ROOT::what_are_glossary_mappings.adoc[?]^
 a|
-[cols="1,5"]
-!===
-! Mapping type ! Term
-{% for skos_verb, terms in class_.skos_mappings.items() %}
-! {{ skos_verb.value }}
-a! {% for term in terms %}
-{% if loop.length == 1 %}
-{{ term }}
-{% else %}
-* {{ term }}{% if loop.last %} +{% endif %}
-{% endif %}
-{% endfor %}
-{% endfor %}
-!===
+{% with skos_mappings=class_.skos_mappings %}
+{% include "skos_mappings.adoc.jinja2" %}
+{% endwith %}
 {% endif %}
 |===
 
@@ -82,19 +71,13 @@ a! {% for term in terms %}
 | Inherited from
 | {{ xref_class(slot.inherited_from) }}
 {% endif %}
-{% if class_.skos_mappings %}
+{% if slot.skos_mappings %}
 | Glossary mappings^xref:ROOT::what_are_glossary_mappings.adoc[?]^
 a|
-[cols="1,5"]
-!===
-! Mapping type ! Term
-{% for skos_verb, term in class_.skos_mappings.items() %}
-! {{ skos_verb.value }}
-! {{ term }}
-{% endfor %}
-!===
+{% with skos_mappings=slot.skos_mappings %}
+{% include "skos_mappings.adoc.jinja2" %}
+{% endwith %}
 {% endif %}
-
 |===
 {% endfor %}
 

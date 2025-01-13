@@ -5,7 +5,6 @@ from linkml_asciidoc_generator.asciidoc import (
     Jinja2TemplateFile,
     Element,
     CURIE,
-    URI,
     Page,
     PrefixesMap,
 )
@@ -42,6 +41,7 @@ class Relation(Element):
     uri: CURIE | None = None
     min_cardinality: int = 0
     max_cardinalty: PositiveInt | None = None
+    skos_mappings: SkosMapping | None = None
 
 
 @dataclass
@@ -52,6 +52,7 @@ class Attribute(Element):
     uri: CURIE | None = None
     min_cardinality: int = 0
     max_cardinalty: PositiveInt | None = None
+    skos_mappings: SkosMapping | None = None
 
 
 @dataclass

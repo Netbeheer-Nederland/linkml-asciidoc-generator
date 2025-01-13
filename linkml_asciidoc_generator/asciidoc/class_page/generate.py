@@ -1,6 +1,7 @@
 from typing import Any
 from linkml_asciidoc_generator.linkml.model import (
     LinkMLClass,
+    LinkMLElement,
     LinkMLSlot,
     LinkMLSlotOwner,
     LinkMLSchema,
@@ -120,6 +121,7 @@ def _generate_attribute(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot) -> Attrib
         uri=slot.slot_uri,
         min_cardinality=_get_min_cardinality(slot),
         max_cardinalty=_get_max_cardinality(slot),
+        skos_mappings=_get_skos_mappings(slot),
     )
 
 
@@ -147,6 +149,7 @@ def _generate_relation(
         uri=slot.slot_uri,
         min_cardinality=_get_min_cardinality(slot),
         max_cardinalty=_get_max_cardinality(slot),
+        skos_mappings=_get_skos_mappings(slot),
     )
 
 
@@ -161,19 +164,19 @@ def _get_standard(class_: LinkMLClass) -> CIMStandard | None:
     return None
 
 
-def _get_skos_mappings(class_: LinkMLClass) -> SkosMapping:
+def _get_skos_mappings(element: LinkMLElement) -> SkosMapping:
     mappings = {}
 
-    if class_.exact_mappings:
-        mappings[SkosVerb.EXACT_MATCH] = class_.exact_mappings
-    elif class_.close_mappings:
-        mappings[SkosVerb.CLOSE_MATCH] = class_.close_mappings
-    elif class_.narrow_mappings:
-        mappings[SkosVerb.NARROW_MATCH] = class_.narrow_mappings
-    elif class_.broad_mappings:
-        mappings[SkosVerb.BROAD_MATCH] = class_.broad_mappings
-    elif class_.mappings:
-        mappings[SkosVerb.MAPPING_RELATION] = class_.mappings
+    if element.exact_mappings:
+        mappings[SkosVerb.EXACT_MATCH] = element.exact_mappings
+    elif element.close_mappings:
+        mappings[SkosVerb.CLOSE_MATCH] = element.close_mappings
+    elif element.narrow_mappings:
+        mappings[SkosVerb.NARROW_MATCH] = element.narrow_mappings
+    elif element.broad_mappings:
+        mappings[SkosVerb.BROAD_MATCH] = element.broad_mappings
+    elif element.mappings:
+        mappings[SkosVerb.MAPPING_RELATION] = element.mappings
 
     return mappings
 
