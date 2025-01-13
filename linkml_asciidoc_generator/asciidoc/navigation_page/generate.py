@@ -11,7 +11,7 @@ from linkml_asciidoc_generator.asciidoc.navigation_page.model import NavigationP
 def _get_classes(schema: LinkMLSchema, config: Config) -> dict[ResourceName, Class]:
     classes = {}
     for class_name, class_ in schema.classes.items():
-        if not (class_.annotations and class_.annotations["cim_datatype"]):
+        if not (class_.annotations and class_.annotations.get("cim_datatype")):
             classes[class_name] = generate_class(class_, schema, config)
 
     return classes

@@ -61,9 +61,21 @@ def _generate_attribute(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot) -> Attrib
 def _generate_relation(
     slot_owner: LinkMLSlotOwner, slot: LinkMLSlot, schema: LinkMLSchema, config: Config
 ) -> Relation:
+    target_class = schema.classes[slot.range]
     return Relation(
         name=slot._meta["name"],
-        destination_class=generate_class(schema.classes[slot.range], schema, config),
+        destination_class=Class(
+            name=target_class._meta["name"],
+            is_abstract=bool(target_class.abstract),
+            is_mixin=bool(target_class.mixin),
+            description=target_class.description,
+            uri=target_class.class_uri,
+            ancestors=[],
+            attributes=[],
+            relations=[],  # No need for these, and can cause recursion errors such as with `Terminal.topologicalNodes <-> TopologicalNode.terminal``
+            prefixes=schema.prefixes,
+            standard=_get_standard(target_class),
+        ),
         inherited_from=slot_owner,
         description=slot.description,
         uri=slot.slot_uri,
