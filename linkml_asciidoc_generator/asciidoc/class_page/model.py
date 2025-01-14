@@ -38,7 +38,7 @@ class Relation(Slot):
 
 @dataclass
 class Attribute(Slot):
-    data_type: LinkMLPrimitive
+    data_type: LinkMLPrimitive | LinkMLClassName
     inherited_from: LinkMLClassName | None = None
     description: str | None = None
     uri: CURIE | None = None
