@@ -5,7 +5,10 @@ from enum import Enum, auto
 
 import jinja2
 
-from linkml_asciidoc_generator.linkml.model import LinkMLElementName
+from linkml_asciidoc_generator.linkml.model import LinkMLElementName, LinkMLPrimitive
+
+
+LINKML_META_BASE_URI = "https://w3id.org/linkml/"
 
 
 type ResourceName = str
@@ -109,3 +112,10 @@ def xref_slot(
 
 def xref_type(type_name: ResourceName) -> AsciiDocStr:
     return _xref_resource(type_name, PageKind.TYPE_PAGE)
+
+
+def xref_primitive_type(type_name: LinkMLPrimitive) -> AsciiDocStr:
+    uri_name = type_name.value[0].upper() + type_name.value[1:]
+    uri = LINKML_META_BASE_URI + uri_name
+
+    return f"{uri}[`{type_name.value}`]"

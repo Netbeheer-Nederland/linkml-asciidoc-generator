@@ -1,6 +1,6 @@
-from typing import Any
 from linkml_asciidoc_generator.linkml.model import (
     LinkMLClass,
+    LinkMLClassName,
     LinkMLElement,
     LinkMLSlot,
     LinkMLSlotOwner,
@@ -104,12 +104,14 @@ def _get_max_cardinality(slot: LinkMLSlot) -> PositiveInt | None:
             return None
 
 
-def _generate_data_type(slot_range: Any) -> LinkMLPrimitive:
-    ...
+def _generate_data_type(slot_range: LinkMLClassName) -> LinkMLPrimitive | None:
+    # TODO: Implement other types than primitive ones.
 
-    data_type = slot_range
+    for enum_val in dict(LinkMLPrimitive.__members__).values():
+        if enum_val.value == slot_range:
+            return enum_val
 
-    return data_type
+    return None
 
 
 def _generate_attribute(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot) -> Attribute:

@@ -9,6 +9,7 @@ from linkml_asciidoc_generator.asciidoc import (
     xref_enum,
     xref_slot,
     xref_type,
+    xref_primitive_type,
     link_curie,
     HexColor,
 )
@@ -125,6 +126,7 @@ def _render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
         xref_class=xref_class,
         xref_enum=xref_enum,
         xref_slot=xref_slot,
+        xref_primitive_type=xref_primitive_type,
         xref_type=xref_type,
         cardinalities=_render_cardinalities,
         relations_diagram=relations_diagram,
@@ -160,6 +162,7 @@ def _render_cim_data_type_page(class_page: ClassPage, config: Config) -> AsciiDo
         xref_enum=xref_enum,
         xref_slot=xref_slot,
         xref_type=xref_type,
+        xref_primitive_type=xref_primitive_type,
         cardinalities=_render_cardinalities,
     )
 

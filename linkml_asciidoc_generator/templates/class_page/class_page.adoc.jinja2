@@ -48,7 +48,7 @@ a|
 {% for slot in slots_for_table %}
 | <<{{ slot.name }},`{{ slot.name }}`>>
 | {{ cardinalities(slot) }}
-| {% if slot.destination_class %}{{ xref_class(slot.destination_class.name) }}{% elif slot.data_type %}`{{ slot.data_type }}`{% else %}`Any`{% endif %}
+| {% if slot.destination_class %}{{ xref_class(slot.destination_class.name) }}{% elif slot.data_type %}{{ xref_primitive_type(slot.data_type) }}{% else %}n/a{% endif %}
 //| +++{{- slot.description | trim | replace("|", '\\|') | truncate(100, False) -}}+++
 | {% if slot.description %}+++{{- slot.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor -%}
@@ -69,7 +69,7 @@ a|
 | Cardinalityxref:ROOT::cardinalities_explained.adoc[^?^,title="Explains stuff"]
 | {{ cardinalities(slot) }}
 | Type
-| {% if slot.destination_class %}{{ xref_class(slot.destination_class.name) }}{% elif slot.data_type %}`{{ slot.data_type }}`{% else %}`Any`{% endif %}
+| {% if slot.destination_class %}{{ xref_class(slot.destination_class.name) }}{% elif slot.data_type %}{{ xref_primitive_type(slot.data_type) }}{% else %}n/a{% endif %}
 {% if slot.inherited_from %}
 | Inherited from
 | {{ xref_class(slot.inherited_from) }}
