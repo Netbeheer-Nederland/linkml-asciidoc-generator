@@ -59,7 +59,7 @@ class PageKind(Enum):
     TYPE_PAGE = auto()
 
 
-PREFIXES_NOT_TO_LINK = {"cim"}
+PREFIXES_NOT_TO_LINK = {"cim", "this"}
 
 
 CIM_DATA_TYPES = [
