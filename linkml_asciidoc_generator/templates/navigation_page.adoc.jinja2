@@ -19,3 +19,7 @@
 *** xref::class/{{ cim_data_type_class.name }}.adoc[`{{ cim_data_type_class.name }}`]
 {% endfor -%}
 {% endif %}
+** Enumerations
+{% for enum in page.enumerations.values() | sort(attribute="name") -%}
+*** xref::enumeration/{{ enum.name }}.adoc[`{{ enum.name }}`]
+{% endfor -%}

@@ -24,7 +24,7 @@ def _generate_enumeration_value(
     return enumeration_value
 
 
-def _generate_enumeration(enum: LinkMLEnumeration, schema: LinkMLSchema) -> Enumeration:
+def generate_enumeration(enum: LinkMLEnumeration, schema: LinkMLSchema) -> Enumeration:
     enumeration = Enumeration(
         name=enum._meta["name"],
         description=enum.description,
@@ -44,7 +44,7 @@ def _generate_enumeration(enum: LinkMLEnumeration, schema: LinkMLSchema) -> Enum
 def generate_enumeration_page(
     enum: LinkMLEnumeration, schema: LinkMLSchema, config: Config
 ) -> EnumerationPage:
-    enumeration = _generate_enumeration(enum, schema)
+    enumeration = generate_enumeration(enum, schema)
 
     enumeration_page = EnumerationPage(
         name=enumeration.name,

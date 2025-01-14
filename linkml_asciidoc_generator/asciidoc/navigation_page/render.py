@@ -2,6 +2,7 @@ from linkml_asciidoc_generator.asciidoc import (
     AsciiDocStr,
     read_jinja2_template,
     xref_class,
+    xref_enum,
     Jinja2TemplateStr,
 )
 from linkml_asciidoc_generator.asciidoc import ResourceName
@@ -29,6 +30,7 @@ def render_navigation_page(
         page=navigation_page,
         root_class=_get_root_class(navigation_page.classes),
         xref_class=xref_class,
+        xref_enum=xref_enum,
     )
 
     return content
