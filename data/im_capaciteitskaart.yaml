@@ -107,6 +107,7 @@ prefixes:
   nbnl: https://begrippen.netbeheernederland.nl/energiesysteembeheer/nl/page/
   dcterms: http://purl.org/dc/terms/
   unit: http://qudt.org/vocab/unit/
+  skos: http://www.w3.org/2004/02/skos/core#
 default_curi_maps:
 - semweb_context
 default_prefix: ck

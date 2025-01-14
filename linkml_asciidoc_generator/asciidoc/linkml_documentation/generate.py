@@ -35,7 +35,7 @@ def generate_linkml_documentation(
     if schema.enums is None:
         linkml_enums = {}
     else:
-        linkml_enums = schema.classes
+        linkml_enums = schema.enums
 
     enumeration_pages = {
         e._meta["name"]: generate_enumeration_page(e, schema, config)

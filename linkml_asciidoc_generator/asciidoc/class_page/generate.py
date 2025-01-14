@@ -28,6 +28,12 @@ from linkml_asciidoc_generator.asciidoc import (
 
 
 def _get_min_cardinality(slot: LinkMLSlot) -> int:
+    match slot.required:
+        case False | None:
+            return 0
+        case True:
+            return 1
+
     return int(slot.required)
 
 
@@ -35,7 +41,7 @@ def _get_max_cardinality(slot: LinkMLSlot) -> PositiveInt | None:
     match slot.multivalued:
         case False:
             return 1
-        case True:
+        case True | None:
             return None
 
 

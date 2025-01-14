@@ -29,11 +29,11 @@ def _get_enumerations(
     if schema.enums is None:
         linkml_enums = {}
     else:
-        linkml_enums = schema.classes
+        linkml_enums = schema.enums
 
     return {
         enum_name: generate_enumeration(enum, schema)
-        for enum_name, enum in linkml_enums
+        for enum_name, enum in linkml_enums.items()
     }
 
 
