@@ -9,11 +9,11 @@ from linkml_asciidoc_generator.asciidoc.index_page.model import (
 
 
 def _generate_class(class_: LinkMLClass) -> Class:
-    return Class(name=class_._meta["name"])
+    return Class(name=class_._meta["name"], description=class_.description)
 
 
 def _generate_enum(enum: LinkMLEnumeration) -> Enumeration:
-    return Enumeration(name=enum._meta["name"])
+    return Enumeration(name=enum._meta["name"], description=enum.description)
 
 
 def generate_index_page(schema: LinkMLSchema, config: Config) -> IndexPage:

@@ -2,18 +2,23 @@
 
 == Classes
 
+[cols="1,2"]
 |===
-| Name
+| Name | Description
+
 {% for class_ in page.classes %}
 | {{ xref_class(class_.name) }}
+| {% if class_.description %}+++{{- class_.description | trim | replace("|", '\\|') | truncate(250) -}}+++{% else %}n/a{% endif %}
 {% endfor %}
 |===
 
 == Enumerations
 
+[cols="1,2"]
 |===
-| Name
+| Name | Description
 {% for enum in page.enumerations %}
 | {{ xref_enum(enum.name) }}
+| {% if enum.description %}+++{{- enum.description | trim | replace("|", '\\|') | truncate(250) -}}+++{% else %}n/a{% endif %}
 {% endfor %}
 |===

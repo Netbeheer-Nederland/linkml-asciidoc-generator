@@ -5,11 +5,13 @@ from linkml_asciidoc_generator.asciidoc import Page
 @dataclass
 class Class:
     name: str
+    description: str | None = None
 
 
 @dataclass
 class Enumeration:
     name: str
+    description: str | None = None
 
 
 @dataclass
