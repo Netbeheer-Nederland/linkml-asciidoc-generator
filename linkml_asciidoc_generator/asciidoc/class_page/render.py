@@ -133,6 +133,18 @@ def _render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
     return content
 
 
+def _get_sorted_slots_for_table_cim_data_type(slots: list[Slot]) -> list[Slot]:
+    def _sort_slots_table(s):
+        return {"value": 0, "multiplier": 1, "unit": 2}[s.name]
+
+    slots_for_table = sorted(
+        slots,
+        key=_sort_slots_table,
+    )
+
+    return slots_for_table
+
+
 def _render_cim_data_type_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
     template: Jinja2TemplateStr = read_jinja2_template(
         config["templates"]["cim_data_type_page"]
@@ -140,7 +152,9 @@ def _render_cim_data_type_page(class_page: ClassPage, config: Config) -> AsciiDo
 
     content = template.render(
         class_=class_page.class_,
-        ancestors=_render_ancestors(class_page.class_),
+        slots_for_table=_get_sorted_slots_for_table_cim_data_type(
+            class_page.class_.attributes + class_page.class_.relations
+        ),
         link_curie=partial(link_curie, prefixes=class_page.class_.prefixes),
         xref_class=xref_class,
         xref_enum=xref_enum,
