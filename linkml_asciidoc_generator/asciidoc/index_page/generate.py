@@ -23,19 +23,33 @@ def _generate_enum(enum: LinkMLEnumeration) -> Enumeration:
 
 
 def generate_index_page(schema: LinkMLSchema, config: Config) -> IndexPage:
+    # TODO: Hacky, but works.
+    if schema.classes is None:
+        linkml_classes = []
+    else:
+        linkml_classes = list(schema.classes.values())
+
+    if schema.enums is None:
+        linkml_enums = []
+    else:
+        linkml_enums = list(schema.classes.values())
+
+    classes = [
+        _generate_class(c)
+        for c in filter(lambda c: not is_cim_data_type(c), linkml_classes)
+    ]
+    cim_data_types = [
+        _generate_cim_data_type(c) for c in filter(is_cim_data_type, linkml_classes)
+    ]
+    enumerations = [_generate_enum(e) for e in linkml_enums]
+
     index_page = IndexPage(
         name="index",
         title="Index",
         template=config["templates"]["index_page"],
-        classes=[
-            _generate_class(c)
-            for c in filter(lambda c: not is_cim_data_type(c), schema.classes.values())
-        ],
-        cim_data_types=[
-            _generate_cim_data_type(c)
-            for c in filter(is_cim_data_type, schema.classes.values())
-        ],
-        enumerations=[_generate_enum(e) for e in schema.enums.values()],
+        classes=classes,
+        cim_data_types=cim_data_types,
+        enumerations=enumerations,
     )
 
     return index_page

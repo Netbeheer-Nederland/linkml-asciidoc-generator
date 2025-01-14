@@ -46,6 +46,7 @@ if __name__ == "__main__":
         "output_dir": "output/",
         "char_encoding": "utf8",
     }
-    schema = Path("data/dp_nbl_forecast.yaml")
+    # schema = Path("data/dp_nbl_forecast.yaml")
     # schema = Path("data/dp_meetdata.new.yaml")
+    schema = Path("data/dp_eh_nettopologie.yaml")
     create_linkml_documentation(schema, config=config)

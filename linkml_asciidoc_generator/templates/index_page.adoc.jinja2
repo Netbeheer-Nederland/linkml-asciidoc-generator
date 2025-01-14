@@ -13,7 +13,7 @@
 |===
 
 == Types
-
+{% if page.cim_data_types %}
 === CIM data types
 
 [cols="1,2"]
@@ -26,8 +26,13 @@
 {% endfor %}
 |===
 
+{% else %}
+No types are defined in the schema.
+{% endif %}
+
 == Enumerations
 
+{% if page.enumerations %}
 [cols="1,2"]
 |===
 | Name | Description
@@ -36,3 +41,6 @@
 | {% if enum.description %}+++{{- enum.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor %}
 |===
+{% else %}
+No enumerations are defined in the schema.
+{% endif %}

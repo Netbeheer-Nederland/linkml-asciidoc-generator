@@ -19,6 +19,7 @@ def generate_linkml_documentation(
     index_page = generate_index_page(schema, config)
     navigation_page = generate_navigation_page(schema, config)
 
+    # Classes.
     class_pages = {
         c._meta["name"]: generate_class_page(c, schema, config)
         for c in schema.classes.values()
@@ -26,10 +27,19 @@ def generate_linkml_documentation(
         # in ["MarketEvaluationPoint", "UsagePoint", "Substation", "ActivePower"]
     }
 
+    # Slots.
     slot_pages = {}
+
+    # Enumerations.
+    # TODO: Hacky, but works.
+    if schema.enums is None:
+        linkml_enums = {}
+    else:
+        linkml_enums = schema.classes
+
     enumeration_pages = {
         e._meta["name"]: generate_enumeration_page(e, schema, config)
-        for e in schema.enums.values()
+        for e in linkml_enums.values()
     }
     type_pages = {}  # TODO.
 

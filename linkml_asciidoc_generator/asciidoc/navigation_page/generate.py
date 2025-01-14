@@ -25,9 +25,15 @@ def _get_classes(schema: LinkMLSchema, config: Config) -> dict[ResourceName, Cla
 def _get_enumerations(
     schema: LinkMLSchema, config: Config
 ) -> dict[ResourceName, Enumeration]:
+    # TODO: Hacky, but works.
+    if schema.enums is None:
+        linkml_enums = {}
+    else:
+        linkml_enums = schema.classes
+
     return {
         enum_name: generate_enumeration(enum, schema)
-        for enum_name, enum in schema.enums.items()
+        for enum_name, enum in linkml_enums
     }
 
 

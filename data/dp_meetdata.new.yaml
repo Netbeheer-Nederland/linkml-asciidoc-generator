@@ -42,6 +42,7 @@ prefixes:
   nl: http://iec.ch/TC57/CIM100-Netherlands#
   owl: http://www.w3.org/2002/07/owl#
   this: http://data.netbeheernederland.nl/dp-meetdata/def#
+  skos: http://www.w3.org/2004/02/skos/core#
 default_curi_maps:
 - semweb_context
 default_prefix: cim
