@@ -25,6 +25,7 @@ def generate_linkml_documentation(
         for c in schema.classes.values()
         if c._meta["name"]
         # in ["MarketEvaluationPoint", "UsagePoint", "Substation", "ActivePower"]
+        in ["EnergyArea"]
     }
 
     # Slots.

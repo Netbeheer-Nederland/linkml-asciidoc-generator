@@ -45,14 +45,14 @@ def _get_max_cardinality(slot: LinkMLSlot) -> PositiveInt | None:
             return None
 
 
-def _generate_data_type(slot_range: LinkMLClassName) -> LinkMLPrimitive | None:
-    # TODO: Implement other types than primitive ones.
-
+def _generate_data_type(
+    slot_range: LinkMLClassName,
+) -> LinkMLPrimitive | LinkMLClassName | None:
     for enum_val in dict(LinkMLPrimitive.__members__).values():
         if enum_val.value == slot_range:
             return enum_val
 
-    return None
+    return slot_range
 
 
 def _generate_attribute(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot) -> Attribute:
