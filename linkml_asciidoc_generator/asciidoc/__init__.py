@@ -204,14 +204,16 @@ def xref_slot(
 
 
 def xref_type(type_name: ResourceName) -> AsciiDocStr:
-    return _xref_resource(type_name, PageKind.TYPE_PAGE)
+    # def xref_type(type_name: LinkMLPrimitive) -> AsciiDocStr:
 
+    if type_name in LinkMLPrimitive:
+        uri_name = type_name.value[0].upper() + type_name.value[1:]
+        uri = LINKML_META_BASE_URI + uri_name
 
-def xref_primitive_type(type_name: LinkMLPrimitive) -> AsciiDocStr:
-    uri_name = type_name.value[0].upper() + type_name.value[1:]
-    uri = LINKML_META_BASE_URI + uri_name
-
-    return f"{uri}[`{type_name.value}`]"
+        return f"{uri}[`{type_name.value}`]"
+    else:
+        # return _xref_resource(type_name, PageKind.TYPE_PAGE)  # TODO
+        return f"`{type_name}`"
 
 
 def get_standard_for_class(class_: LinkMLClass) -> CIMStandard | None:
