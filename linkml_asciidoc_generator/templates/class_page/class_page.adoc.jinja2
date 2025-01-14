@@ -14,10 +14,13 @@
 |===
 | Type
 | {% if class_.is_abstract %}Abstract class^xref:ROOT::usage_notes_abstract_class.adoc[?]^{% else %}Class{% endif %}
-
 {% if class_.uri %}
 | URI^xref:ROOT::uri_explanation.adoc[?]^
 | {{ link_curie(class_.uri) }}
+{% endif %}
+{% if class_.standard %}
+| From CIM standard
+| {{ class_.standard.value }}
 {% endif %}
 {% if class_.skos_mappings %}
 | Glossary mappings^xref:ROOT::what_are_glossary_mappings.adoc[?]^

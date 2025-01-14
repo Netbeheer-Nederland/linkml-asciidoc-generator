@@ -28,9 +28,9 @@ type SkosMapping = dict[SkosVerb, list[CURIE]]
 
 
 class CIMStandard(Enum):
-    IEC61970 = "IEC61970"
-    IEC61968 = "IEC61968"
-    IEC62325 = "IEC62325"
+    IEC61970 = "IEC61970 (Grid)"
+    IEC61968 = "IEC61968 (Enterprise)"
+    IEC62325 = "IEC62325 (Market)"
 
 
 @dataclass
