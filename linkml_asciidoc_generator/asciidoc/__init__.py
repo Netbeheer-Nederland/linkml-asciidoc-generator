@@ -59,7 +59,11 @@ class PageKind(Enum):
     TYPE_PAGE = auto()
 
 
-PREFIXES_NOT_TO_LINK = {"cim", "this"}
+PREFIXES_NOT_TO_LINK = {
+    "cim",
+    "this",
+    "ck",
+}  # TODO: This is horrible, especially since it affects _all_ schemas.
 
 
 CIM_DATA_TYPES = [
