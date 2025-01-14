@@ -32,7 +32,7 @@ def generate_index_page(schema: LinkMLSchema, config: Config) -> IndexPage:
     if schema.enums is None:
         linkml_enums = []
     else:
-        linkml_enums = list(schema.classes.values())
+        linkml_enums = list(schema.enums.values())
 
     classes = [
         _generate_class(c)
