@@ -29,6 +29,16 @@ a|
 {% include "skos_mappings.adoc.jinja2" %}
 {% endwith %}
 {% endif %}
+{% if enumeration.see_also %}
+| See also
+a| {% for link in enumeration.see_also %}
+{% if loop.length == 1 %}
+{{ link }}
+{% else %}
+* {{ link }}{% if loop.last %} +{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
 |===
 
 == Values

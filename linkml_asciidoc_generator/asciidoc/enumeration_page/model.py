@@ -3,6 +3,7 @@ from linkml_asciidoc_generator.asciidoc import (
     Page,
     PrefixesMap,
     CURIE,
+    URI,
     CIMStandard,
     SkosMapping,
 )
@@ -24,6 +25,7 @@ class Enumeration:
     standard: CIMStandard | None = None
     description: str | None = None
     skos_mappings: SkosMapping | None = None
+    see_also: list[URI] | None = None
 
 
 @dataclass

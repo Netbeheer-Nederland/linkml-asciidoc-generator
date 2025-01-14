@@ -59,6 +59,7 @@ def _generate_attribute(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot) -> Attrib
         min_cardinality=_get_min_cardinality(slot),
         max_cardinality=_get_max_cardinality(slot),
         skos_mappings=get_skos_mappings(slot),
+        see_also=slot.see_also,
     )
 
 
@@ -87,6 +88,7 @@ def _generate_relation(
         min_cardinality=_get_min_cardinality(slot),
         max_cardinality=_get_max_cardinality(slot),
         skos_mappings=get_skos_mappings(slot),
+        see_also=slot.see_also,
     )
 
 
@@ -113,6 +115,7 @@ def generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) ->
         prefixes=schema.prefixes,
         standard=get_standard_for_class(class_),
         skos_mappings=get_skos_mappings(class_),
+        see_also=class_.see_also,
     )
 
     return _class_

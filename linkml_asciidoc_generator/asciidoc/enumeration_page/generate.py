@@ -36,6 +36,7 @@ def generate_enumeration(enum: LinkMLEnumeration, schema: LinkMLSchema) -> Enume
         prefixes=schema.prefixes,
         standard=get_standard_for_enumeration(enum),
         skos_mappings=get_skos_mappings(enum),
+        see_also=enum.see_also,
     )
 
     return enumeration

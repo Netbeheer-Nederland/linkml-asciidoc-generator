@@ -776,6 +776,8 @@ classes:
         required: false
     class_uri: cim:NameTypeAuthority
   IdentifiedObject:
+    see_also:
+    - http://www.google.com
     description: This is a root class to provide common identification for all classes
       needing identification and naming attributes.
     from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61970.Base.Core
