@@ -19,6 +19,7 @@ from linkml_asciidoc_generator.asciidoc.class_page.model import (
     RelationsDiagram,
     Attribute,
     Relation,
+    Slot,
 )
 
 
@@ -41,10 +42,10 @@ def _render_ancestors(class_: Class) -> AsciiDocStr:
 def _render_cardinalities(slot: Attribute | Relation):
     min_cardinality = str(slot.min_cardinality)
 
-    if slot.max_cardinalty is None:
+    if slot.max_cardinality is None:
         max_cardinality = "*"
     else:
-        max_cardinality = str(slot.max_cardinalty)
+        max_cardinality = str(slot.max_cardinality)
 
     if min_cardinality == max_cardinality:
         return f"{min_cardinality}"
@@ -73,6 +74,35 @@ def _get_class_color(class_: Class, config: Config) -> HexColor:
     return color
 
 
+def _get_sorted_slots_for_table(slots: list[Slot]) -> list[Slot]:
+    def _sort_slots_table(s):
+        key = ""
+        if s.min_cardinality == 0:
+            key += "1"
+        else:
+            key += "0"
+
+        if s.inherited_from:
+            key += "1"
+        else:
+            key += "0"
+
+        if s.max_cardinality == 1:
+            key += "0"
+        else:
+            key += "1"
+
+        key += s.name
+        return key
+
+    slots_for_table = sorted(
+        slots,
+        key=_sort_slots_table,
+    )
+
+    return slots_for_table
+
+
 def _render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
     template: Jinja2TemplateStr = read_jinja2_template(
         config["templates"]["class_page"]
@@ -87,6 +117,9 @@ def _render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
 
     content = template.render(
         class_=class_page.class_,
+        slots_for_table=_get_sorted_slots_for_table(
+            class_page.class_.attributes + class_page.class_.relations
+        ),
         ancestors=_render_ancestors(class_page.class_),
         link_curie=partial(link_curie, prefixes=class_page.class_.prefixes),
         xref_class=xref_class,

@@ -34,24 +34,29 @@ class CIMStandard(Enum):
 
 
 @dataclass
-class Relation(Element):
+class Slot(Element):
+    pass
+
+
+@dataclass
+class Relation(Slot):
     destination_class: "Class"
     inherited_from: LinkMLClassName | None = None
     description: str | None = None
     uri: CURIE | None = None
     min_cardinality: int = 0
-    max_cardinalty: PositiveInt | None = None
+    max_cardinality: PositiveInt | None = None
     skos_mappings: SkosMapping | None = None
 
 
 @dataclass
-class Attribute(Element):
+class Attribute(Slot):
     data_type: LinkMLPrimitive
     inherited_from: LinkMLClassName | None = None
     description: str | None = None
     uri: CURIE | None = None
     min_cardinality: int = 0
-    max_cardinalty: PositiveInt | None = None
+    max_cardinality: PositiveInt | None = None
     skos_mappings: SkosMapping | None = None
 
 

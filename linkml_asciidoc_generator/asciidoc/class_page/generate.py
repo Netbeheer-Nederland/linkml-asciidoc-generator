@@ -120,7 +120,7 @@ def _generate_attribute(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot) -> Attrib
         description=slot.description,
         uri=slot.slot_uri,
         min_cardinality=_get_min_cardinality(slot),
-        max_cardinalty=_get_max_cardinality(slot),
+        max_cardinality=_get_max_cardinality(slot),
         skos_mappings=_get_skos_mappings(slot),
     )
 
@@ -148,7 +148,7 @@ def _generate_relation(
         description=slot.description,
         uri=slot.slot_uri,
         min_cardinality=_get_min_cardinality(slot),
-        max_cardinalty=_get_max_cardinality(slot),
+        max_cardinality=_get_max_cardinality(slot),
         skos_mappings=_get_skos_mappings(slot),
     )
 
@@ -192,10 +192,13 @@ def generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) ->
         uri=class_.class_uri,
         ancestors=[c._meta["name"] for c in get_ancestors(class_, schema)],
         attributes=[
-            _generate_attribute(a[0], a[1]) for a in get_attributes(class_, schema)
+            _generate_attribute(a[0] if a[0] != class_._meta["name"] else None, a[1])
+            for a in get_attributes(class_, schema)
         ],
         relations=[
-            _generate_relation(r[0], r[1], schema, config)
+            _generate_relation(
+                r[0] if r[0] != class_._meta["name"] else None, r[1], schema, config
+            )
             for r in get_relations(class_, schema)
         ],
         prefixes=schema.prefixes,
