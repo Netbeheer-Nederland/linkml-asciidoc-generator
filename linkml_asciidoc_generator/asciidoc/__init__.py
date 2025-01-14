@@ -59,6 +59,9 @@ class PageKind(Enum):
     TYPE_PAGE = auto()
 
 
+PREFIXES_NOT_TO_LINK = {"cim"}
+
+
 CIM_DATA_TYPES = [
     "cim:ActivePower",
     "cim:ActivePowerChangeRate",
@@ -176,7 +179,10 @@ def link_curie(curie: CURIE, prefixes: PrefixesMap) -> AsciiDocStr:
     prefix, ncname = curie.split(":")
     base_uri = prefixes[prefix]
 
-    return f"{base_uri}{ncname}[`{curie}`]"
+    if prefix in PREFIXES_NOT_TO_LINK:
+        return f"`{curie}`"
+    else:
+        return f"{base_uri}{ncname}[`{curie}`]"
 
 
 def xref_class(class_name: ResourceName) -> AsciiDocStr:
