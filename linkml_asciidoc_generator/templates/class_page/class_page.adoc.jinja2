@@ -49,7 +49,7 @@ a|
 | <<{{ slot.name }},`{{ slot.name }}`>>
 | {{ cardinalities(slot) }}
 | {% if slot.destination_class %}{{ xref_class(slot.destination_class.name) }}{% elif slot.data_type %}{{ xref_primitive_type(slot.data_type) }}{% else %}n/a{% endif %}
-| {% if slot.description %}+++{{- slot.description | trim | replace("|", '\\|') | truncate(250) -}}+++{% else %}n/a{% endif %}
+| {% if slot.description %}+++{{- slot.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor -%}
 |===
 

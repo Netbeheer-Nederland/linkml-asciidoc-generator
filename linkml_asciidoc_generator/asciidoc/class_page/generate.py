@@ -20,70 +20,11 @@ from linkml_asciidoc_generator.linkml.query import (
     get_relations,
     get_attributes,
 )
-from linkml_asciidoc_generator.asciidoc import get_skos_mappings, get_standard_for_class
-
-CIM_DATA_TYPES = [
-    "cim:ActivePower",
-    "cim:ActivePowerChangeRate",
-    "cim:ActivePowerPerCurrentFlow",
-    "cim:ActivePowerPerFrequency",
-    "cim:Admittance",
-    "cim:AngleDegrees",
-    "cim:AngleRadians",
-    "cim:ApparentPower",
-    "cim:Area",
-    "cim:Bearing",
-    "cim:Capacitance",
-    "cim:CapacitancePerLength",
-    "cim:Classification",
-    "cim:Conductance",
-    "cim:ConductancePerLength",
-    "cim:CostPerEnergyUnit",
-    "cim:CostPerHeatUnit",
-    "cim:CostPerVolume",
-    "cim:CostRate",
-    "cim:CurrentFlow",
-    "cim:Damping",
-    "cim:Displacement",
-    "cim:Emission",
-    "cim:Frequency",
-    "cim:HeatRate",
-    "cim:Hours",
-    "cim:Impedance",
-    "cim:Inductance",
-    "cim:InductancePerLength",
-    "cim:KiloActivePower",
-    "cim:Length",
-    "cim:MagneticField",
-    "cim:Mass",
-    "cim:Minutes",
-    "cim:Money",
-    "cim:ParticulateDensity",
-    "cim:PerCent",
-    "cim:Pressure",
-    "cim:PU",
-    "cim:Reactance",
-    "cim:ReactancePerLength",
-    "cim:ReactivePower",
-    "cim:RealEnergy",
-    "cim:Resistance",
-    "cim:ResistancePerLength",
-    "cim:RotationSpeed",
-    "cim:Seconds",
-    "cim:Speed",
-    "cim:Susceptance",
-    "cim:SusceptancePerLength",
-    "cim:Temperature",
-    "cim:Voltage",
-    "cim:VoltagePerReactivePower",
-    "cim:Volume",
-    "cim:VolumeFlowRate",
-    "cim:WaterLevel",
-]
-
-
-def is_cim_data_type(class_: LinkMLClass):
-    return class_.class_uri in CIM_DATA_TYPES
+from linkml_asciidoc_generator.asciidoc import (
+    get_skos_mappings,
+    get_standard_for_class,
+    is_cim_data_type,
+)
 
 
 def _get_min_cardinality(slot: LinkMLSlot) -> int:

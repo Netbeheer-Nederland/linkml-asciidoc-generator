@@ -14,7 +14,7 @@
 {% endif %}
 {% endfor -%}
 {% if page.cim_data_types %}
-** CIM data type classes
+** CIM data types
 {% for cim_data_type_class in page.cim_data_types.values() -%}
 *** xref::class/{{ cim_data_type_class.name }}.adoc[`{{ cim_data_type_class.name }}`]
 {% endfor -%}

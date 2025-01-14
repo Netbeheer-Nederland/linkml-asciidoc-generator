@@ -15,6 +15,13 @@ class Enumeration:
 
 
 @dataclass
+class CIMDataType:
+    name: str
+    description: str | None = None
+
+
+@dataclass
 class IndexPage(Page):
     classes: list[Class]
+    cim_data_types: list[CIMDataType]
     enumerations: list[Enumeration]

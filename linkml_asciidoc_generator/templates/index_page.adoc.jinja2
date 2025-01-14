@@ -8,7 +8,21 @@
 
 {% for class_ in page.classes %}
 | {{ xref_class(class_.name) }}
-| {% if class_.description %}+++{{- class_.description | trim | replace("|", '\\|') | truncate(250) -}}+++{% else %}n/a{% endif %}
+| {% if class_.description %}+++{{- class_.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
+{% endfor %}
+|===
+
+== Types
+
+=== CIM data types
+
+[cols="1,2"]
+|===
+| Name | Description
+
+{% for type_ in page.cim_data_types %}
+| {{ xref_class(type_.name) }}
+| {% if type_.description %}+++{{- type_.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor %}
 |===
 
@@ -19,6 +33,6 @@
 | Name | Description
 {% for enum in page.enumerations %}
 | {{ xref_enum(enum.name) }}
-| {% if enum.description %}+++{{- enum.description | trim | replace("|", '\\|') | truncate(250) -}}+++{% else %}n/a{% endif %}
+| {% if enum.description %}+++{{- enum.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor %}
 |===
