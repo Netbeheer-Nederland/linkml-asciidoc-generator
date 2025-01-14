@@ -1,0 +1,587 @@
+name: im-capaciteitskaart
+description: |-
+  The capacity heatmaps information model was defined to cover a superset of
+  data exchanged by the NL system operators. A minimum set of data is defined
+  that all operators are expected to conform to, along with a number of
+  optional properties and data types.
+
+  ```mermaid
+  classDiagram
+  direction RL
+
+  class HeatmapDataSet {
+      string conforms_to
+      string contributor
+      string coverage
+      string creator
+      date date
+      string description
+      string format
+      string identifier
+      date issued
+      string language
+      string publisher
+      string rights
+      string title
+      date valid
+      EnergyArea energy_areas
+  }
+  class EnergyArea {
+      string short_code
+      integer demand_requests_in_queue
+      MegaW demand_capacity_in_queue
+      MegaW demand_quoted_capacity
+      MegaW demand_available_capacity
+      MegaW demand_forecast_capacity
+      integer demand_alleviation_year
+      RAGKind demand_constraint
+      integer generation_requests_in_queue
+      MegaW generation_capacity_in_queue
+      MegaW generation_quoted_capacity
+      MegaW generation_available_capacity
+      MegaW generation_forecast_capacity
+      integer generation_alleviation_year
+      RAGKind generation_constraint
+      Work works
+      PostcodeArea postcode_areas
+      string description
+      string m_rid
+      Name names
+  }
+  class Work {
+      date request_date_time
+      string work_order_number
+      WorkStatusKind status_kind
+      WorkTimeSchedule time_schedules
+      string type
+      string description
+      string m_rid
+      Name names
+  }
+  class PostcodeArea {
+      string postcode
+      RAGKind demand_constraint
+      RAGKind generation_constraint
+      string description
+      string m_rid
+      Name names
+  }
+
+  HeatmapDataSet --> EnergyArea : energy_areas
+  EnergyArea --> Work : works
+  EnergyArea --> PostcodeArea : postcode_areas
+  ```
+
+  The data is intended to be presented as a hierarchy with a
+  [HeatmapDataSet](HeatmapDataSet.md) at its root, followed by
+  [EnergyArea-s](EnergyArea.md) nested inside the *HeatmapDataSet*.
+  *EnergyArea-s* then have their own child elements.
+
+  This information model is based in part on the [LTDS Capacity Heatmap
+  Information
+  Model](https://www.ofgem.gov.uk/decision/long-term-development-statement-direction),
+  which itself is published under the [Open Government
+  License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/),
+  under ©Crown copyright 2024.
+
+  ## Additional schemas
+  * [JSON Schema](https://raw.githubusercontent.com/Netbeheer-Nederland/im-capaciteitskaart/main/project/jsonschema/im_capaciteitskaart.schema.json)
+  * [SHACL](https://raw.githubusercontent.com/Netbeheer-Nederland/im-capaciteitskaart/main/project/shacl/im_capaciteitskaart.shacl.ttl)
+  ## Identifiers
+title: Information model for the NBNL-capaciteitskaart.
+see_also:
+- https://Netbeheer-Nederland.github.io/im-capaciteitskaart
+contributors:
+- github:ritger-alliander
+- github:sefanja
+id: http://data.netbeheernederland.nl/capaciteitskaart/v1.2.0
+version: 1.2.0
+imports:
+- linkml:types
+license: Apache Software License 2.0
+prefixes:
+  linkml: https://w3id.org/linkml/
+  github: https://github.com/
+  cim: https://cim.ucaiug.io/ns#
+  ck: http://data.netbeheernederland.nl/capaciteitskaart/def#
+  nbnl: https://begrippen.netbeheernederland.nl/energiesysteembeheer/nl/page/
+  dcterms: http://purl.org/dc/terms/
+  unit: http://qudt.org/vocab/unit/
+default_curi_maps:
+- semweb_context
+default_prefix: ck
+default_range: string
+types:
+  MegaW:
+    typeof: float
+    uri: unit:MegaW
+  KiloA:
+    typeof: float
+    uri: unit:KiloA
+  KiloV:
+    typeof: float
+    uri: unit:KiloV
+enums:
+  RAGKind:
+    description: Traffic light colors coding scheme for categorising status.
+    enum_uri: ck:RAGKind
+    permissible_values:
+      transparant:
+        description: Transport capacity is available, without queue (*Transportcapaciteit
+          beschikbaar zonder wachtrij*).
+        meaning: ck:RAGKind.Transparant
+      red:
+        description: Shortage of transport capacity, with queue (Tekort aan Transportcapaciteit
+          met wachtrij).
+        meaning: ck:RAGKind.Red
+      amber:
+        description: Energy Area is being investigated, with queue (Voedingsgebied
+          is in onderzoek met wachtrij).
+        meaning: ck:RAGKind.Amber
+      yellow:
+        description: Limited availability of transport capacity, without queue (Transportcapaciteit
+          beperkt beschikbaar zonder wachtrij).
+        meaning: ck:RAGKind.Yellow
+  WorkStatusKind:
+    description: Kind of status, specific to work.
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61968
+    enum_uri: cim:WorkStatusKind
+    permissible_values:
+      cancelled:
+        meaning: cim:WorkStatusKind.cancelled
+      completed:
+        meaning: cim:WorkStatusKind.completed
+      inProgress:
+        meaning: cim:WorkStatusKind.inProgress
+      scheduled:
+        meaning: cim:WorkStatusKind.scheduled
+  WorkTimeScheduleKind:
+    description: Kind of work schedule.
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61968
+    enum_uri: cim:WorkTimeScheduleKind
+    permissible_values:
+      actual:
+        meaning: cim:WorkTimeScheduleKind.actual
+      earliest:
+        meaning: cim:WorkTimeScheduleKind.earliest
+      estimate:
+        meaning: cim:WorkTimeScheduleKind.estimate
+      immediate:
+        meaning: cim:WorkTimeScheduleKind.immediate
+      latest:
+        meaning: cim:WorkTimeScheduleKind.latest
+      request:
+        meaning: cim:WorkTimeScheduleKind.request
+classes:
+  HeatmapDataSet:
+    description: A single instance of a published dataset. The descriptions of these
+      fields are taken from the Dublin Core Standard.
+    attributes:
+      conforms_to:
+        description: ID for the schema used to create the instance data.
+        slot_uri: dcterms:conformsTo
+        required: true
+      contributor:
+        description: An entity responsible for making contributions to the resource.
+        slot_uri: dcterms:contributor
+        required: false
+      coverage:
+        description: The spatial or temporal topic of the resource, spatial applicability
+          of the resource, or jurisdiction under which the resource is relevant.
+        slot_uri: dcterms:coverage
+        required: false
+      creator:
+        description: An entity responsible for making the resource.
+        slot_uri: dcterms:creator
+        required: true
+      date:
+        description: A point of time associated with an event in the lifecycle of
+          the resource. For this implementation this will represent the date the data
+          set is valid from.
+        slot_uri: dcterms:date
+        range: date
+        required: false
+      description:
+        description: An account of the resource.
+        slot_uri: dcterms:description
+        required: false
+      format:
+        description: The file format of the resource.
+        slot_uri: dcterms:format
+        required: false
+      identifier:
+        description: An unambiguous reference to the resource within a given context.
+        slot_uri: dcterms:identifier
+        required: true
+      issued:
+        description: Date of formal issuance of the resource.
+        slot_uri: dcterms:issued
+        range: date
+        required: true
+      language:
+        description: A language of the resource.
+        slot_uri: dcterms:language
+        required: false
+      publisher:
+        description: An entity responsible for making the resource available.
+        slot_uri: dcterms:publisher
+        required: false
+      rights:
+        description: Information about rights held in and over the resource.
+        slot_uri: dcterms:rights
+        required: false
+      title:
+        description: A name given to the resource.
+        slot_uri: dcterms:title
+        required: false
+      valid:
+        description: A date range for the validity of a resource. This should be two
+          dates to form a range.  The first date is inclusive and the second date
+          exclusive.
+        slot_uri: dcterms:valid
+        range: date
+        minimum_cardinality: 2
+        maximum_cardinality: 2
+        required: false
+      energy_areas:
+        description: A list of energy areas with heatmap data.
+        slot_uri: ck:HeatmapDataSet.EnergyAreas
+        multivalued: true
+        range: EnergyArea
+        required: true
+    class_uri: ck:HeatmapDataSet
+    tree_root: true
+  EnergyArea:
+    description: Describes an area having energy production or consumption. Specializations
+      are intended to support the load allocation function as typically required in
+      energy management systems or planning studies to allocate hypothesized load
+      levels to individual load points for power flow analysis. Often the energy area
+      can be linked to both measured and forecast load levels.
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61970.Base.LoadModel
+    exact_mappings:
+    - nbnl:voedingsgebied
+    is_a: IdentifiedObject
+    attributes:
+      short_code:
+        description: Short code name for EnergyArea. This is the *Uniek ID voedingsgebied*
+          in the previous implementation.
+        slot_uri: ck:EnergyArea.shortCode
+        required: true
+      demand_requests_in_queue:
+        description: Number of demand requests for new grid connections and capacity
+          increases in queue. This is the *Aantal unieke transportverzoeken in een
+          wachtrij - afname* in the previous implementation.
+        slot_uri: ck:EnergyArea.demandRequestsInQueue
+        range: integer
+        required: false
+        minimum_value: 0
+      demand_capacity_in_queue:
+        description: The contract value of demand requests not yet granted. This is
+          the *Wachtrij in capaciteit - afname* in the previous implementation.
+        slot_uri: ck:EnergyArea.demandCapacityInQueue
+        range: MegaW
+        required: false
+        minimum_value: 0
+      demand_quoted_capacity:
+        description: Sum of all demand (in MW) currently quoted at the EnergyArea.
+          This is the *Benodigde transportcapaciteit (in MW) afname* in the previous
+          implementation.
+        slot_uri: ck:EnergyArea.demandQuotedCapacity
+        range: MegaW
+        required: false
+        minimum_value: 0
+      demand_available_capacity:
+        description: The available demand capacity (in MW) at the EnergyArea. The
+          value should reflect the capacity a network operator would make available
+          to a connecting party. This is the *Aanwezige transportcapaciteit (in MW)
+          afname huidige jaar* in the previous implementation.
+        slot_uri: ck:EnergyArea.demandAvailableCapacity
+        range: MegaW
+        required: false
+        minimum_value: 0
+      demand_forecast_capacity:
+        description: Sum of all demand (in MW) forecast for the current year at the
+          EnergyArea.
+        slot_uri: ck:EnergyArea.demandForecastCapacity
+        range: MegaW
+        required: false
+        minimum_value: 0
+      demand_alleviation_year:
+        description: Year (e.g. *2028*) from which any capacity issues have been alleviated
+          for the EnergyArea.
+        slot_uri: ck:EnergyArea.demandAlleviationYear
+        range: integer
+        required: false
+      demand_constraint:
+        description: A RAG definition of the demand constraints at the EnergyArea.
+          A utility should provide details on how this RAG status is calculated as
+          part of the accompanying documentation. Only specify this attribute if no
+          PostcodeArea-s are provided.
+        slot_uri: ck:EnergyArea.demandConstraint
+        range: RAGKind
+        required: false
+      generation_requests_in_queue:
+        description: Number of generation requests for new grid connections and capacity
+          increases in queue. This is the *Aantal unieke transportverzoeken in een
+          wachtrij - invoeding* in the previous implementation.
+        slot_uri: ck:EnergyArea.generationRequestsInQueue
+        range: integer
+        required: false
+        minimum_value: 0
+      generation_capacity_in_queue:
+        description: The contract value of generation requests not yet granted. This
+          is the *Wachtrij in capaciteit - invoeding* in the previous implementation.
+        slot_uri: ck:EnergyArea.generationCapacityInQueue
+        range: MegaW
+        required: false
+        minimum_value: 0
+      generation_quoted_capacity:
+        description: Sum of all currently quoted generation (in MW) at the EnergyArea.
+          This is the *Benodigde transportcapaciteit (in MW) invoeding* in the previous
+          implementation.
+        slot_uri: ck:EnergyArea.generationQuotedCapacity
+        range: MegaW
+        required: false
+        minimum_value: 0
+      generation_available_capacity:
+        description: Available generation capacity (in MW) at the EnergyArea. This
+          is the *Aanwezige transportcapaciteit (in MW) invoeding huidige jaar* in
+          the previous implementation.
+        slot_uri: ck:EnergyArea.generationAvailableCapacity
+        range: MegaW
+        required: false
+        minimum_value: 0
+      generation_forecast_capacity:
+        description: Sum of all forecast generation (in MW) for the current year at
+          the EnergyArea.
+        slot_uri: ck:EnergyArea.generationForecastCapacity
+        range: MegaW
+        required: false
+        minimum_value: 0
+      generation_alleviation_year:
+        description: Year (e.g. *2028*) from which any capacity issues have been alleviated
+          for the EnergyArea.
+        slot_uri: ck:EnergyArea.generationAlleviationYear
+        range: integer
+        required: false
+      generation_constraint:
+        description: A RAG definition of the generation constraints at the EnergyArea.
+          A utility should provide details on how this RAG status is calculated as
+          part of the accompanying documentation. Only specify this attribute if no
+          PostcodeArea-s are provided.
+        slot_uri: ck:EnergyArea.generationConstraint
+        range: RAGKind
+        required: false
+      works:
+        description: All the works performed for this EnergyArea.
+        slot_uri: ck:EnergyArea.Works
+        multivalued: true
+        range: Work
+        required: true
+      postcode_areas:
+        description: Postcode Areas serviced by this EnergyArea.
+        slot_uri: ck:EnergyArea.PostcodeAreas
+        multivalued: true
+        range: PostcodeArea
+        required: true
+    class_uri: cim:EnergyArea
+  PostcodeArea:
+    description: A geographic region that is defined by the initial letters or digits
+      of a postcode.
+    is_a: IdentifiedObject
+    attributes:
+      postcode:
+        description: Identifier for the postcode area. Contain four (4) numbers, followed
+          by two (2) letters, uppercase. No spaces between the numbers and letters,
+          i.e. "1234AB".
+        slot_uri: ck:PostcodeArea.postcode
+        required: true
+      demand_constraint:
+        description: A RAG definition of the demand constraints at the EnergyArea.
+          A utility should provide details on how this RAG status is calculated as
+          part of the accompanying documentation. This is the *Kleurcodering van het
+          postcodegebied voor afname* in the previous implementation.
+        slot_uri: ck:PostcodeArea.demandConstraint
+        range: RAGKind
+        required: true
+      generation_constraint:
+        description: A RAG definition of the generation constraints at the EnergyArea.
+          A utility should provide details on how this RAG status is calculated as
+          part of the accompanying documentation. This is the *Kleurcodering van het
+          postcodegebied voor opwek* in the previous implementation.
+        slot_uri: ck:PostcodeArea.generationConstraint
+        range: RAGKind
+        required: true
+    class_uri: ck:PostcodeArea
+  Work:
+    description: Document used to request, initiate, track and record work. Use the
+      *description* attribute to add additional information about this *Work*. This
+      is *Toelichting bijzonderheden rondom planning* in the previous implementation.
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61968.Work
+    is_a: BaseWork
+    attributes:
+      project_name:
+        description: Name of the project this work belongs to. This is the *Projectnaam*
+          in the previous implementation.
+        slot_uri: ck:Work.projectName
+        required: true
+    class_uri: cim:Work
+  BaseWork:
+    description: Common representation for work and work tasks.
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61968.Work
+    is_a: Document
+    attributes:
+      status_kind:
+        description: Kind of work status.
+        slot_uri: cim:BaseWork.statusKind
+        range: WorkStatusKind
+        required: false
+      time_schedules:
+        description: All time schedules for this work or work task.
+        slot_uri: cim:BaseWork.TimeSchedules
+        multivalued: true
+        range: WorkTimeSchedule
+        required: true
+    class_uri: cim:BaseWork
+  WorkTimeSchedule:
+    description: Time schedule specific to work.
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61968.Work
+    is_a: TimeSchedule
+    class_uri: cim:WorkTimeSchedule
+  Document:
+    description: Parent class for different groupings of information collected and
+      managed as a part of a business process. It will frequently contain references
+      to other objects, such as assets, people and power system resources.
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61968.Common
+    is_a: IdentifiedObject
+    attributes:
+      type:
+        description: Utility-specific classification of this document, according to
+          its corporate standards, practices, and existing IT systems (e.g., for management
+          of assets, maintenance, work, outage, customers, etc.).
+        slot_uri: cim:Document.type
+        range: string
+        required: false
+    class_uri: cim:Document
+  TimeSchedule:
+    description: Description of anything that changes through time. Time schedule
+      is used to perform a single-valued function of time. Use inherited 'type' attribute
+      to give additional information on this schedule, such as periodic (hourly, daily,
+      weekly, monthly, etc.), day of the month, by date, calendar (specific times
+      and dates).
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61968.Common
+    is_a: Document
+    attributes:
+      schedule_interval:
+        description: Schedule date and time interval.
+        slot_uri: cim:TimeSchedule.scheduleInterval
+        range: DateTimeInterval
+        required: true
+    class_uri: cim:TimeSchedule
+  DateTimeInterval:
+    description: Interval between two date and time points, where the interval includes
+      the start time but excludes end time.
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61970.Base.Domain
+    attributes:
+      end:
+        description: End date and time of this interval. The end date and time where
+          the interval is defined up to, but excluded. Follows the international date
+          format of YYYY-MM-DD, i.e. 2024-12-31. When only a specific month is known,
+          use *01* as day. This is the *Beoogde in bedrijfsname* in the previous implementation.
+        slot_uri: cim:DateTimeInterval.end
+        range: date
+        required: false
+      start:
+        description: Start date and time of this interval. The start date and time
+          is included in the defined interval. Follows the international date format
+          of YYYY-MM-DD, i.e. 2024-12-31. When only a specific month is known, use
+          *01* as day. This is the *Startdatum* in the previous implementation.
+        slot_uri: cim:DateTimeInterval.start
+        range: date
+        required: false
+      quarter:
+        description: Quarter indicator for when this Work is completed. Use in
+          combination with ck:DateTimeInterval.year.
+        slot_uri: ck:DateTimeInterval.quarter
+        range: integer
+        minimum_value: 1
+        maximum_value: 4
+        required: false
+      year:
+        description: Year indicator for when this Work is completed. Use in
+          combination with ck:DateTimeInterval.quarter.
+        slot_uri: ck:DateTimeInterval.year
+        range: integer
+        required: false
+    class_uri: cim:DateTimeInterval
+  IdentifiedObject:
+    description: This is a root class to provide common identification for all classes
+      needing identification and naming attributes.
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61970.Base.Core
+    attributes:
+      description:
+        description: The description is a free human readable text describing or naming
+          the object. It may be non unique and may not correlate to a naming hierarchy.
+          This is the *Herkenbare naam voedingsgebied* in the previous implementation.
+        slot_uri: cim:IdentifiedObject.description
+        range: string
+      m_rid:
+        description: Master resource identifier issued by a model authority. The mRID
+          is unique within an exchange context. Global uniqueness is easily achieved
+          by using a UUID, as specified in RFC 4122, for the mRID. The use of UUID
+          is strongly recommended. For CIMXML data files in RDF syntax conforming
+          to IEC 61970-552, the mRID is mapped to rdf:ID or rdf:about attributes that
+          identify CIM object elements.
+        slot_uri: cim:IdentifiedObject.mRID
+        range: string
+      names:
+        description: All names of this identified object.
+        slot_uri: cim:IdentifiedObject.Names
+        multivalued: true
+        range: Name
+    class_uri: cim:IdentifiedObject
+  Name:
+    description: The Name class provides the means to define any number of human readable
+      names for an object. A name is <b>not</b> to be used for defining inter-object
+      relationships. For inter-object relationships instead use the object identification
+      'mRID'
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61970.Base.Core
+    attributes:
+      name_type:
+        description: Type of this name.
+        slot_uri: cim:Name.NameType
+        range: NameType
+        required: true
+    class_uri: cim:Name
+  NameType:
+    description: Type of name. Possible values for attribute 'name' are implementation
+      dependent but standard profiles may specify types. An enterprise may have multiple
+      IT systems each having its own local name for the same object, e.g.  a planning
+      system may have different names from an EMS. An object may also have different
+      names within the same IT system, e.g. localName as defined in CIM version 14.
+      The definition from CIM14 is The localName is a human readable name of the object.
+      It is a free text name local to a node in a naming hierarchy similar to a file
+      directory structure. A power system related naming hierarchy may be Substation,
+      VoltageLevel, Equipment etc. Children of the same parent in such a hierarchy
+      have names that typically are unique among them.
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61970.Base.Core
+    attributes:
+      description:
+        description: Description of the name type.
+        slot_uri: cim:NameType.description
+      name_type_authority:
+        description: Authority responsible for managing names of this type.
+        slot_uri: cim:NameType.NameTypeAuthority
+        range: NameTypeAuthority
+    class_uri: cim:NameType
+  NameTypeAuthority:
+    description: Authority responsible for creation and management of names of a given
+      type; typically an organization or an enterprise system.
+    from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61970.Base.Core
+    attributes:
+      description:
+        description: Description of the name type authority.
+        slot_uri: cim:NameTypeAuthority.description
+        range: string
+    class_uri: cim:NameTypeAuthority
+

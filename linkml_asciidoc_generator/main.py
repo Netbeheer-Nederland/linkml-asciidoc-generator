@@ -48,5 +48,6 @@ if __name__ == "__main__":
     }
     # schema = Path("data/dp_nbl_forecast.yaml")
     # schema = Path("data/dp_meetdata.new.yaml")
-    schema = Path("data/dp_eh_nettopologie.yaml")
+    # schema = Path("data/dp_eh_nettopologie.yaml")
+    schema = Path("data/im_capaciteitskaart.yaml")
     create_linkml_documentation(schema, config=config)
