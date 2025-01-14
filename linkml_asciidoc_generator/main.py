@@ -29,6 +29,7 @@ if __name__ == "__main__":
     config = {
         "templates": {
             "class_page": "linkml_asciidoc_generator/templates/class_page/class_page.adoc.jinja2",
+            "enumeration_page": "linkml_asciidoc_generator/templates/enumeration_page.adoc.jinja2",
             "cim_data_type_page": "linkml_asciidoc_generator/templates/class_page/cim_data_type_page.adoc.jinja2",
             "class_page_relations_diagram": "linkml_asciidoc_generator/templates/class_page/relations_diagram.adoc.jinja2",
             "index_page": "linkml_asciidoc_generator/templates/index_page.adoc.jinja2",

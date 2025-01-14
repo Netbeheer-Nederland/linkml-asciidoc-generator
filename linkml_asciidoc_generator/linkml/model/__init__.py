@@ -8,11 +8,13 @@ from linkml_asciidoc_generator.linkml.model.metamodel import (
     TypeDefinition,
     SlotDefinition,
     SchemaDefinition,
+    PermissibleValue,
 )
 
 LinkMLElement = Element
 LinkMLClass = ClassDefinition
 LinkMLEnumeration = EnumDefinition
+LinkMLEnumerationValue = PermissibleValue
 LinkMLType = TypeDefinition
 
 LinkMLSlot = SlotDefinition

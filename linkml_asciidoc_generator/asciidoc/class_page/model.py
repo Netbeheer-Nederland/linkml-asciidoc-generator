@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from enum import Enum
 from linkml_asciidoc_generator.asciidoc import (
     Resource,
     Jinja2TemplateFile,
@@ -7,6 +6,8 @@ from linkml_asciidoc_generator.asciidoc import (
     CURIE,
     Page,
     PrefixesMap,
+    SkosMapping,
+    CIMStandard,
 )
 from linkml_asciidoc_generator.linkml.model import (
     LinkMLClassName,
@@ -14,23 +15,7 @@ from linkml_asciidoc_generator.linkml.model import (
     LinkMLElementName,
 )
 
-
-class SkosVerb(Enum):
-    EXACT_MATCH = "skos:exactMatch"
-    CLOSE_MATCH = "skos:closeMatch"
-    NARROW_MATCH = "skos:narrowMatch"
-    BROAD_MATCH = "skos:broadMatch"
-    MAPPING_RELATION = "skos:mappingRelation"
-
-
 type PositiveInt = int
-type SkosMapping = dict[SkosVerb, list[CURIE]]
-
-
-class CIMStandard(Enum):
-    IEC61970 = "IEC61970 (Grid)"
-    IEC61968 = "IEC61968 (Enterprise)"
-    IEC62325 = "IEC62325 (Market)"
 
 
 @dataclass

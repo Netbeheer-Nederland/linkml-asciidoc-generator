@@ -5,7 +5,19 @@ from enum import Enum, auto
 
 import jinja2
 
-from linkml_asciidoc_generator.linkml.model import LinkMLElementName, LinkMLPrimitive
+from linkml_asciidoc_generator.linkml.model import (
+    LinkMLElementName,
+    LinkMLPrimitive,
+    LinkMLElement,
+    LinkMLClass,
+    LinkMLEnumeration,
+)
+
+from linkml_asciidoc_generator.asciidoc.standard_mapping import (
+    CLASSES_IN_STANDARD,
+    ENUMS_IN_STANDARD,
+    CIMStandard,
+)
 
 
 LINKML_META_BASE_URI = "https://w3id.org/linkml/"
@@ -25,6 +37,17 @@ type D2DiagramCodeStr = str
 type CharEncoding = str
 type HexColor = str
 type PrefixesMap = dict[CURIEPrefix, URI]
+
+
+class SkosVerb(Enum):
+    EXACT_MATCH = "skos:exactMatch"
+    CLOSE_MATCH = "skos:closeMatch"
+    NARROW_MATCH = "skos:narrowMatch"
+    BROAD_MATCH = "skos:broadMatch"
+    MAPPING_RELATION = "skos:mappingRelation"
+
+
+type SkosMapping = dict[SkosVerb, list[CURIE]]
 
 
 class PageKind(Enum):
@@ -119,3 +142,40 @@ def xref_primitive_type(type_name: LinkMLPrimitive) -> AsciiDocStr:
     uri = LINKML_META_BASE_URI + uri_name
 
     return f"{uri}[`{type_name.value}`]"
+
+
+def get_standard_for_class(class_: LinkMLClass) -> CIMStandard | None:
+    # TODO: This is a temporary semi-hardcoded solution.
+
+    for standard, classes in CLASSES_IN_STANDARD.items():
+        if class_.class_uri in classes:
+            return standard
+    return None
+
+
+def get_standard_for_enumeration(enum: LinkMLEnumeration) -> CIMStandard | None:
+    # TODO: This is a temporary semi-hardcoded solution.
+
+    return CIMStandard.IEC61970  # TODO: Implement.
+
+    for standard, enums in ENUMS_IN_STANDARD.items():
+        if enum.enum_uri in enums:
+            return standard
+    return None
+
+
+def get_skos_mappings(element: LinkMLElement) -> SkosMapping:
+    mappings = {}
+
+    if element.exact_mappings:
+        mappings[SkosVerb.EXACT_MATCH] = element.exact_mappings
+    if element.close_mappings:
+        mappings[SkosVerb.CLOSE_MATCH] = element.close_mappings
+    if element.narrow_mappings:
+        mappings[SkosVerb.NARROW_MATCH] = element.narrow_mappings
+    if element.broad_mappings:
+        mappings[SkosVerb.BROAD_MATCH] = element.broad_mappings
+    if element.mappings:
+        mappings[SkosVerb.MAPPING_RELATION] = element.mappings
+
+    return mappings

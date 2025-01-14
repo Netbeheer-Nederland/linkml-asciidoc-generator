@@ -8,3 +8,12 @@
 | {{ xref_class(class_.name) }}
 {% endfor %}
 |===
+
+== Enumerations
+
+|===
+| Name
+{% for enum in page.enumerations %}
+| {{ xref_enum(enum.name) }}
+{% endfor %}
+|===

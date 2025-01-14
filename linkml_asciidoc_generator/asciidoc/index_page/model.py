@@ -8,5 +8,11 @@ class Class:
 
 
 @dataclass
+class Enumeration:
+    name: str
+
+
+@dataclass
 class IndexPage(Page):
     classes: list[Class]
+    enumerations: list[Enumeration]

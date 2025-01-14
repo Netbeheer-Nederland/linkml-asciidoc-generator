@@ -1,7 +1,6 @@
 from linkml_asciidoc_generator.linkml.model import (
     LinkMLClass,
     LinkMLClassName,
-    LinkMLElement,
     LinkMLSlot,
     LinkMLSlotOwner,
     LinkMLSchema,
@@ -11,22 +10,17 @@ from linkml_asciidoc_generator.config import Config
 from linkml_asciidoc_generator.asciidoc.class_page.model import (
     ClassPage,
     Class,
-    CIMStandard,
     Relation,
     Attribute,
     RelationsDiagram,
     PositiveInt,
-    SkosVerb,
-    SkosMapping,
-)
-from linkml_asciidoc_generator.asciidoc.class_page.standard_mapping import (
-    CLASSES_IN_STANDARD,
 )
 from linkml_asciidoc_generator.linkml.query import (
     get_ancestors,
     get_relations,
     get_attributes,
 )
+from linkml_asciidoc_generator.asciidoc import get_skos_mappings, get_standard_for_class
 
 CIM_DATA_TYPES = [
     "cim:ActivePower",
@@ -123,7 +117,7 @@ def _generate_attribute(slot_owner: LinkMLSlotOwner, slot: LinkMLSlot) -> Attrib
         uri=slot.slot_uri,
         min_cardinality=_get_min_cardinality(slot),
         max_cardinality=_get_max_cardinality(slot),
-        skos_mappings=_get_skos_mappings(slot),
+        skos_mappings=get_skos_mappings(slot),
     )
 
 
@@ -144,43 +138,15 @@ def _generate_relation(
             attributes=[],
             relations=[],  # No need for these, and can cause recursion errors such as with `Terminal.topologicalNodes <-> TopologicalNode.terminal``
             prefixes=schema.prefixes,
-            standard=_get_standard(target_class),
+            standard=get_standard_for_class(target_class),
         ),
         inherited_from=slot_owner,
         description=slot.description,
         uri=slot.slot_uri,
         min_cardinality=_get_min_cardinality(slot),
         max_cardinality=_get_max_cardinality(slot),
-        skos_mappings=_get_skos_mappings(slot),
+        skos_mappings=get_skos_mappings(slot),
     )
-
-
-def _get_standard(class_: LinkMLClass) -> CIMStandard | None:
-    # TODO: This is a temporary semi-hardcoded solution.
-
-    standard = CIMStandard.IEC61970
-
-    for standard, classes in CLASSES_IN_STANDARD.items():
-        if class_.class_uri in classes:
-            return standard
-    return None
-
-
-def _get_skos_mappings(element: LinkMLElement) -> SkosMapping:
-    mappings = {}
-
-    if element.exact_mappings:
-        mappings[SkosVerb.EXACT_MATCH] = element.exact_mappings
-    if element.close_mappings:
-        mappings[SkosVerb.CLOSE_MATCH] = element.close_mappings
-    if element.narrow_mappings:
-        mappings[SkosVerb.NARROW_MATCH] = element.narrow_mappings
-    if element.broad_mappings:
-        mappings[SkosVerb.BROAD_MATCH] = element.broad_mappings
-    if element.mappings:
-        mappings[SkosVerb.MAPPING_RELATION] = element.mappings
-
-    return mappings
 
 
 def generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) -> Class:
@@ -204,8 +170,8 @@ def generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) ->
             for r in get_relations(class_, schema)
         ],
         prefixes=schema.prefixes,
-        standard=_get_standard(class_),
-        skos_mappings=_get_skos_mappings(class_),
+        standard=get_standard_for_class(class_),
+        skos_mappings=get_skos_mappings(class_),
     )
 
     return _class_
