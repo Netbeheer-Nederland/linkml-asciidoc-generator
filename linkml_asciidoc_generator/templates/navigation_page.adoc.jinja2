@@ -2,13 +2,16 @@
 * Information model
 ** xref::index.adoc[Index]
 ** Classes
-{% for class_ in page.classes.values() -%}
+*** xref::class/{{ root_class.name }}.adoc[`{{ root_class.name }}` (root)]
+{% for class_ in page.classes.values() | sort(attribute="name") -%}
+{% if not class_.is_root %}
 *** xref::class/{{ class_.name }}.adoc[`{{ class_.name }}`]
 {#%- if class_.attributes -%}
 {% for slot in (class_.attributes + class_.relations) -%}
 **** xref::slot/{{ slot.name }}.adoc[`{{ slot.name }}`]
 {% endfor -%}
 {% endif %#}
+{% endif %}
 {% endfor -%}
 {% if page.cim_data_types %}
 ** CIM data type classes

@@ -37,9 +37,9 @@ if __name__ == "__main__":
         "diagrams": {
             "relations": True,
             "class_color": {
-                "IEC61970": "#eccfcb",
-                "IEC61968": "#d1e7c2",
-                "IEC62325": "#fffbef",
+                "IEC61970 (Grid)": "#eccfcb",
+                "IEC61968 (Enterprise)": "#d1e7c2",
+                "IEC62325 (Market)": "#fffbef",
             },
         },
         "output_dir": "output/",

@@ -4,10 +4,18 @@ from linkml_asciidoc_generator.asciidoc import (
     xref_class,
     Jinja2TemplateStr,
 )
+from linkml_asciidoc_generator.asciidoc import ResourceName
 from linkml_asciidoc_generator.config import Config
 from linkml_asciidoc_generator.asciidoc.navigation_page.model import (
     NavigationPage,
 )
+from linkml_asciidoc_generator.asciidoc.class_page.model import Class
+
+
+def _get_root_class(classes: dict[ResourceName, Class]) -> Class | None:
+    for class_ in classes.values():
+        if class_.is_root:
+            return class_
 
 
 def render_navigation_page(
@@ -16,6 +24,11 @@ def render_navigation_page(
     template: Jinja2TemplateStr = read_jinja2_template(
         config["templates"]["navigation_page"]
     )
-    content = template.render(page=navigation_page, xref_class=xref_class)
+
+    content = template.render(
+        page=navigation_page,
+        root_class=_get_root_class(navigation_page.classes),
+        xref_class=xref_class,
+    )
 
     return content

@@ -10,7 +10,7 @@
 +++{{ class_.description | trim }}+++
 {% endif %}
 
-[cols="h,4",width=65%]
+[cols="h,3",width=65%]
 |===
 | Type
 | {% if class_.is_abstract %}Abstract class^xref:ROOT::usage_notes_abstract_class.adoc[?]^{% else %}Class{% endif %}
@@ -19,7 +19,7 @@
 | {{ link_curie(class_.uri) }}
 {% endif %}
 {% if class_.standard %}
-| From CIM standard
+| CIM standard (perspective)
 | {{ class_.standard.value }}
 {% endif %}
 {% if class_.skos_mappings %}

@@ -186,6 +186,7 @@ def generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) ->
         name=class_._meta["name"],
         is_abstract=bool(class_.abstract),
         is_mixin=bool(class_.mixin),
+        is_root=bool(class_.tree_root),
         is_cim_data_type=is_cim_data_type(class_),
         description=class_.description,
         uri=class_.class_uri,

@@ -58,14 +58,15 @@ class Attribute(Element):
 @dataclass
 class Class:
     name: LinkMLElementName
-    is_abstract: bool
-    is_mixin: bool
-    is_cim_data_type: bool
-    uri: CURIE
     ancestors: list[LinkMLClassName]
     relations: list[Relation]
     attributes: list[Attribute]
     prefixes: PrefixesMap
+    uri: CURIE | None = None
+    is_abstract: bool = False
+    is_mixin: bool = False
+    is_cim_data_type: bool = False
+    is_root: bool = False
     standard: CIMStandard | None = None
     description: str | None = None
     skos_mappings: SkosMapping | None = None
