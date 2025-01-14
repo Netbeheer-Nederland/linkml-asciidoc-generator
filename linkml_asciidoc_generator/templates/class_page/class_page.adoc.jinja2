@@ -68,7 +68,7 @@ a|
 | {% if slot.uri %}{{ link_curie(slot.uri) }}{% else %}n/a{% endif %}
 | Cardinalityxref:ROOT::cardinalities_explained.adoc[^?^,title="Explains stuff"]
 | {{ cardinalities(slot) }}
-| Data type
+| Type
 | {% if slot.destination_class %}{{ xref_class(slot.destination_class.name) }}{% elif slot.data_type %}`{{ slot.data_type }}`{% else %}`Any`{% endif %}
 {% if slot.inherited_from %}
 | Inherited from
