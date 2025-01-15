@@ -30,12 +30,12 @@ def create_linkml_documentation(schema_file: Path, config=Config) -> None:
 if __name__ == "__main__":
     config = {
         "templates": {
-            "class_page": "linkml_asciidoc_generator/templates/class_page/class_page.adoc.jinja2",
-            "enumeration_page": "linkml_asciidoc_generator/templates/enumeration_page.adoc.jinja2",
-            "cim_data_type_page": "linkml_asciidoc_generator/templates/class_page/cim_data_type_page.adoc.jinja2",
-            "class_page_relations_diagram": "linkml_asciidoc_generator/templates/class_page/relations_diagram.adoc.jinja2",
-            "index_page": "linkml_asciidoc_generator/templates/index_page.adoc.jinja2",
-            "navigation_page": "linkml_asciidoc_generator/templates/navigation_page.adoc.jinja2",
+            "class_page": "templates/class_page/class_page.adoc.jinja2",
+            "enumeration_page": "templates/enumeration_page.adoc.jinja2",
+            "cim_data_type_page": "templates/class_page/cim_data_type_page.adoc.jinja2",
+            "class_page_relations_diagram": "templates/class_page/relations_diagram.adoc.jinja2",
+            "index_page": "templates/index_page.adoc.jinja2",
+            "navigation_page": "templates/navigation_page.adoc.jinja2",
         },
         "diagrams": {
             "relations": True,
