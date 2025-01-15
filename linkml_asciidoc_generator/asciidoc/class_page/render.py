@@ -27,7 +27,8 @@ from linkml_asciidoc_generator.asciidoc.class_page.model import (
 DEFAULT_COLOR = "#cccccc"
 
 
-def _render_ancestors(class_: Class) -> AsciiDocStr:
+def _render_class_hierarchy(class_: Class) -> AsciiDocStr:
+    # Ancestors.
     hierarchy_adoc = reduce(
         lambda acc, succ: f"{acc}{'*' * succ[0]} {xref_class(succ[1])}\n",
         enumerate(class_.ancestors[::-1], 1),
@@ -35,7 +36,15 @@ def _render_ancestors(class_: Class) -> AsciiDocStr:
     )
 
     # Self.
-    hierarchy_adoc += f"{'*' * (len(class_.ancestors) + 1)} *`{class_.name}`*\n"
+    depth_self = len(class_.ancestors) + 1
+    hierarchy_adoc += f"{'*' * depth_self} *`{class_.name}`*\n"
+
+    # Descendants.
+    hierarchy_adoc += reduce(
+        lambda acc, succ: f"{acc} {'*' * (depth_self + 1)} {xref_class(succ)}\n",
+        sorted(class_.descendants),
+        "",
+    )
 
     return hierarchy_adoc
 
@@ -121,7 +130,7 @@ def _render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
         slots_for_table=_get_sorted_slots_for_table(
             class_page.class_.attributes + class_page.class_.relations
         ),
-        ancestors=_render_ancestors(class_page.class_),
+        class_hierarchy=_render_class_hierarchy(class_page.class_),
         link_curie=partial(link_curie, prefixes=class_page.class_.prefixes),
         xref_class=xref_class,
         xref_enum=xref_enum,

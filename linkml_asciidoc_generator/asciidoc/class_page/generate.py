@@ -17,6 +17,7 @@ from linkml_asciidoc_generator.asciidoc.class_page.model import (
 )
 from linkml_asciidoc_generator.linkml.query import (
     get_ancestors,
+    get_descendants,
     get_relations,
     get_attributes,
 )
@@ -83,6 +84,7 @@ def _generate_relation(
             description=target_class.description,
             uri=target_class.class_uri,
             ancestors=[],
+            descendants=[],
             attributes=[],
             relations=[],  # No need for these, and can cause recursion errors such as with `Terminal.topologicalNodes <-> TopologicalNode.terminal``
             prefixes=schema.prefixes,
@@ -108,6 +110,7 @@ def generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) ->
         description=class_.description,
         uri=class_.class_uri,
         ancestors=[c._meta["name"] for c in get_ancestors(class_, schema)],
+        descendants=[c._meta["name"] for c in get_descendants(class_, schema)],
         attributes=[
             _generate_attribute(a[0] if a[0] != class_._meta["name"] else None, a[1])
             for a in get_attributes(class_, schema)

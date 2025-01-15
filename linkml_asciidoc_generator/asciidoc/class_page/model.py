@@ -51,6 +51,7 @@ class Attribute(Slot):
 @dataclass
 class Class:
     name: LinkMLElementName
+    descendants: list[LinkMLClassName]
     ancestors: list[LinkMLClassName]
     relations: list[Relation]
     attributes: list[Attribute]
