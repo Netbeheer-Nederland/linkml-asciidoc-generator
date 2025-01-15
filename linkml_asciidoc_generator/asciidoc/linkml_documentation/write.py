@@ -33,7 +33,8 @@ def write_linkml_documentation(
     an Antora component version.
     """
 
-    module_dir = os.path.join(config["output_dir"], linkml_documentation.name.lower())
+    # module_dir = os.path.join(config["output_dir"], linkml_documentation.name.lower())
+    module_dir = config["output_dir"]
 
     pages_dir = os.path.join(module_dir, "pages")
     partials_dir = os.path.join(module_dir, "partials")

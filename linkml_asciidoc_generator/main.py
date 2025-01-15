@@ -1,3 +1,5 @@
+import sys
+
 from pathlib import Path
 from linkml_asciidoc_generator.linkml.read import read_linkml_schema
 from linkml_asciidoc_generator.linkml.parse import parse_linkml_schema
@@ -43,11 +45,12 @@ if __name__ == "__main__":
                 "IEC62325 (Market)": "#fffbef",
             },
         },
-        "output_dir": "output/",
+        "output_dir": sys.argv[2],
         "char_encoding": "utf8",
     }
     # schema = Path("data/dp_nbl_forecast.yaml")
-    schema = Path("data/dp_meetdata.new.yaml")
+    # schema = Path("data/dp_meetdata.new.yaml")
     # schema = Path("data/dp_eh_nettopologie.yaml")
     # schema = Path("data/im_capaciteitskaart.yaml")
+    schema = Path(sys.argv[1])
     create_linkml_documentation(schema, config=config)
