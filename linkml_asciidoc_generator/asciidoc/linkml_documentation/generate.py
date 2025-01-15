@@ -24,13 +24,13 @@ def generate_linkml_documentation(
         c._meta["name"]: generate_class_page(c, schema, config)
         for c in schema.classes.values()
         if c._meta["name"]
-        in [
-            "MarketEvaluationPoint",
-            "UsagePoint",
-            "Substation",
-            "ActivePower",
-            "IdentifiedObject",
-        ]
+        # in [
+        #     "MarketEvaluationPoint",
+        #     "UsagePoint",
+        #     "Substation",
+        #     "ActivePower",
+        #     "IdentifiedObject",
+        # ]
     }
 
     # Slots.
