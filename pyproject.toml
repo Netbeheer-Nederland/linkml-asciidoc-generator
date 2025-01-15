@@ -2,7 +2,7 @@
 name = "linkml-asciidoc-generator"
 version = "0.1.0"
 description = "LinkML generator for generating AsciiDoc documentation from a LinkML schema."
-readme = "README.adoc"
+readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "cssutils>=2.11.1",
