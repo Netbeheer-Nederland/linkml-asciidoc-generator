@@ -142,10 +142,13 @@ class Page(Resource):
     template: Jinja2TemplateFile
 
 
-def read_jinja2_template(template_path: PathLike) -> Jinja2TemplateStr:
-    template_dir, tmpl_filename = os.path.split(template_path)
-    jinja2_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir))
-    template = jinja2_env.get_template(tmpl_filename)
+def read_jinja2_template(template_path: RelativeFilePath) -> Jinja2TemplateStr:
+    templates_dir = os.path.join(
+        os.path.sep.join(os.path.realpath(__file__).split(os.path.sep)[:-2]),
+        "templates",
+    )
+    jinja2_env = jinja2.Environment(loader=jinja2.FileSystemLoader(templates_dir))
+    template = jinja2_env.get_template(template_path)
 
     return template
 
