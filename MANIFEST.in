@@ -1,0 +1,2 @@
+include linkml_asciidoc_generator/templates/*
+include linkml_asciidoc_generator/templates/class_page/*
