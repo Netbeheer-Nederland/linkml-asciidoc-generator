@@ -6,7 +6,7 @@
 |===
 | Name | Description
 
-{% for class_ in page.classes %}
+{% for class_ in page.classes|sort(attribute="name") %}
 | {{ xref_class(class_.name) }}
 | {% if class_.description %}+++{{- class_.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor %}
@@ -20,7 +20,7 @@
 |===
 | Name | Description
 
-{% for type_ in page.cim_data_types %}
+{% for type_ in page.cim_data_types|sort(attribute="name") %}
 | {{ xref_class(type_.name) }}
 | {% if type_.description %}+++{{- type_.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor %}
@@ -36,7 +36,7 @@ No types are defined in the schema.
 [cols="1,2"]
 |===
 | Name | Description
-{% for enum in page.enumerations %}
+{% for enum in page.enumerations|sort(attribute="name") %}
 | {{ xref_enum(enum.name) }}
 | {% if enum.description %}+++{{- enum.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor %}
