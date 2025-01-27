@@ -1,6 +1,6 @@
 [project]
 name = "linkml-asciidoc-generator"
-version = "0.1.0"
+version = "0.3.0"
 description = "LinkML generator for generating AsciiDoc documentation from a LinkML schema."
 readme = "README.md"
 requires-python = ">=3.12"
