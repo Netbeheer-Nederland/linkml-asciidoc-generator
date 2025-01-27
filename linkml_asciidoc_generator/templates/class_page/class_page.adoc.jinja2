@@ -54,7 +54,7 @@ a| {% for link in class_.see_also %}
 
 [cols="3,1,3,6",width=100%]
 |===
-| Name | Cardinalityxref:ROOT::cardinalities_explained.adoc[^?^,title="The cardinality of a slot is the amount "] | Type | Description
+| Name | Cardinality | Type | Description
 {% for slot in slots_for_table %}
 | <<{{ slot.name }},`{{ slot.name }}`>>
 | {{ cardinalities(slot) }}
@@ -75,7 +75,7 @@ a| {% for link in class_.see_also %}
 |===
 | URI
 | {% if slot.uri %}{{ link_curie(slot.uri) }}{% else %}n/a{% endif %}
-| Cardinalityxref:ROOT::cardinalities_explained.adoc[^?^,title="Explains stuff"]
+| Cardinality
 | {{ cardinalities(slot) }}
 | Type
 | {% if slot.destination_class %}{{ xref_class(slot.destination_class.name) }}{% elif slot.data_type is none %}n/a{% else %}{{ xref_type(slot.data_type) }}{% endif %}
