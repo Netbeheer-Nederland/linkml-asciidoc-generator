@@ -19,7 +19,7 @@
 | {% if is_relation %}Relation{% else %}Attribute{% endif %}
 
 {% if slot.uri %}
-| URI^xref:ROOT::uri_explanation.adoc[?]^
+| URI
 | {{ link_curie(slot.uri) }}
 {% endif %}
 |===
@@ -38,7 +38,7 @@
 | Inherited from
 | {{ xref_slot(slot.inherited_from) }}
 {% endif %}
-| Glossary mappings ^xref:ROOT::what_are_glossary_mappings.adoc[?]^
+| Glossary mappings
 a|
 !===
 ! Mapping type ! Term

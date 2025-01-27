@@ -15,7 +15,7 @@
 | Type
 | Enumeration
 {% if enumeration.uri %}
-| URI^xref:ROOT::uri_explanation.adoc[?]^
+| URI
 | {{ link_curie(enumeration.uri) }}
 {% endif %}
 {% if enumeration.standard %}
@@ -23,7 +23,7 @@
 | {{ enumeration.standard.value }}
 {% endif %}
 {% if enumeration.skos_mappings %}
-| Glossary mappings^xref:ROOT::what_are_glossary_mappings.adoc[?]^
+| Glossary mappings
 a|
 {% with skos_mappings=enumeration.skos_mappings %}
 {% include "class_page/skos_mappings.adoc.jinja2" %}
