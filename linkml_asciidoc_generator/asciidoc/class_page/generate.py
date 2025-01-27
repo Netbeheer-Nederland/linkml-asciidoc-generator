@@ -1,6 +1,6 @@
 from linkml_asciidoc_generator.linkml.model import (
     LinkMLClass,
-    LinkMLClassName,
+    LinkMLEnumeration,
     LinkMLSlot,
     LinkMLSlotOwner,
     LinkMLSchema,
@@ -46,12 +46,13 @@ def _get_max_cardinality(slot: LinkMLSlot) -> PositiveInt | None:
             return None
 
 
-def _generate_data_type(
-    slot_range: LinkMLClassName,
-) -> LinkMLPrimitive | LinkMLClassName | None:
+def _generate_data_type(slot_range) -> LinkMLPrimitive | LinkMLEnumeration | None:
+    # Primitive
     for enum_val in dict(LinkMLPrimitive.__members__).values():
         if enum_val.value == slot_range:
             return enum_val
+
+    # Enumeration
 
     return slot_range
 

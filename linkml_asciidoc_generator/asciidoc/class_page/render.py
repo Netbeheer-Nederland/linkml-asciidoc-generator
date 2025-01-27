@@ -9,7 +9,6 @@ from linkml_asciidoc_generator.asciidoc import (
     xref_enum,
     xref_slot,
     xref_type,
-    xref_type,
     link_curie,
     HexColor,
 )

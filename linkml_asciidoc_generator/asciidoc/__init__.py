@@ -206,7 +206,7 @@ def xref_slot(
     return _xref_resource(slot_name, PageKind.SLOT_PAGE)
 
 
-def xref_type(type_name: ResourceName) -> AsciiDocStr:
+def xref_type(type_name) -> AsciiDocStr:
     # def xref_type(type_name: LinkMLPrimitive) -> AsciiDocStr:
 
     if type_name in LinkMLPrimitive:
@@ -216,7 +216,12 @@ def xref_type(type_name: ResourceName) -> AsciiDocStr:
         return f"{uri}[`{type_name.value}`]"
     else:
         # return _xref_resource(type_name, PageKind.TYPE_PAGE)  # TODO
-        return f"`{type_name}`"
+
+        # TODO: UGLY. Assume non-primitive data type is enum, since classes
+        # can only be ranges of relations which don't use the `data_type` field
+        # but `destination_class` field.
+        # This will fix that enum ranges are hyperlinks.
+        return xref_enum(type_name)
 
 
 def get_standard_for_class(class_: LinkMLClass) -> CIMStandard | None:
