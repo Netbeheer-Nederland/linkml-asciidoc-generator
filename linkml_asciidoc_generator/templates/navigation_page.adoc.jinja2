@@ -15,7 +15,7 @@
 {% endfor -%}
 {% if page.cim_data_types %}
 ** CIM data types
-{% for cim_data_type_class in page.cim_data_types.values() -%}
+{% for cim_data_type_class in page.cim_data_types.values() | sort(attribute="name") -%}
 *** xref::class/{{ cim_data_type_class.name }}.adoc[`{{ cim_data_type_class.name }}`]
 {% endfor -%}
 {% endif %}

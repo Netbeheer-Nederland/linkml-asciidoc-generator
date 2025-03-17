@@ -31,7 +31,7 @@ def generate_enumeration(enum: LinkMLEnumeration, schema: LinkMLSchema) -> Enume
         uri=enum.enum_uri,
         values=[
             _generate_enumeration_value(enum, pv_name)
-            for pv_name in enum.permissible_values
+            for pv_name in (enum.permissible_values or [])  # TODO: This should be taken care of more thoroughly in the data model.
         ],
         prefixes=schema.prefixes,
         standard=get_standard_for_enumeration(enum),
