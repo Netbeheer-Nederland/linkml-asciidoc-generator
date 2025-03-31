@@ -1,4 +1,5 @@
 from functools import reduce, partial
+from operator import attrgetter
 
 from linkml_asciidoc_generator.asciidoc import (
     AsciiDocStr,
@@ -83,31 +84,12 @@ def _get_class_color(class_: Class, config: Config) -> HexColor:
     return color
 
 
-def _get_sorted_slots_for_table(slots: list[Slot]) -> list[Slot]:
-    def _sort_slots_table(s):
-        key = ""
-        if s.min_cardinality == 0:
-            key += "1"
-        else:
-            key += "0"
-
-        if s.inherited_from:
-            key += "1"
-        else:
-            key += "0"
-
-        if s.max_cardinality == 1:
-            key += "0"
-        else:
-            key += "1"
-
-        key += s.name
-        return key
-
-    slots_for_table = sorted(
-        slots,
-        key=_sort_slots_table,
-    )
+def _get_sorted_slots_for_table(class_: Class, slots: list[Slot]) -> list[Slot]:
+    slots_for_table = []
+    for class_name in [None] + class_.ancestors:
+        slots_for_table += sorted([s for s in slots if
+                                   s.inherited_from == class_name],
+                                  key=attrgetter('name'))
 
     return slots_for_table
 
@@ -127,6 +109,7 @@ def _render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
     content = template.render(
         class_=class_page.class_,
         slots_for_table=_get_sorted_slots_for_table(
+            class_page.class_,
             class_page.class_.attributes + class_page.class_.relations
         ),
         class_hierarchy=_render_class_hierarchy(class_page.class_),
