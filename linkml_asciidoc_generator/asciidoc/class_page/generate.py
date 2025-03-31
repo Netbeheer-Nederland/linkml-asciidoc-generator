@@ -14,7 +14,6 @@ from linkml_asciidoc_generator.asciidoc.class_page.model import (
     Attribute,
     RelationsDiagram,
     PositiveInt,
-    UsedByMap,
 )
 from linkml_asciidoc_generator.linkml.query import (
     get_ancestors,
@@ -26,6 +25,7 @@ from linkml_asciidoc_generator.asciidoc import (
     get_skos_mappings,
     get_standard_for_class,
     is_cim_data_type,
+    generate_used_by,
 )
 
 
@@ -106,23 +106,6 @@ def _generate_relation(
     )
 
 
-def _generate_used_by(class_: LinkMLClass, schema: LinkMLSchema) -> UsedByMap:
-    used_by_classes = {}
-
-    if not schema.classes:
-        return used_by_classes
-
-    for source_class_name, source_class in schema.classes.items():
-        if source_class.attributes is None:
-            continue
-
-        for slot_name, slot in source_class.attributes.items():
-            if slot.range == class_._meta["name"]:
-                used_by_classes[source_class_name] = [slot_name]
-
-    return used_by_classes
-
-
 def generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) -> Class:
     _class_ = Class(
         name=class_._meta["name"],
@@ -134,7 +117,7 @@ def generate_class(class_: LinkMLClass, schema: LinkMLSchema, config: Config) ->
         uri=class_.class_uri,
         ancestors=[c._meta["name"] for c in get_ancestors(class_, schema)],
         descendants=[c._meta["name"] for c in get_descendants(class_, schema)],
-        used_by=_generate_used_by(class_, schema),
+        used_by=generate_used_by(class_, schema),
         attributes=[
             _generate_attribute(a[0] if a[0] != class_._meta["name"] else None, a[1])
             for a in get_attributes(class_, schema)

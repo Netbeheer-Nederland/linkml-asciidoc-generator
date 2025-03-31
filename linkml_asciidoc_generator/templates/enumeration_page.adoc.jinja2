@@ -52,3 +52,21 @@ a| {% for link in enumeration.see_also %}
 | {% if val.description %}+++{{- val.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor -%}
 |===
+
+== Used by
+
+{% if enumeration.used_by %}
+[cols="1,1",width=65%]
+|===
+| Source class | Slot name
+
+{% for class_name, slot_names in enumeration.used_by | dictsort %}
+{% for slot_name in slot_names | sort %}
+| {{ xref_class(class_name) }} | {{ xref_slot(slot_name, class_name) }}
+{% endfor %}
+{% endfor %}
+|===
+
+{% else %}
+This enumeration is not used by any classes as the range of a slot.
+{% endif %}

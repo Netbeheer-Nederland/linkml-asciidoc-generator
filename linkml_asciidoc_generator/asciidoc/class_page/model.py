@@ -9,16 +9,15 @@ from linkml_asciidoc_generator.asciidoc import (
     PrefixesMap,
     SkosMapping,
     CIMStandard,
+    UsedByMap,
 )
 from linkml_asciidoc_generator.linkml.model import (
     LinkMLClassName,
-    LinkMLSlotName,
     LinkMLPrimitive,
     LinkMLElementName,
 )
 
 type PositiveInt = int
-type UsedByMap = dict[LinkMLClassName, list[LinkMLSlotName]]
 
 
 @dataclass

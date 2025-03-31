@@ -10,6 +10,9 @@ from linkml_asciidoc_generator.linkml.model import (
     LinkMLPrimitive,
     LinkMLElement,
     LinkMLClass,
+    LinkMLClassName,
+    LinkMLSlotName,
+    LinkMLSchema,
     LinkMLEnumeration,
 )
 
@@ -37,6 +40,7 @@ type D2DiagramCodeStr = str
 type CharEncoding = str
 type HexColor = str
 type PrefixesMap = dict[CURIEPrefix, URI]
+type UsedByMap = dict[LinkMLClassName, list[LinkMLSlotName]]
 
 
 class SkosVerb(Enum):
@@ -267,3 +271,22 @@ def get_skos_mappings(element: LinkMLElement) -> SkosMapping:
 
 def is_cim_data_type(class_: LinkMLClass):
     return class_.class_uri in CIM_DATA_TYPES
+
+
+def generate_used_by(
+    element: LinkMLClass | LinkMLEnumeration, schema: LinkMLSchema
+) -> UsedByMap:
+    used_by_classes = {}
+
+    if not schema.classes:
+        return used_by_classes
+
+    for source_class_name, source_class in schema.classes.items():
+        if source_class.attributes is None:
+            continue
+
+        for slot_name, slot in source_class.attributes.items():
+            if slot.range == element._meta["name"]:
+                used_by_classes[source_class_name] = [slot_name]
+
+    return used_by_classes

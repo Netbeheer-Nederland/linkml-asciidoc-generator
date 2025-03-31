@@ -70,3 +70,21 @@ a| {% for link in class_.see_also %}
 |===
 {% endfor %}
 ////
+
+== Used by
+
+{% if class_.used_by %}
+[cols="1,1",width=65%]
+|===
+| Source class | Slot name
+
+{% for class_name, slot_names in class_.used_by | dictsort %}
+{% for slot_name in slot_names | sort %}
+| {{ xref_class(class_name) }} | {{ xref_slot(slot_name, class_name) }}
+{% endfor %}
+{% endfor %}
+|===
+
+{% else %}
+This CIM data type is not used by any classes as the range of a slot.
+{% endif %}

@@ -6,6 +6,7 @@ from linkml_asciidoc_generator.asciidoc import (
     URI,
     CIMStandard,
     SkosMapping,
+    UsedByMap,
 )
 from linkml_asciidoc_generator.linkml.model import LinkMLElementName
 
@@ -24,6 +25,7 @@ class Enumeration:
     uri: CURIE | None = None
     standard: CIMStandard | None = None
     description: str | None = None
+    used_by: UsedByMap | None = None
     skos_mappings: SkosMapping | None = None
     see_also: list[URI] | None = None
 

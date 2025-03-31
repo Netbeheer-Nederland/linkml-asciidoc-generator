@@ -12,6 +12,7 @@ from linkml_asciidoc_generator.asciidoc.enumeration_page.model import (
 from linkml_asciidoc_generator.asciidoc import (
     get_standard_for_enumeration,
     get_skos_mappings,
+    generate_used_by,
 )
 
 
@@ -29,9 +30,12 @@ def generate_enumeration(enum: LinkMLEnumeration, schema: LinkMLSchema) -> Enume
         name=enum._meta["name"],
         description=enum.description,
         uri=enum.enum_uri,
+        used_by=generate_used_by(enum, schema),
         values=[
             _generate_enumeration_value(enum, pv_name)
-            for pv_name in (enum.permissible_values or [])  # TODO: This should be taken care of more thoroughly in the data model.
+            for pv_name in (
+                enum.permissible_values or []
+            )  # TODO: This should be taken care of more thoroughly in the data model.
         ],
         prefixes=schema.prefixes,
         standard=get_standard_for_enumeration(enum),
