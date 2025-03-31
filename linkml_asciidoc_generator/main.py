@@ -53,4 +53,9 @@ if __name__ == "__main__":
     # schema = Path("data/dp_eh_nettopologie.yaml")
     # schema = Path("data/im_capaciteitskaart.yaml")
     schema = Path(sys.argv[1])
+
+    # TODO: Improve this.
+    if sys.argv[3] == "--no-relations-diagrams":
+        config["diagrams"]["relations"] = False
+
     create_linkml_documentation(schema, config=config)
