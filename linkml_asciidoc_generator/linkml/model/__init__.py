@@ -23,6 +23,7 @@ LinkMLAttribute = NewType("LinkMLAttribute", LinkMLSlot)
 LinkMLSchema = SchemaDefinition
 
 LinkMLElementName = str
+LinkMLSlotName = str
 LinkMLClassName = str
 LinkMLSlotOwner = ClassDefinition
 

@@ -56,8 +56,8 @@ a| {% for link in class_.see_also %}
 |===
 | Name | Type | Description | Inherited from
 {% for slot in slots_for_table %}
-//| <<{{ slot.name }},`{{ slot.name }}`>>
-| [[slots_table.{{ slot.name }}]]<<{{ slot.name }},`{{ slot.name }}`>>
+| <<{{ slot.name }},`{{ slot.name }}`>>
+//| [[slots_table.{{ slot.name }}]]<<{{ slot.name }},`{{ slot.name }}`>>
 | {{ cardinalities(slot) }} +
 {% if slot.destination_class %}{{ xref_class(slot.destination_class.name) }}{% elif slot.data_type %}{{ xref_type(slot.data_type) }}{% else %}_n/a_{% endif %}
 | {% if slot.description %}+++{{- slot.description | trim | replace("|", '\\|') | truncate(128) -}}+++{% else %}_n/a_{% endif %}
@@ -106,4 +106,22 @@ a|
 
 {% else %}
 This class has no slots.
+{% endif %}
+
+== Used by
+
+{% if class_.used_by %}
+[cols="1,1",width=65%]
+|===
+| Source class | Slot name
+
+{% for class_name, slot_names in class_.used_by | dictsort %}
+{% for slot_name in slot_names | sort %}
+| {{ xref_class(class_name) }} | {{ xref_slot(slot_name, class_name) }}
+{% endfor %}
+{% endfor %}
+|===
+
+{% else %}
+This class is not used by any other classes as the range of a slot.
 {% endif %}

@@ -87,9 +87,9 @@ def _get_class_color(class_: Class, config: Config) -> HexColor:
 def _get_sorted_slots_for_table(class_: Class, slots: list[Slot]) -> list[Slot]:
     slots_for_table = []
     for class_name in [None] + class_.ancestors:
-        slots_for_table += sorted([s for s in slots if
-                                   s.inherited_from == class_name],
-                                  key=attrgetter('name'))
+        slots_for_table += sorted(
+            [s for s in slots if s.inherited_from == class_name], key=attrgetter("name")
+        )
 
     return slots_for_table
 
@@ -110,7 +110,7 @@ def _render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
         class_=class_page.class_,
         slots_for_table=_get_sorted_slots_for_table(
             class_page.class_,
-            class_page.class_.attributes + class_page.class_.relations
+            class_page.class_.attributes + class_page.class_.relations,
         ),
         class_hierarchy=_render_class_hierarchy(class_page.class_),
         link_curie=partial(link_curie, prefixes=class_page.class_.prefixes),
