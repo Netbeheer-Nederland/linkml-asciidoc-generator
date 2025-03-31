@@ -46,14 +46,18 @@ def _get_max_cardinality(slot: LinkMLSlot) -> PositiveInt | None:
             return None
 
 
-def _generate_data_type(slot_range) -> LinkMLPrimitive | LinkMLEnumeration | None:
+def _generate_data_type(slot_range) -> LinkMLPrimitive | LinkMLEnumeration:
+    # `None`
+    # TODO: `default_range` should be parsed, then this logic here would probably not be necessary.
+    if slot_range is None:
+        return LinkMLPrimitive.STRING
+
     # Primitive
     for enum_val in dict(LinkMLPrimitive.__members__).values():
         if enum_val.value == slot_range:
             return enum_val
 
     # Enumeration
-
     return slot_range
 
 
