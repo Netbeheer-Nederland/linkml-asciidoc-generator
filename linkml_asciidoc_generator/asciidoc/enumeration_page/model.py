@@ -13,6 +13,7 @@ from linkml_asciidoc_generator.linkml.model import LinkMLElementName
 
 @dataclass
 class EnumerationValue:
+    description: str
     value: str
     uri: CURIE
 

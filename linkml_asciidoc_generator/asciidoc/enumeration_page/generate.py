@@ -20,7 +20,8 @@ def _generate_enumeration_value(
     enum: LinkMLEnumeration, pv_name: str
 ) -> EnumerationValue:
     pv: LinkMLEnumerationValue = enum.permissible_values[pv_name]
-    enumeration_value = EnumerationValue(value=pv_name, uri=pv.meaning)
+    enumeration_value = EnumerationValue(description=pv.description,
+                                         value=pv_name, uri=pv.meaning)
 
     return enumeration_value
 
