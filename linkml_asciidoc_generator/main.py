@@ -15,7 +15,7 @@ from linkml_asciidoc_generator.asciidoc.linkml_documentation.write import (
 from linkml_asciidoc_generator.config import Config
 
 
-def create_linkml_documentation(schema_file: Path, config=Config) -> None:
+def create_linkml_documentation(schema_file: Path, config: Config) -> None:
     schema_dict = read_linkml_schema(schema_file)
     schema = parse_linkml_schema(schema_dict)
     linkml_documentation = generate_linkml_documentation(schema, config)
