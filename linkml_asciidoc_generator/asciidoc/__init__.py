@@ -174,16 +174,16 @@ def get_page_resource_id(name: ResourceName, kind: PageKind) -> ResourceID:
         case _:
             page_type = ""
 
-    return os.path.join(page_type, f"{name}.adoc")
+    return f"{os.path.join(page_type, name)}.adoc"
 
 
 # Render functions.
 
 
-def _xref_resource(name: ResourceName, kind: PageKind) -> AsciiDocStr:
+def _xref_resource(name: ResourceName, kind: PageKind, module: ResourceName = "") -> AsciiDocStr:
     resource_id = get_page_resource_id(name, kind)
 
-    return f"xref::{resource_id}[`{name}`]"
+    return f"xref:{module}:{resource_id}[`{name}`]"
 
 
 def link_curie(curie: CURIE, prefixes: PrefixesMap) -> AsciiDocStr:
@@ -196,12 +196,12 @@ def link_curie(curie: CURIE, prefixes: PrefixesMap) -> AsciiDocStr:
         return f"{base_uri}{ncname}[`{curie}`]"
 
 
-def xref_class(class_name: ResourceName) -> AsciiDocStr:
-    return _xref_resource(class_name, PageKind.CLASS_PAGE)
+def xref_class(class_name: ResourceName, module: ResourceName = "") -> AsciiDocStr:
+    return _xref_resource(class_name, PageKind.CLASS_PAGE, module)
 
 
-def xref_enum(enum_name: ResourceName) -> AsciiDocStr:
-    return _xref_resource(enum_name, PageKind.ENUMERATION_PAGE)
+def xref_enum(enum_name: ResourceName, module: ResourceName = "") -> AsciiDocStr:
+    return _xref_resource(enum_name, PageKind.ENUMERATION_PAGE, module)
 
 
 def xref_slot(

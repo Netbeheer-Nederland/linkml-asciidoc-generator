@@ -1,27 +1,25 @@
-= {{ page.title }}
-
-== Classes
+=== Classes
 
 [cols="1,2"]
 |===
 | Name | Description
 
 {% for class_ in page.classes|sort(attribute="name") %}
-| {{ xref_class(class_.name) }}
+| [[{{class_.name}}]]{{ xref_class(class_.name, "schema") }}
 | {% if class_.description %}+++{{- class_.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor %}
 |===
 
-== Types
+=== Types
 {% if page.cim_data_types %}
-=== CIM data types
+==== CIM data types
 
 [cols="1,2"]
 |===
 | Name | Description
 
 {% for type_ in page.cim_data_types|sort(attribute="name") %}
-| {{ xref_class(type_.name) }}
+| {{ xref_class(type_.name, "schema") }}
 | {% if type_.description %}+++{{- type_.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor %}
 |===
@@ -30,14 +28,14 @@
 No types are defined in the schema.
 {% endif %}
 
-== Enumerations
+=== Enumerations
 
 {% if page.enumerations %}
 [cols="1,2"]
 |===
 | Name | Description
 {% for enum in page.enumerations|sort(attribute="name") %}
-| {{ xref_enum(enum.name) }}
+| {{ xref_enum(enum.name, "schema") }}
 | {% if enum.description %}+++{{- enum.description | trim | replace("|", '\\|') -}}+++{% else %}n/a{% endif %}
 {% endfor %}
 |===
