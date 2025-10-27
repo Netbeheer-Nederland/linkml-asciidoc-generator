@@ -207,11 +207,12 @@ def xref_enum(enum_name: ResourceName, module: ResourceName = "") -> AsciiDocStr
 def xref_slot(
     slot_name: ResourceName,
     owner_class: ResourceName | None = None,
+    module: ResourceName = ""
 ) -> AsciiDocStr:
     if owner_class is not None:  # Slot section on class page.
-        return f"xref::class/{owner_class}.adoc#{slot_name}[`{slot_name}`]"
+        return f"xref::{module}:class/{owner_class}.adoc#{slot_name}[`{slot_name}`]"
     else:  # Slot page.
-        return _xref_resource(slot_name, PageKind.SLOT_PAGE)
+        return _xref_resource(slot_name, PageKind.SLOT_PAGE, module)
 
 
 def xref_type(type_name) -> AsciiDocStr:

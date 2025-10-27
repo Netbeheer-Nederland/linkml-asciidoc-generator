@@ -1,12 +1,11 @@
-[.truncate]
 ** Classes
-*** xref::class/{{ root_class.name }}.adoc[{{ root_class.name }} (root)]
+*** {{ xref_class(root_class.name, "schema") }} (root)
 {% for class_ in page.classes.values() | sort(attribute="name") -%}
 {% if not class_.is_root %}
-*** xref::class/{{ class_.name }}.adoc[{{ class_.name }}]
+*** {{ xref_class(class_.name, "schema") }}
 {#%- if class_.attributes -%}
 {% for slot in (class_.attributes + class_.relations) -%}
-**** xref::slot/{{ slot.name }}.adoc[{{ slot.name }}]
+**** {{ xref_slot(slot.name) }}
 {% endfor -%}
 {% endif %#}
 {% endif %}
@@ -14,12 +13,12 @@
 {% if page.cim_data_types %}
 ** CIM data types
 {% for cim_data_type_class in page.cim_data_types.values() | sort(attribute="name") -%}
-*** xref::class/{{ cim_data_type_class.name }}.adoc[{{ cim_data_type_class.name }}]
+*** {{ xref_class(cim_data_type_class.name, "schema") }}
 {% endfor -%}
 {% endif %}
 {% if page.enumerations %}
 ** Enumerations
 {% for enum in page.enumerations.values() | sort(attribute="name") -%}
-*** xref::enumeration/{{ enum.name }}.adoc[{{ enum.name }}]
+*** {{ xref_enum(enum.name) }}
 {% endfor -%}
 {% endif %}
