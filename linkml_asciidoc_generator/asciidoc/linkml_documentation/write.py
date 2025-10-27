@@ -57,7 +57,7 @@ def write_linkml_documentation(
     )
 
     navigation_page_path = os.path.join(
-        module_dir,
+        partials_dir,
         get_page_resource_id("nav", PageKind.NAVIGATION_PAGE),
     )
     _write_page(
