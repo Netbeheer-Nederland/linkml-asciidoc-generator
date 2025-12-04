@@ -66,7 +66,7 @@ def _render_cardinalities(slot: Attribute | Relation):
 def _render_relations_diagram(
     diagram: RelationsDiagram, config: Config
 ) -> D2DiagramCodeStr:
-    template = read_jinja2_template(config["templates"]["class_page_relations_diagram"])
+    template = read_jinja2_template("class_page_relations_diagram", config)
     content = template.render(
         class_=diagram.class_,
         color_class=partial(_get_class_color, config=config),
@@ -95,9 +95,7 @@ def _get_sorted_slots_for_table(class_: Class, slots: list[Slot]) -> list[Slot]:
 
 
 def _render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
-    template: Jinja2TemplateStr = read_jinja2_template(
-        config["templates"]["class_page"]
-    )
+    template: Jinja2TemplateStr = read_jinja2_template("class_page", config)
 
     if class_page.relations_diagram and len(class_page.class_.relations) > 0:
         relations_diagram: D2DiagramCodeStr = _render_relations_diagram(
@@ -138,9 +136,7 @@ def _get_sorted_slots_for_table_cim_data_type(slots: list[Slot]) -> list[Slot]:
 
 
 def _render_cim_data_type_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
-    template: Jinja2TemplateStr = read_jinja2_template(
-        config["templates"]["cim_data_type_page"]
-    )
+    template: Jinja2TemplateStr = read_jinja2_template("cim_data_type_page", config)
 
     content = template.render(
         class_=class_page.class_,

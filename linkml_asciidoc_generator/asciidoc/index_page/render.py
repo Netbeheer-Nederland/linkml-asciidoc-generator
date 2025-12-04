@@ -12,9 +12,7 @@ from linkml_asciidoc_generator.asciidoc.index_page.model import (
 
 
 def render_index_page(index_page: IndexPage, config: Config) -> AsciiDocStr:
-    template: Jinja2TemplateStr = read_jinja2_template(
-        config["templates"]["index_page"]
-    )
+    template: Jinja2TemplateStr = read_jinja2_template("index_page", config)
     content = template.render(
         page=index_page, xref_class=xref_class, xref_enum=xref_enum
     )

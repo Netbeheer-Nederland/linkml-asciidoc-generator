@@ -1,3 +1,4 @@
+import argparse
 import sys
 
 from pathlib import Path
@@ -28,8 +29,17 @@ def create_linkml_documentation(schema_file: Path, config: Config) -> None:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("schema", help="path to the LinkML schema", type=Path)
+    parser.add_argument("-o", "--output-dir", help="output directory path to write Antora module to", default=Path("./output"), type=Path)
+    parser.add_argument("-t", "--templates-dir", help="path to (custom) Jinja2 templates for rendering the AsciiDco", default=Path(__file__).parent / 'asciidoc' / 'templates', type=Path)
+    parser.add_argument("--render-diagrams", help="whether to render relation diagrams or not", action="store_true")
+
+    args = parser.parse_args()
+
     config = {
         "templates": {
+            "dir": args.templates_dir,
             "class_page": "class_page/class_page.adoc.jinja2",
             "enumeration_page": "enumeration_page.adoc.jinja2",
             "cim_data_type_page": "class_page/cim_data_type_page.adoc.jinja2",
@@ -38,24 +48,15 @@ if __name__ == "__main__":
             "navigation_page": "navigation_page.adoc.jinja2",
         },
         "diagrams": {
-            "relations": True,
+            "relations": args.render_diagrams,
             "class_color": {
                 "IEC61970 (Grid)": "#eccfcb",
                 "IEC61968 (Enterprise)": "#d1e7c2",
                 "IEC62325 (Market)": "#fffbef",
             },
         },
-        "output_dir": sys.argv[2],
+        "output_dir": args.output_dir,
         "char_encoding": "utf8",
     }
-    # schema = Path("data/dp_nbl_forecast.yaml")
-    # schema = Path("data/dp_meetdata.new.yaml")
-    # schema = Path("data/dp_eh_nettopologie.yaml")
-    # schema = Path("data/im_capaciteitskaart.yaml")
-    schema = Path(sys.argv[1])
 
-    # TODO: Improve this.
-    if sys.argv[3] == "--no-relations-diagrams":
-        config["diagrams"]["relations"] = False
-
-    create_linkml_documentation(schema, config=config)
+    create_linkml_documentation(args.schema, config=config)

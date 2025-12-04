@@ -17,9 +17,7 @@ from linkml_asciidoc_generator.asciidoc.enumeration_page.model import (
 def render_enumeration_page(
     enumeration_page: EnumerationPage, config: Config
 ) -> AsciiDocStr:
-    template: Jinja2TemplateStr = read_jinja2_template(
-        config["templates"]["enumeration_page"]
-    )
+    template: Jinja2TemplateStr = read_jinja2_template("enumeration_page", config)
 
     content = template.render(
         enumeration=enumeration_page.enumeration,

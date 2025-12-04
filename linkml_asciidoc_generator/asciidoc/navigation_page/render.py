@@ -22,9 +22,7 @@ def _get_root_class(classes: dict[ResourceName, Class]) -> Class | None:
 def render_navigation_page(
     navigation_page: NavigationPage, config: Config
 ) -> AsciiDocStr:
-    template: Jinja2TemplateStr = read_jinja2_template(
-        config["templates"]["navigation_page"]
-    )
+    template: Jinja2TemplateStr = read_jinja2_template("navigation_page", config)
 
     content = template.render(
         page=navigation_page,
