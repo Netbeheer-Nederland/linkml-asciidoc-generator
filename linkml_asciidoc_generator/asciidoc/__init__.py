@@ -2,6 +2,7 @@ import os.path
 from dataclasses import dataclass
 from os import PathLike
 from enum import Enum, auto
+from typing import NamedTuple
 
 import jinja2
 
@@ -26,7 +27,6 @@ from linkml_asciidoc_generator.config import Config
 
 LINKML_META_BASE_URI = "https://w3id.org/linkml/"
 
-
 type ResourceName = str
 type CURIE = str
 type CURIEPrefix = str
@@ -43,13 +43,16 @@ type HexColor = str
 type PrefixesMap = dict[CURIEPrefix, URI]
 type UsedByMap = dict[LinkMLClassName, list[LinkMLSlotName]]
 
+class LabeledCURIE(NamedTuple):
+    curie: CURIE
+    label: str
 
 class SkosVerb(Enum):
-    EXACT_MATCH = "skos:exactMatch"
-    CLOSE_MATCH = "skos:closeMatch"
-    NARROW_MATCH = "skos:narrowMatch"
-    BROAD_MATCH = "skos:broadMatch"
-    MAPPING_RELATION = "skos:mappingRelation"
+    EXACT_MATCH = LabeledCURIE("skos:exactMatch", "has exact match")
+    CLOSE_MATCH = LabeledCURIE("skos:closeMatch", "has close match")
+    NARROW_MATCH = LabeledCURIE("skos:narrowMatch", "has narrower match")
+    BROAD_MATCH = LabeledCURIE("skos:broadMatch", "has broader match")
+    MAPPING_RELATION = LabeledCURIE("skos:mappingRelation", "is related to")
 
 
 type SkosMapping = dict[SkosVerb, list[CURIE]]
@@ -183,14 +186,17 @@ def _xref_resource(name: ResourceName, kind: PageKind) -> AsciiDocStr:
     return f"xref::{resource_id}[`{name}`]"
 
 
-def link_curie(curie: CURIE, prefixes: PrefixesMap) -> AsciiDocStr:
+def link_curie(curie: CURIE, prefixes: PrefixesMap, label: str | None = None) -> AsciiDocStr:
     prefix, ncname = curie.split(":")
     base_uri = prefixes[prefix]
 
+    if not label:
+        label = f"`{curie}`"
+
     if prefix in PREFIXES_NOT_TO_LINK:
-        return f"`{curie}`"
+        return label
     else:
-        return f"{base_uri}{ncname}[`{curie}`]"
+        return f"{base_uri}{ncname}[{label}]"
 
 
 def xref_class(class_name: ResourceName) -> AsciiDocStr:
