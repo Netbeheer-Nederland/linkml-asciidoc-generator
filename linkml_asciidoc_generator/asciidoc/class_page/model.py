@@ -57,6 +57,7 @@ class Class:
     relations: list[Relation]
     attributes: list[Attribute]
     prefixes: PrefixesMap
+    vocabulary_graphs: PrefixesMap
     used_by: UsedByMap | None = None
     uri: CURIE | None = None
     is_abstract: bool = False

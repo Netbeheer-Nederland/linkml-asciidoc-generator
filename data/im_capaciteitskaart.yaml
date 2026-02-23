@@ -104,7 +104,7 @@ prefixes:
   github: https://github.com/
   cim: https://cim.ucaiug.io/ns#
   ck: http://data.netbeheernederland.nl/capaciteitskaart/def#
-  nbnl: https://begrippen.netbeheernederland.nl/energiesysteembeheer/nl/page/
+  nbnl: https://begrippen.netbeheernederland.nl/id/
   dcterms: http://purl.org/dc/terms/
   unit: http://qudt.org/vocab/unit/
   skos: http://www.w3.org/2004/02/skos/core#
@@ -260,7 +260,10 @@ classes:
       can be linked to both measured and forecast load levels.
     from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61970.Base.LoadModel
     exact_mappings:
-    - nbnl:voedingsgebied
+    - nbnl:7qmcr
+    - nbnl:7qmcr
+    close_mappings:
+    - nbnl:he89b
     is_a: IdentifiedObject
     attributes:
       short_code:

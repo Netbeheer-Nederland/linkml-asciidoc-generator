@@ -293,3 +293,23 @@ def generate_used_by(
                 used_by_classes[source_class_name] = [slot_name]
 
     return used_by_classes
+
+
+def resolve_curie(curie: CURIE, prefixes: PrefixesMap) -> URI:
+    prefix, ncname = curie.split(":")
+    base_uri = prefixes[prefix]
+    uri = f"{base_uri}{ncname}"
+
+    return uri
+
+
+def label_for(curie: str, prefixes: PrefixesMap) -> str:
+    uri = resolve_curie(curie, prefixes)
+
+    g = Graph()
+    g.parse("https://begrippen.netbeheernederland.nl/begrippenkader.ttl")
+
+    for subj, pred, obj in g:
+        if subj == URIRef(uri) and pred == SKOS.prefLabel:
+            return obj
+

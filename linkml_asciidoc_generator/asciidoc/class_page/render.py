@@ -1,3 +1,4 @@
+from rdflib import Graph, URIRef, SKOS
 from functools import reduce, partial
 from operator import attrgetter
 
@@ -10,8 +11,10 @@ from linkml_asciidoc_generator.asciidoc import (
     xref_enum,
     xref_slot,
     xref_type,
+    label_for,
     link_curie,
     HexColor,
+    PrefixesMap
 )
 from linkml_asciidoc_generator.config import Config
 from linkml_asciidoc_generator.asciidoc.class_page.model import (
@@ -112,6 +115,7 @@ def _render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
         ),
         class_hierarchy=_render_class_hierarchy(class_page.class_),
         link_curie=partial(link_curie, prefixes=class_page.class_.prefixes),
+        label_for=partial(label_for, prefixes=class_page.class_prefixes),
         xref_class=xref_class,
         xref_enum=xref_enum,
         xref_slot=xref_slot,
@@ -144,6 +148,7 @@ def _render_cim_data_type_page(class_page: ClassPage, config: Config) -> AsciiDo
             class_page.class_.attributes + class_page.class_.relations
         ),
         link_curie=partial(link_curie, prefixes=class_page.class_.prefixes),
+        label_for=partial(label_for, prefixes=class_page.class_prefixes),
         xref_class=xref_class,
         xref_enum=xref_enum,
         xref_slot=xref_slot,
