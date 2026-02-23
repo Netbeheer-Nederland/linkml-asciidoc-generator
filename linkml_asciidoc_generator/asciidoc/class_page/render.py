@@ -1,4 +1,3 @@
-from rdflib import Graph, URIRef, SKOS
 from functools import reduce, partial
 from operator import attrgetter
 
@@ -115,7 +114,7 @@ def _render_class_page(class_page: ClassPage, config: Config) -> AsciiDocStr:
         ),
         class_hierarchy=_render_class_hierarchy(class_page.class_),
         link_curie=partial(link_curie, prefixes=class_page.class_.prefixes),
-        label_for=partial(label_for, prefixes=class_page.class_prefixes),
+        label_for=partial(label_for, prefixes=class_page.class_.prefixes),
         xref_class=xref_class,
         xref_enum=xref_enum,
         xref_slot=xref_slot,
@@ -148,7 +147,7 @@ def _render_cim_data_type_page(class_page: ClassPage, config: Config) -> AsciiDo
             class_page.class_.attributes + class_page.class_.relations
         ),
         link_curie=partial(link_curie, prefixes=class_page.class_.prefixes),
-        label_for=partial(label_for, prefixes=class_page.class_prefixes),
+        label_for=partial(label_for, prefixes=class_page.class_.prefixes),
         xref_class=xref_class,
         xref_enum=xref_enum,
         xref_slot=xref_slot,

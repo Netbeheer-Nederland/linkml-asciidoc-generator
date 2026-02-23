@@ -5,6 +5,7 @@ from enum import Enum, auto
 from typing import NamedTuple
 
 import jinja2
+from rdflib import Graph, URIRef, SKOS
 
 from linkml_asciidoc_generator.linkml.model import (
     LinkMLElementName,
