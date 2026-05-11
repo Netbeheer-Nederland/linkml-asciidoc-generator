@@ -93,7 +93,6 @@ docstring-code-format = false
 # enabled.
 docstring-code-line-length = "dynamic"
 
-
 [tool.setuptools]
 packages = [
     "linkml_asciidoc_generator",
