@@ -291,7 +291,7 @@ def generate_used_by(
 
         for slot_name, slot in source_class.attributes.items():
             if slot.range == element._meta["name"]:
-                used_by_classes[source_class_name] = [slot_name]
+                used_by_classes.setdefault(source_class_name, []).append(slot_name)
 
     return used_by_classes
 
