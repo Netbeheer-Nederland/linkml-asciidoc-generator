@@ -4305,7 +4305,7 @@ enums:
         meaning: cim:UnitMultiplier.Z
       Y:
         meaning: cim:UnitMultiplier.Y
-    enum_uri: http://iec.ch/TC57/CIM100#UnitMultiplier
+    enum_uri: cim:UnitMultiplier
   UnitSymbol:
     permissible_values:
       none:
@@ -4590,7 +4590,7 @@ enums:
         meaning: cim:UnitSymbol.kgPerJ
       JPers:
         meaning: cim:UnitSymbol.JPers
-    enum_uri: http://iec.ch/TC57/CIM100#UnitSymbol
+    enum_uri: cim:UnitSymbol
   DCPolarityKind:
     permissible_values:
       positive:
@@ -4599,7 +4599,7 @@ enums:
         meaning: cim:DCPolarityKind.middle
       negative:
         meaning: cim:DCPolarityKind.negative
-    enum_uri: http://iec.ch/TC57/CIM100#DCPolarityKind
+    enum_uri: cim:DCPolarityKind
   ControlAreaTypeKind:
     permissible_values:
       AGC:
@@ -4608,14 +4608,14 @@ enums:
         meaning: cim:ControlAreaTypeKind.Forecast
       Interchange:
         meaning: cim:ControlAreaTypeKind.Interchange
-    enum_uri: http://iec.ch/TC57/CIM100#ControlAreaTypeKind
+    enum_uri: cim:ControlAreaTypeKind
   CurveStyle:
     permissible_values:
       constantYValue:
         meaning: cim:CurveStyle.constantYValue
       straightLineYValues:
         meaning: cim:CurveStyle.straightLineYValues
-    enum_uri: http://iec.ch/TC57/CIM100#CurveStyle
+    enum_uri: cim:CurveStyle
   DCConverterOperatingModeKind:
     permissible_values:
       bipolar:
@@ -4624,7 +4624,7 @@ enums:
         meaning: cim:DCConverterOperatingModeKind.monopolarMetallicReturn
       monopolarGroundReturn:
         meaning: cim:DCConverterOperatingModeKind.monopolarGroundReturn
-    enum_uri: http://iec.ch/TC57/CIM100#DCConverterOperatingModeKind
+    enum_uri: cim:DCConverterOperatingModeKind
   FuelType:
     permissible_values:
       coal:
@@ -4647,7 +4647,7 @@ enums:
         meaning: cim:FuelType.peat
       other:
         meaning: cim:FuelType.other
-    enum_uri: http://iec.ch/TC57/CIM100#FuelType
+    enum_uri: cim:FuelType
   GeneratorControlSource:
     permissible_values:
       unavailable:
@@ -4658,7 +4658,7 @@ enums:
         meaning: cim:GeneratorControlSource.onAGC
       plantControl:
         meaning: cim:GeneratorControlSource.plantControl
-    enum_uri: http://iec.ch/TC57/CIM100#GeneratorControlSource
+    enum_uri: cim:GeneratorControlSource
   Currency:
     permissible_values:
       AED:
@@ -4983,14 +4983,14 @@ enums:
         meaning: cim:Currency.ZMK
       ZWL:
         meaning: cim:Currency.ZWL
-    enum_uri: http://iec.ch/TC57/CIM100#Currency
+    enum_uri: cim:Currency
   HydroEnergyConversionKind:
     permissible_values:
       generator:
         meaning: cim:HydroEnergyConversionKind.generator
       pumpAndGenerator:
         meaning: cim:HydroEnergyConversionKind.pumpAndGenerator
-    enum_uri: http://iec.ch/TC57/CIM100#HydroEnergyConversionKind
+    enum_uri: cim:HydroEnergyConversionKind
   HydroTurbineKind:
     permissible_values:
       francis:
@@ -4999,7 +4999,7 @@ enums:
         meaning: cim:HydroTurbineKind.pelton
       kaplan:
         meaning: cim:HydroTurbineKind.kaplan
-    enum_uri: http://iec.ch/TC57/CIM100#HydroTurbineKind
+    enum_uri: cim:HydroTurbineKind
   HydroPlantStorageKind:
     permissible_values:
       runOfRiver:
@@ -5008,7 +5008,7 @@ enums:
         meaning: cim:HydroPlantStorageKind.pumpedStorage
       storage:
         meaning: cim:HydroPlantStorageKind.storage
-    enum_uri: http://iec.ch/TC57/CIM100#HydroPlantStorageKind
+    enum_uri: cim:HydroPlantStorageKind
   OperationalLimitDirectionKind:
     permissible_values:
       high:
@@ -5017,7 +5017,7 @@ enums:
         meaning: cim:OperationalLimitDirectionKind.low
       absoluteValue:
         meaning: cim:OperationalLimitDirectionKind.absoluteValue
-    enum_uri: http://iec.ch/TC57/CIM100#OperationalLimitDirectionKind
+    enum_uri: cim:OperationalLimitDirectionKind
   LimitKind:
     permissible_values:
       patl:
@@ -5042,7 +5042,7 @@ enums:
         meaning: eu:LimitKind.warningVoltage
       stability:
         meaning: eu:LimitKind.stability
-    enum_uri: http://iec.ch/TC57/CIM100-European#LimitKind
+    enum_uri: eu:LimitKind
   WindingConnection:
     permissible_values:
       D:
@@ -5059,7 +5059,7 @@ enums:
         meaning: cim:WindingConnection.A
       I:
         meaning: cim:WindingConnection.I
-    enum_uri: http://iec.ch/TC57/CIM100#WindingConnection
+    enum_uri: cim:WindingConnection
   RegulatingControlModeKind:
     permissible_values:
       voltage:
@@ -5078,14 +5078,14 @@ enums:
         meaning: cim:RegulatingControlModeKind.temperature
       powerFactor:
         meaning: cim:RegulatingControlModeKind.powerFactor
-    enum_uri: http://iec.ch/TC57/CIM100#RegulatingControlModeKind
+    enum_uri: cim:RegulatingControlModeKind
   SVCControlMode:
     permissible_values:
       reactivePower:
         meaning: cim:SVCControlMode.reactivePower
       voltage:
         meaning: cim:SVCControlMode.voltage
-    enum_uri: http://iec.ch/TC57/CIM100#SVCControlMode
+    enum_uri: cim:SVCControlMode
   SynchronousMachineKind:
     permissible_values:
       generator:
@@ -5102,7 +5102,7 @@ enums:
         meaning: cim:SynchronousMachineKind.motorOrCondenser
       generatorOrCondenserOrMotor:
         meaning: cim:SynchronousMachineKind.generatorOrCondenserOrMotor
-    enum_uri: http://iec.ch/TC57/CIM100#SynchronousMachineKind
+    enum_uri: cim:SynchronousMachineKind
   PhaseCode:
     permissible_values:
       ABCN:
@@ -5157,11 +5157,11 @@ enums:
         meaning: cim:PhaseCode.XN
       XYN:
         meaning: cim:PhaseCode.XYN
-    enum_uri: http://iec.ch/TC57/CIM100#PhaseCode
+    enum_uri: cim:PhaseCode
   WindGenUnitKind:
     permissible_values:
       offshore:
         meaning: cim:WindGenUnitKind.offshore
       onshore:
         meaning: cim:WindGenUnitKind.onshore
-    enum_uri: http://iec.ch/TC57/CIM100#WindGenUnitKind
+    enum_uri: cim:WindGenUnitKind
