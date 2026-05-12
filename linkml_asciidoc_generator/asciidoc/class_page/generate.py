@@ -41,9 +41,9 @@ def _get_min_cardinality(slot: LinkMLSlot) -> int:
 
 def _get_max_cardinality(slot: LinkMLSlot) -> PositiveInt | None:
     match slot.multivalued:
-        case False:
+        case False | None:
             return 1
-        case True | None:
+        case True:
             return None
 
 
